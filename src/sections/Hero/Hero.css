@@ -3,7 +3,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    min-height: calc(100vh - 132px);
+        /* Adjusted to ensure footer is visible */
     background: url('https://via.placeholder.com/1500x800') no-repeat center center/cover;
     text-align: center;
 }
