@@ -1,15 +1,18 @@
+@import '../../styles/variables.css';
+
 .dashboard-page {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #e6f7ff;
+  /* height: 100vh; */
+  background-color: #f4f4f4;
 }
 
 .dashboard-page h1 {
-  color: #003366;
+  color: var(--primary-color);
 }
 
 .dashboard-page p {
-  color: #004999;
+  color: var(--primary-hover-color);
 }

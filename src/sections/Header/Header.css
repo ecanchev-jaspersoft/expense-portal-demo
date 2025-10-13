@@ -6,19 +6,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background: var(--footer-gradient);
+    background: var(--background-gradient);
     color: var(--text-color);
-        animation: fadeIn 1.5s ease-in-out;
-    }
-    
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-    
-        to {
-            opacity: 1;
-        }
+    animation: fadeIn 1.5s ease-in-out;
 }
 
 .nav-links {
@@ -34,7 +24,6 @@
     color: var(--text-color);
     font-weight: bold;
     transition: color 0.3s ease;
-    cursor: pointer;
 }
 
 .nav-links a:hover {

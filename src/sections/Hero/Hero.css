@@ -1,41 +1,20 @@
 @import '../../styles/variables.css';
+
 /* Hero Section */
 .hero {
     display: flex;
     justify-content: center;
     align-items: center;
     background: var(--background-gradient);
-        color: var(--text-color);
+    color: var(--text-color);
     text-align: center;
     animation: fadeIn 1.5s ease-in-out;
-    }
-    
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-    
-        to {
-            opacity: 1;
-        }
 }
 
 .hero-content h1 {
     font-size: var(--font-large);
     margin-bottom: 1rem;
     animation: slideIn 1.5s ease-in-out;
-    }
-    
-    @keyframes slideIn {
-        from {
-            transform: translateY(-20px);
-            opacity: 0;
-        }
-    
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
 }
 
 .hero-content p {
@@ -46,9 +25,9 @@
 
 .cta-button {
     padding: var(--padding-small) var(--padding-medium);
-        font-size: var(--font-small);
-        color: var(--text-color);
-        background-color: var(--secondary-color);
+    font-size: var(--font-small);
+    color: var(--text-color);
+    background-color: var(--secondary-color);
     border: none;
     border-radius: var(--border-radius);
     cursor: pointer;

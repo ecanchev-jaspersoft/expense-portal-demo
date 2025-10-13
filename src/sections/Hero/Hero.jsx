@@ -12,8 +12,8 @@ const Hero = () => {
     return <>
         <section className="hero h-main-section">
             <div className="hero-content">
-                <h1>Welcome to HotelManager</h1>
-                <p>Manage your hotels efficiently and effortlessly.</p>
+                <h1>Welcome to the ExpensePulse Portal</h1>
+                <p>Track your expenses efficiently and effortlessly.</p>
                 <button className="cta-button"
                     onClick={redirectToLogin}
                 >Get Started</button>

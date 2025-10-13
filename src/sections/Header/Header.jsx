@@ -5,13 +5,10 @@ const Header = () => {
     return (
         <>
             <header className="navbar">
-                <div className="logo">HotelManager</div>
+                <div className="logo">ExpensePulse </div>
                 <nav>
                     <ul className="nav-links">
                         <li><NavLink to="/">Home</NavLink></li>
-                        {/* <li><a href="#">About Us</a></li>
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Contact</a></li> */}
                     </ul>
                 </nav>
             </header>

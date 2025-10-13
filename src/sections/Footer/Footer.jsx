@@ -2,7 +2,7 @@ import './Footer.css';
 const Footer = () => {
     return <>
         <footer className="footer">
-            <p>&copy; 2025 HotelManager. All rights reserved.</p>
+            <p>&copy; 2025 ExpensePulse Portal. All rights reserved.</p>
         </footer></>
 };
 export default Footer;

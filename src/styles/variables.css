@@ -1,20 +1,20 @@
 :root {
   /* Colors */
-  --primary-color: #0066cc;
-  --primary-hover-color: #004999;
-  --secondary-color: #ff6600;
-  --secondary-hover-color: #cc5200;
-  --background-gradient: linear-gradient(135deg, #0066cc, #004999);
-  --footer-gradient: linear-gradient(135deg, #003366, #001f4d);
-  --text-color: white;
+  --primary-color: #2a9d8f; /* Teal for a professional and modern look */
+  --primary-hover-color: #1f776b;
+  --secondary-color: #e76f51; /* Coral for accents */
+  --secondary-hover-color: #c65a42;
+  --background-gradient: linear-gradient(135deg, #2a9d8f, #264653);
+  --footer-gradient: linear-gradient(135deg, #264653, #1d3557);
+  --text-color: #f4f4f4;
 
   /* Font Sizes */
-  --font-large: 3rem;
-  --font-medium: 1.5rem;
+  --font-large: 2.5rem;
+  --font-medium: 1.25rem;
   --font-small: 1rem;
 
   /* Spacing */
-  --padding-small: 0.75rem;
-  --padding-medium: 1.5rem;
-  --border-radius: 5px;
+  --padding-small: 0.5rem;
+  --padding-medium: 1rem;
+  --border-radius: 8px;
 }
