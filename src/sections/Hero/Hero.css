@@ -4,7 +4,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 132px);
     background: var(--background-gradient);
         color: var(--text-color);
     text-align: center;
