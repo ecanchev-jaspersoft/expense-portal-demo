@@ -1,7 +1,19 @@
+@import '../../styles/variables.css';
 /* Footer */
 .footer {
     text-align: center;
     padding: 1rem;
-    background-color: #003366;
-    color: white;
+    background: var(--footer-gradient);
+        color: var(--text-color);
+        animation: fadeIn 1.5s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+    
+        to {
+            opacity: 1;
+        }
 }

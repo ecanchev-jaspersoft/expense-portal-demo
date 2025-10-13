@@ -1,0 +1,6 @@
+@import './styles/variables.css';
+
+/* Global Animations */
+body {
+    animation: fadeIn 1.5s ease-in-out;
+}

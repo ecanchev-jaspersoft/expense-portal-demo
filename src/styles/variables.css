@@ -1,0 +1,20 @@
+:root {
+  /* Colors */
+  --primary-color: #0066cc;
+  --primary-hover-color: #004999;
+  --secondary-color: #ff6600;
+  --secondary-hover-color: #cc5200;
+  --background-gradient: linear-gradient(135deg, #0066cc, #004999);
+  --footer-gradient: linear-gradient(135deg, #003366, #001f4d);
+  --text-color: white;
+
+  /* Font Sizes */
+  --font-large: 3rem;
+  --font-medium: 1.5rem;
+  --font-small: 1rem;
+
+  /* Spacing */
+  --padding-small: 0.75rem;
+  --padding-medium: 1.5rem;
+  --border-radius: 5px;
+}

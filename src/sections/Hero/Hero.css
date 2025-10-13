@@ -1,34 +1,61 @@
+@import '../../styles/variables.css';
 /* Hero Section */
 .hero {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: calc(100vh - 132px);
-        /* Adjusted to ensure footer is visible */
-    background: url('https://via.placeholder.com/1500x800') no-repeat center center/cover;
+    background: var(--background-gradient);
+        color: var(--text-color);
     text-align: center;
+    animation: fadeIn 1.5s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+    
+        to {
+            opacity: 1;
+        }
 }
 
 .hero-content h1 {
-    font-size: 3rem;
+    font-size: var(--font-large);
     margin-bottom: 1rem;
+    animation: slideIn 1.5s ease-in-out;
+    }
+    
+    @keyframes slideIn {
+        from {
+            transform: translateY(-20px);
+            opacity: 0;
+        }
+    
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
 }
 
 .hero-content p {
-    font-size: 1.5rem;
+    font-size: var(--font-medium);
     margin-bottom: 2rem;
+    animation: slideIn 1.5s ease-in-out 0.5s;
 }
 
 .cta-button {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    color: white;
-    background-color: #0066cc;
+    padding: var(--padding-small) var(--padding-medium);
+        font-size: var(--font-small);
+        color: var(--text-color);
+        background-color: var(--secondary-color);
     border: none;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .cta-button:hover {
-    background-color: #004999;
+    background-color: var(--secondary-hover-color);
 }

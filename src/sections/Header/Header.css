@@ -1,11 +1,23 @@
+@import '../../styles/variables.css';
 /* Navbar */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background-color: #003366;
-    color: white;
+    background: var(--footer-gradient);
+        color: var(--text-color);
+        animation: fadeIn 1.5s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+    
+        to {
+            opacity: 1;
+        }
 }
 
 .nav-links {
@@ -18,6 +30,11 @@
 
 .nav-links a {
     text-decoration: none;
-    color: white;
+    color: var(--text-color);
     font-weight: bold;
+    transition: color 0.3s ease;
+    }
+    
+    .nav-links a:hover {
+        color: var(--secondary-color);
 }
