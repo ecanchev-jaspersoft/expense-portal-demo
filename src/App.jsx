@@ -5,20 +5,28 @@ import Hero from './sections/Hero/Hero';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
+import { AuthProvider, useAuth } from './context/AuthContext';
+
+const ProtectedRoute = ({ children }) => {
+  const { isLoggedIn } = useAuth();
+  return isLoggedIn ? children : <Navigate to="/login" />;
+}
 
 const App = () => {
   return (
-    <Router>
+    <AuthProvider>
+      <Router>
         <Header />
         <Routes>
           <Route path="/" element={<Hero />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-      <Footer />
-    </Router>
+        <Footer />
+      </Router>
+    </AuthProvider>
   );
-}
+};
 
 export default App;

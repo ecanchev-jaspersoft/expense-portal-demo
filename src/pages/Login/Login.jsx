@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import './Login.css';
 
 const Login = () => {
     const [isDisabledBtn, setIsDisabledBtn] = useState(true);
     const [credentials, setCredentials] = useState({ username: '', password: '' });
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         // Mock login process
         if (credentials.username && credentials.password) {
+            login();
             navigate('/dashboard');
         }
     };
@@ -19,7 +22,7 @@ const Login = () => {
         const newCredentials = { ...credentials, [field]: value };
         setCredentials(newCredentials);
         setIsDisabledBtn(!(newCredentials.username && newCredentials.password));
-    }
+    };
 
     return (
         <div className="login-page h-main-section">
@@ -37,13 +40,12 @@ const Login = () => {
                     value={credentials.password}
                     onChange={(e) => updateCredentials('password', e.target.value)}
                 />
-                <button type="submit"
-                    disabled={isDisabledBtn}>
+                <button type="submit" disabled={isDisabledBtn}>
                     Login
                 </button>
             </form>
         </div>
     );
-}
+};
 
 export default Login;
