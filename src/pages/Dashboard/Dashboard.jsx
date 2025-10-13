@@ -1,6 +1,6 @@
 import './Dashboard.css';
 
-function Dashboard() {
+const Dashboard = () => {
   return (
     <div className="dashboard-page h-main-section">
       <h1>Welcome to the Dashboard</h1>

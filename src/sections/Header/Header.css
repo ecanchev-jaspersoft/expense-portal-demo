@@ -1,4 +1,5 @@
 @import '../../styles/variables.css';
+
 /* Navbar */
 .navbar {
     display: flex;
@@ -6,7 +7,7 @@
     align-items: center;
     padding: 1rem 2rem;
     background: var(--footer-gradient);
-        color: var(--text-color);
+    color: var(--text-color);
         animation: fadeIn 1.5s ease-in-out;
     }
     
@@ -33,8 +34,9 @@
     color: var(--text-color);
     font-weight: bold;
     transition: color 0.3s ease;
-    }
-    
-    .nav-links a:hover {
-        color: var(--secondary-color);
+    cursor: pointer;
+}
+
+.nav-links a:hover {
+    color: var(--secondary-color);
 }

@@ -6,10 +6,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
 
-function App() {
+const App = () => {
   return (
     <Router>
-      <div className="landing-page">
         <Header />
         <Routes>
           <Route path="/" element={<Hero />} />
@@ -17,8 +16,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-        <Footer />
-      </div>
+      <Footer />
     </Router>
   );
 }
