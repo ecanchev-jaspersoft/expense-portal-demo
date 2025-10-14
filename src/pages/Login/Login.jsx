@@ -7,13 +7,13 @@ const Login = () => {
     const [isDisabledBtn, setIsDisabledBtn] = useState(true);
     const [credentials, setCredentials] = useState({ username: '', password: '' });
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { dispatch } = useAuth();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         // Mock login process
         if (credentials.username && credentials.password) {
-            login();
+            dispatch({ type: 'LOGIN' });
             navigate('/dashboard');
         }
     };

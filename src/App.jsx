@@ -8,9 +8,9 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 const ProtectedRoute = ({ children }) => {
-  const { isLoggedIn } = useAuth();
+  const { state: { isLoggedIn } } = useAuth();
   return isLoggedIn ? children : <Navigate to="/login" />;
-}
+};
 
 const App = () => {
   return (

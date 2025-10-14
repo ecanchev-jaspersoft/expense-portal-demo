@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 
 const Hero = () => {
     const navigate = useNavigate();
-    const { isLoggedIn } = useAuth();
+    const { state: { isLoggedIn } } = useAuth();
 
     const redirectToPage = () => {
         if (isLoggedIn) {
