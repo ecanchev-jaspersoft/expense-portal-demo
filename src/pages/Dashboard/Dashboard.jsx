@@ -10,13 +10,12 @@ const Dashboard = () => {
     }
     window.visualize({
       auth: {
-        name: "joeuser",
-        password: "joeuser",
-        organization: "organization_1"
+        name: "superuser",
+        password: "superuser"
       }
     }, function (v) {
       v("#viz-container").adhocView({
-        resource: "/public/viz/Adhoc/Change_Visualization1",
+        resource: "/public/Samples/Ad_Hoc_Views/VIZ/ExpensesOverTime",
         error: function (e) {
           console.log(e);
         }
