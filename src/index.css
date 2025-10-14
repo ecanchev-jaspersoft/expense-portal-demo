@@ -19,5 +19,5 @@ html {
     }
 }
 .h-main-section {
-  min-height: calc(100vh - 132px);
+  min-height: calc(100vh - 132px) !important;
 }
