@@ -10,7 +10,7 @@
         "lint": "eslint .",
         "preview": "vite preview",
         "predeploy": "yarn run build",
-        "deploy": "gh-pages -d dist"
+        "deploy": "touch dist/.nojekyll && gh-pages -d dist"
     },
     "dependencies": {
         "react": "^19.1.1",
