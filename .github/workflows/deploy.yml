@@ -1,0 +1,49 @@
+name: Deploy Vite/React Demo to GitHub Pages
+
+# Controls when the workflow will run: on pushes to 'main' or manually
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Grant the necessary permissions for the workflow to deploy to Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies (using Yarn)
+        run: yarn install --frozen-lockfile
+
+      - name: Run Vite build
+        run: yarn run build
+
+      - name: Upload production artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # The path to your built assets (the folder Vite creates)
+          path: './dist' 
+          
+  deploy:
+    # This job must wait for the 'build' job to complete
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

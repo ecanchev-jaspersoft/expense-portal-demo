@@ -2,15 +2,12 @@
     "name": "expense-portal-demo",
     "private": true,
     "version": "0.0.1",
-    "homepage": "https://Jaspersoft.github.io/expense-portal-demo/",
     "type": "module",
     "scripts": {
         "dev": "vite",
         "build": "vite build",
         "lint": "eslint .",
-        "preview": "vite preview",
-        "predeploy": "yarn run build",
-        "deploy": "touch dist/.nojekyll && gh-pages -d dist"
+        "preview": "vite preview"
     },
     "dependencies": {
         "react": "^19.1.1",
