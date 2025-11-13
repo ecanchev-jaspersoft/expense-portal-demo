@@ -2,6 +2,7 @@
     height: 340px;
     margin-top: 10px;
     width: 100%;
+    text-align: -webkit-center;
 }
 
 /*Start of Crosstab specific styles*/

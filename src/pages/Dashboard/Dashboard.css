@@ -12,6 +12,7 @@
 .dashboard-page p {
   color: var(--primary-hover-color);
 }
+
 .sidebar {
   width: 350px;
   background-color: var(--background-gradient);
@@ -55,4 +56,13 @@
   box-sizing: border-box;
   overflow-y: auto;
   height: inherit;
+}
+.switch-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  /* Allow wrapping if there are too many buttons */
+  gap: 16px;
+  /* Add space between buttons */
+  align-items: center;
+  /* Align buttons vertically */
 }

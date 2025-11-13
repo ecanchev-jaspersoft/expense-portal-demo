@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import './Dashboard.css';
 import './viz.css';
+import SwitchButton from '../InputControls/SwitchButton';
 
-let theInputControlsData = null;
-let theInputControlsViz = null;
-let theReportViz = null;
 const charts = [
     {
         name: 'Account Statement',
@@ -45,6 +43,9 @@ const charts = [
 
 const Dashboard = () => {
     const [selectedChart, setSelectedChart] = useState(charts[0]);
+    const [inputControlsData, setInputControlsData] = useState([]);
+    const [inputControlsViz, setInputControlsViz] = useState(null);
+    const [reportViz, setReportViz] = useState(null);
 
     useEffect(() => {
         if (!window.visualize) {
@@ -69,27 +70,37 @@ const Dashboard = () => {
                     return;
                 }
 
-                theInputControlsViz = v.inputControls({
-                    resource: selectedChart.resource,
-                    success: (icData) => {
-                        theInputControlsData = icData;
-                        console.log('Input Controls Data:', icData);
-                    },
-                });
-                theReportViz = v.report({
-                    container: '#viz-container',
-                    resource: selectedChart.resource,
-                    error: (e) => {
-                        console.log(e);
-                    },
-                    // Pass and control individual paramaters
-                    // params: {
-                    //     'SHOW_VISUALS': ['FALSE'],
-                    // },
-                });
+                setInputControlsViz(
+                    v.inputControls({
+                        resource: selectedChart.resource,
+                        success: (icData) => {
+                            setInputControlsData(icData);
+                            console.log('Input Controls Data:', icData);
+                        },
+                    })
+                );
+                setReportViz(
+                    v.report({
+                        container: '#viz-container',
+                        resource: selectedChart.resource,
+                        error: (e) => {
+                            console.log(e);
+                        },
+                        // Pass and control individual paramaters
+                        // params: {
+                        //     'SHOW_VISUALS': ['FALSE'],
+                        // },
+                    })
+                );
             }
         );
     }, [selectedChart]);
+
+    const handleChange = (newValue, icName) => {
+        console.log('SwitchButton new value:', newValue);
+        console.log('SwitchButton  icName:', icName);
+        console.log('SwitchButton  inputControlsData:', inputControlsData);
+    };
 
     return (
         <main className='dashboard-page h-main-section'>
@@ -109,6 +120,22 @@ const Dashboard = () => {
             </section>
             <section className='main-content'>
                 <h1>Welcome to the Dashboard</h1>
+
+                {/* Loop through inputControlsData to render the switch buttons */}
+
+                {inputControlsData?.length > 0 && (
+                    <div className='switch-button-row'>
+                        {inputControlsData.map((icToRender) => {
+                            return (
+                                <SwitchButton
+                                    onChange={(newValue) => handleChange(newValue, icToRender.id)}
+                                    name={icToRender.id}
+                                    label={icToRender.label}
+                                />
+                            );
+                        })}
+                    </div>
+                )}
 
                 {/* Provide container to render your visualization */}
                 <div id='viz-container'></div>
