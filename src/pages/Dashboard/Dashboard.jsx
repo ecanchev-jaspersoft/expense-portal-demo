@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './Dashboard.css';
 import './viz.css';
 import SwitchButton from '../InputControls/SwitchButton';
+import Sidebar from '../Sidebar/Sidebar';
 
 import { CHARTS, FORBIDDEN_INPUT_CONTROLS, BOOLEAN_TEXT } from './Constants';
 
@@ -28,7 +29,7 @@ const Dashboard = () => {
                     v('#viz-container').adhocView({
                         resource: selectedChart.resource,
                         error: (e) => {
-                            console.log(e);
+                            console.error(e);
                         },
                     });
                     return;
@@ -48,7 +49,7 @@ const Dashboard = () => {
                         container: '#viz-container',
                         resource: selectedChart.resource,
                         error: (e) => {
-                            console.log(e);
+                            console.error(e);
                         },
                     })
                 );
@@ -76,11 +77,10 @@ const Dashboard = () => {
             accum[icData.id] = [icData.state.value];
             return accum;
         }, {});
-        console.log('Params to send to report:', paramsReport);
         reportViz.params(paramsReport).run();
     };
 
-    const formatOriginalValue = (ic) => {
+    const transformOriginalValue = (ic) => {
         if (!ic.state || !ic.state.value) {
             return false;
         }
@@ -89,20 +89,7 @@ const Dashboard = () => {
 
     return (
         <main className='dashboard-page h-main-section'>
-            <section className='sidebar'>
-                <h2>Charts</h2>
-                <ul>
-                    {CHARTS.map((chart) => (
-                        <li
-                            key={chart.resource}
-                            className={chart.resource === selectedChart.resource ? 'active' : ''}
-                            onClick={() => setSelectedChart(chart)}
-                        >
-                            {chart.name}
-                        </li>
-                    ))}
-                </ul>
-            </section>
+            <Sidebar selectedChart={selectedChart} setSelectedChart={setSelectedChart} />
             <section className='main-content'>
                 <h1>Welcome to the Dashboard</h1>
 
@@ -112,10 +99,11 @@ const Dashboard = () => {
                             if (!FORBIDDEN_INPUT_CONTROLS.includes(icToRender.id)) {
                                 return (
                                     <SwitchButton
+                                        key={icToRender.id}
                                         onChange={(newValue) => handleChange(newValue, icToRender.id)}
                                         name={icToRender.id}
                                         label={icToRender.label}
-                                        origIsChecked={formatOriginalValue(icToRender)}
+                                        origIsChecked={transformOriginalValue(icToRender)}
                                     />
                                 );
                             }

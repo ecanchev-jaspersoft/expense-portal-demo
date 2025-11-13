@@ -1,0 +1,37 @@
+@import '../../styles/variables.css';
+.sidebar {
+  width: 350px;
+  background-color: var(--background-gradient);
+  padding: 20px;
+  border-right: 1px solid var(--primary-hover-color);
+  box-sizing: border-box;
+  height: inherit;
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+  color: var(--primary-color);
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  transition: background-color 0.3s;
+}
+
+.sidebar li:hover {
+  background-color: var(--primary-hover-color);
+  color: var(--text-color);
+}
+
+.sidebar li.active {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
