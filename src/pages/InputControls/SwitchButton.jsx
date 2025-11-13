@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import './SwitchButton.css'; // Assuming you will style the component in a CSS file
 
-const SwitchButton = ({ name, onChange, label }) => {
-    const [isChecked, setIsChecked] = useState(false);
+const SwitchButton = ({ name, onChange, label, origIsChecked }) => {
+    const [isChecked, setIsChecked] = useState(origIsChecked || false);
 
     const handleToggle = () => {
         const newValue = !isChecked;

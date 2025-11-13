@@ -3,48 +3,11 @@ import './Dashboard.css';
 import './viz.css';
 import SwitchButton from '../InputControls/SwitchButton';
 
-const charts = [
-    {
-        name: 'Account Statement',
-        resource: '/public/Demo_Example/Reports/Account_Statement/Account_Statement',
-        type: 'report',
-    },
-    {
-        name: 'Invoice A',
-        resource: '/public/Demo_Example/Reports/Invoice/Invoice_A',
-        type: 'report',
-    },
-    {
-        name: 'Invoice B',
-        resource: '/public/Demo_Example/Reports/Invoice/Invoice_B',
-        type: 'report',
-    },
-    {
-        name: 'Invoice C',
-        resource: '/public/Demo_Example/Reports/Invoice/Invoice_C',
-        type: 'report',
-    },
-    {
-        name: 'Invoice D',
-        resource: '/public/Demo_Example/Reports/Invoice/Invoice_D',
-        type: 'report',
-    },
-    {
-        name: 'Rental Contract',
-        resource: '/public/Demo_Example/Reports/Rental_Contract/Rental_Contract',
-        type: 'report',
-    },
-    {
-        name: 'Ticket',
-        resource: '/public/Demo_Example/Reports/Tickets/Ticket',
-        type: 'report',
-    },
-];
+import { CHARTS, FORBIDDEN_INPUT_CONTROLS, BOOLEAN_TEXT } from './Constants';
 
 const Dashboard = () => {
-    const [selectedChart, setSelectedChart] = useState(charts[0]);
+    const [selectedChart, setSelectedChart] = useState(CHARTS[0]);
     const [inputControlsData, setInputControlsData] = useState([]);
-    const [inputControlsViz, setInputControlsViz] = useState(null);
     const [reportViz, setReportViz] = useState(null);
 
     useEffect(() => {
@@ -61,6 +24,7 @@ const Dashboard = () => {
             },
             (v) => {
                 if ('report' !== selectedChart?.type) {
+                    // TODO: Might need to add logic for other viz types
                     v('#viz-container').adhocView({
                         resource: selectedChart.resource,
                         error: (e) => {
@@ -70,15 +34,15 @@ const Dashboard = () => {
                     return;
                 }
 
-                setInputControlsViz(
-                    v.inputControls({
-                        resource: selectedChart.resource,
-                        success: (icData) => {
-                            setInputControlsData(icData);
-                            console.log('Input Controls Data:', icData);
-                        },
-                    })
-                );
+                // Fetch the input controls
+                v.inputControls({
+                    resource: selectedChart.resource,
+                    success: (icData) => {
+                        setInputControlsData(icData);
+                    },
+                    error: () => setInputControlsData([]),
+                });
+                // Render the report and store the viz instance
                 setReportViz(
                     v.report({
                         container: '#viz-container',
@@ -86,10 +50,6 @@ const Dashboard = () => {
                         error: (e) => {
                             console.log(e);
                         },
-                        // Pass and control individual paramaters
-                        // params: {
-                        //     'SHOW_VISUALS': ['FALSE'],
-                        // },
                     })
                 );
             }
@@ -97,9 +57,34 @@ const Dashboard = () => {
     }, [selectedChart]);
 
     const handleChange = (newValue, icName) => {
-        console.log('SwitchButton new value:', newValue);
-        console.log('SwitchButton  icName:', icName);
-        console.log('SwitchButton  inputControlsData:', inputControlsData);
+        const strValue = newValue ? BOOLEAN_TEXT.TRUE : BOOLEAN_TEXT.FALSE;
+        const icsUpdated = inputControlsData.map((ic) => {
+            if (ic.id !== icName) {
+                return ic;
+            }
+            return {
+                ...ic,
+                state: {
+                    ...ic.state,
+                    value: strValue,
+                },
+            };
+        });
+        setInputControlsData(icsUpdated);
+
+        const paramsReport = icsUpdated.reduce((accum, icData) => {
+            accum[icData.id] = [icData.state.value];
+            return accum;
+        }, {});
+        console.log('Params to send to report:', paramsReport);
+        reportViz.params(paramsReport).run();
+    };
+
+    const formatOriginalValue = (ic) => {
+        if (!ic.state || !ic.state.value) {
+            return false;
+        }
+        return ic.state.value === BOOLEAN_TEXT.TRUE;
     };
 
     return (
@@ -107,7 +92,7 @@ const Dashboard = () => {
             <section className='sidebar'>
                 <h2>Charts</h2>
                 <ul>
-                    {charts.map((chart) => (
+                    {CHARTS.map((chart) => (
                         <li
                             key={chart.resource}
                             className={chart.resource === selectedChart.resource ? 'active' : ''}
@@ -121,18 +106,19 @@ const Dashboard = () => {
             <section className='main-content'>
                 <h1>Welcome to the Dashboard</h1>
 
-                {/* Loop through inputControlsData to render the switch buttons */}
-
-                {inputControlsData?.length > 0 && (
+                {CHARTS[0].resource === selectedChart?.resource && inputControlsData?.length > 0 && (
                     <div className='switch-button-row'>
                         {inputControlsData.map((icToRender) => {
-                            return (
-                                <SwitchButton
-                                    onChange={(newValue) => handleChange(newValue, icToRender.id)}
-                                    name={icToRender.id}
-                                    label={icToRender.label}
-                                />
-                            );
+                            if (!FORBIDDEN_INPUT_CONTROLS.includes(icToRender.id)) {
+                                return (
+                                    <SwitchButton
+                                        onChange={(newValue) => handleChange(newValue, icToRender.id)}
+                                        name={icToRender.id}
+                                        label={icToRender.label}
+                                        origIsChecked={formatOriginalValue(icToRender)}
+                                    />
+                                );
+                            }
                         })}
                     </div>
                 )}
