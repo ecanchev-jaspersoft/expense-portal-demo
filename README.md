@@ -1,16 +1,60 @@
-# React + Vite
+# Expense Portal Demo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a demo application for managing expenses, built with React and Vite.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Before running this project, ensure you have the following installed:
 
-## React Compiler
+- **Node.js**: Version LTS/Iron (verify with `node -v`). Refer to the [Download](https://nodejs.org/en/download) page for downloading NodeJS into your system. 
+- **Yarn Classic**: Package manager (verify with `yarn -v`). Refer to the [Installation](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable) page for instructions on how to install the yarn package manager, once NodeJS is installed in your system.
+- **Local JRS instance**: Have running a local JRS instance to access the resources via visualize.js
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Getting Started
 
-## Expanding the ESLint configuration
+Follow these steps to set up and run the project:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/ecanchev-jaspersoft/expense-portal-demo.git
+   cd expense-portal-demo
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   yarn install
+   ```
+
+3. **Run the development server**:
+   ```bash
+   yarn dev
+   ```
+
+4. **Access the application**:
+   Open your browser and navigate to `http://localhost:5173` (default Vite dev server port).
+
+## Github page
+
+You can access the system by visiting this [page](https://ecanchev-jaspersoft.github.io/expense-portal-demo/).
+
+## Project Structure
+
+The project follows a modular structure:
+
+- `src/`: Contains the source code, including components, pages, and styles.
+- `public/`: Static assets served directly.
+- `package.json`: Project metadata and scripts.
+
+## Scripts
+
+- `yarn dev`: Starts the development server.
+- `yarn build`: Builds the project for production.
+- `yarn preview`: Previews the production build locally.
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+For any issues or contributions, feel free to open a pull request or issue on the [GitHub repository](https://github.com/ecanchev-jaspersoft/expense-portal-demo).
