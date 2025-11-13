@@ -6,7 +6,7 @@ This project is a demo application for managing expenses, built with React and V
 
 Before running this project, ensure you have the following installed:
 
-- **Node.js**: Version LTS/Iron (verify with `node -v`). Refer to the [Download](https://nodejs.org/en/download) page for downloading NodeJS into your system. 
+- **Node.js**: Version LTS/Iron (`v20.19.5`) (verify with `node -v`). Refer to the [Download](https://nodejs.org/en/download) page for downloading NodeJS into your system. 
 - **Yarn Classic**: Package manager (verify with `yarn -v`). Refer to the [Installation](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable) page for instructions on how to install the yarn package manager, once NodeJS is installed in your system.
 - **Local JRS instance**: Have running a local JRS instance to access the resources via visualize.js
 
