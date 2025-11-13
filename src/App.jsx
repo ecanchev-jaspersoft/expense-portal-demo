@@ -8,25 +8,34 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 const ProtectedRoute = ({ children }) => {
-  const { state: { isLoggedIn } } = useAuth();
-  return isLoggedIn ? children : <Navigate to="/login" />;
+    const {
+        state: { isLoggedIn },
+    } = useAuth();
+    return isLoggedIn ? children : <Navigate to='/login' />;
 };
 
 const App = () => {
-  return (
-    <AuthProvider>
-      <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Hero />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-        <Footer />
-      </Router>
-    </AuthProvider>
-  );
+    return (
+        <AuthProvider>
+            <Router>
+                <Header />
+                <Routes>
+                    <Route path='/' element={<Hero />} />
+                    <Route path='/login' element={<Login />} />
+                    <Route
+                        path='/dashboard'
+                        element={
+                            <ProtectedRoute>
+                                <Dashboard />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route path='*' element={<Navigate to='/' />} />
+                </Routes>
+                <Footer />
+            </Router>
+        </AuthProvider>
+    );
 };
 
 export default App;
