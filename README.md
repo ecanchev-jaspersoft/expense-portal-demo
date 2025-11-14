@@ -6,9 +6,8 @@ This project is a demo application for managing expenses, built with React and V
 
 Before running this project, ensure you have the following installed:
 
-- **Node.js**: Version LTS/Iron (`v20.19.5`) (verify with `node -v`). Refer to the [Download](https://nodejs.org/en/download) page for downloading NodeJS into your system. 
-- **Yarn Classic**: Package manager (verify with `yarn -v`). Refer to the [Installation](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable) page for instructions on how to install the yarn package manager, once NodeJS is installed in your system.
-- **Local JRS instance**: Have running a local JRS instance to access the resources via visualize.js
+- **Node.js**: Version LTS/Iron (verify with `node -v`)
+- **Yarn Classic**: Package manager (verify with `yarn -v`)
 
 ## Getting Started
 
@@ -33,10 +32,6 @@ Follow these steps to set up and run the project:
 4. **Access the application**:
    Open your browser and navigate to `http://localhost:5173` (default Vite dev server port).
 
-## Github page
-
-You can access the system by visiting this [page](https://ecanchev-jaspersoft.github.io/expense-portal-demo/).
-
 ## Project Structure
 
 The project follows a modular structure:
@@ -50,6 +45,11 @@ The project follows a modular structure:
 - `yarn dev`: Starts the development server.
 - `yarn build`: Builds the project for production.
 - `yarn preview`: Previews the production build locally.
+- `yarn lint`: Lints the project files.
+
+## Pre-Commit Hook
+
+This project uses Husky to enforce linting before every commit. The `yarn lint` command will automatically run before each commit to ensure code quality.
 
 ## License
 
