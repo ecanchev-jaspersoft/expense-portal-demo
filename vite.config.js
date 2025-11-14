@@ -5,4 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
     plugins: [react()],
     base: '/expense-portal-demo/',
+    server: {
+        historyApiFallback: true, // Ensures all routes are redirected to index.html
+    },
 });

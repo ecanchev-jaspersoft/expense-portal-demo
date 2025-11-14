@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import './Dashboard.css';
 import './viz.css';
-import SwitchButton from '../InputControls/SwitchButton';
-import Sidebar from '../Sidebar/Sidebar';
+import SwitchButton from '../../utils/InputControls/SwitchButton';
+import Sidebar from '../../sections/Sidebar/Sidebar';
 
-import { CHARTS, FORBIDDEN_INPUT_CONTROLS, BOOLEAN_TEXT } from './Constants';
+import { CHARTS, FORBIDDEN_INPUT_CONTROLS, BOOLEAN_TEXT } from '../../utils/Constants';
 
 const Dashboard = () => {
     const [selectedChart, setSelectedChart] = useState(CHARTS[0]);

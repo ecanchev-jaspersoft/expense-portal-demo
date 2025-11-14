@@ -17,7 +17,7 @@ const ProtectedRoute = ({ children }) => {
 const App = () => {
     return (
         <AuthProvider>
-            <Router>
+            <Router basename='/expense-portal-demo'>
                 <Header />
                 <Routes>
                     <Route path='/' element={<Hero />} />
