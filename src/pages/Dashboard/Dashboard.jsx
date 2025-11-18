@@ -2,10 +2,21 @@ import { useEffect, useState } from 'react';
 import './Dashboard.css';
 import './viz.css';
 import Sidebar from '../../sections/Sidebar/Sidebar';
+import { Viewer } from '../../sections/PdfViewer/Viewer/Viewer';
+import { ViewerControls } from '../../sections/PdfViewer/ViewerControls/ViewerControls';
 
 import { CHARTS, BOOLEAN_TEXT } from '../../utils/Constants';
 
-const Dashboard = ({ isLoadingPDFGeneration, handlePdfConversion, showDashboard }) => {
+const Dashboard = ({
+    isLoadingPDFGeneration,
+    handlePdfConversion,
+    pdfBlob,
+    setPdfBlob,
+    setPageNumber,
+    pageNumber,
+    numPages,
+    onDocumentLoadSuccess,
+}) => {
     const [selectedChart] = useState(CHARTS[0]);
     const [inputControlsData, setInputControlsData] = useState([]);
     const [reportViz, setReportViz] = useState(null);
@@ -43,15 +54,22 @@ const Dashboard = ({ isLoadingPDFGeneration, handlePdfConversion, showDashboard 
                     error: () => setInputControlsData([]),
                 });
                 // Render the report and store the viz instance
-                setReportViz(
-                    v.report({
-                        container: '#viz-container',
-                        resource: selectedChart.resource,
-                        error: (e) => {
-                            console.error(e);
-                        },
-                    })
-                );
+                const theReportViz = v.report({
+                    container: '#viz-container',
+                    resource: selectedChart.resource,
+                    error: (e) => {
+                        console.error(e);
+                    },
+                    // events: {
+                    //     reportCompleted: (status, error) => {
+                    //         if ('ready' === status && !error && automaticPdf) {
+                    //             setAutomaticPdf(false);
+                    //             handlePdfConversion();
+                    //         }
+                    //     },
+                    // },
+                });
+                setReportViz(theReportViz);
             }
         );
     }, [selectedChart]);
@@ -71,12 +89,19 @@ const Dashboard = ({ isLoadingPDFGeneration, handlePdfConversion, showDashboard 
             };
         });
         setInputControlsData(icsUpdated);
+    };
 
-        const paramsReport = icsUpdated.reduce((accum, icData) => {
-            accum[icData.id] = [icData.state.value];
-            return accum;
-        }, {});
-        reportViz.params(paramsReport).run();
+    const handlePreview = () => {
+        if (pdfBlob) {
+            setPdfBlob(null);
+        }
+        setTimeout(() => {
+            const paramsReport = inputControlsData.reduce((accum, icData) => {
+                accum[icData.id] = [icData.state.value];
+                return accum;
+            }, {});
+            reportViz.params(paramsReport).run();
+        });
     };
 
     return (
@@ -86,13 +111,20 @@ const Dashboard = ({ isLoadingPDFGeneration, handlePdfConversion, showDashboard 
                 handleSwitchButtonChange={handleChange}
                 isLoading={isLoadingPDFGeneration}
                 handlePdfConversion={handlePdfConversion}
+                handlePreviewOnly={handlePreview}
             />
-            {showDashboard && (
+            {!isLoadingPDFGeneration && !pdfBlob && (
                 <section className='main-content'>
                     <h1>Welcome to the Dashboard</h1>
 
                     {/* Provide container to render your visualization */}
                     <div id='viz-container'></div>
+                </section>
+            )}
+            {pdfBlob && (
+                <section className='main-content' style={{ border: '1px solid #1e88e5', borderRadius: '4px' }}>
+                    <ViewerControls setPageNumber={setPageNumber} pageNumber={pageNumber} numPages={numPages} />
+                    <Viewer pdfBlob={pdfBlob} onDocumentLoadSuccess={onDocumentLoadSuccess} pageNumber={pageNumber} />
                 </section>
             )}
         </main>

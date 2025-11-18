@@ -3,8 +3,7 @@ import { pdfjs } from 'react-pdf';
 import { generateChartPdf } from '../../utils/pdfGenerator';
 import Dashboard from '../Dashboard/Dashboard';
 import './ReportViewer.css';
-import { ViewerControls } from '../../sections/PdfViewer/ViewerControls/ViewerControls';
-import { Viewer } from '../../sections/PdfViewer/Viewer/Viewer';
+
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     'pdfjs-dist/build/pdf.worker.min.mjs',
     import.meta.url // This ensures the path is resolved correctly relative to the module
@@ -37,21 +36,16 @@ const ReportViewer = () => {
     };
 
     return (
-        <div style={{ padding: '20px' }}>
-            {/* 1. The Chart to be converted */}
-            <Dashboard
-                handlePdfConversion={handleGenerateAndView}
-                isLoadingPDFGeneration={isLoading}
-                showDashboard={!isLoading && !pdfBlob}
-            />
-
-            {pdfBlob && (
-                <div style={{ marginTop: '30px', border: '1px solid #1e88e5', borderRadius: '4px' }}>
-                    <ViewerControls setPageNumber={setPageNumber} pageNumber={pageNumber} numPages={numPages} />
-                    <Viewer pdfBlob={pdfBlob} onDocumentLoadSuccess={onDocumentLoadSuccess} pageNumber={pageNumber} />
-                </div>
-            )}
-        </div>
+        <Dashboard
+            handlePdfConversion={handleGenerateAndView}
+            isLoadingPDFGeneration={isLoading}
+            pdfBlob={pdfBlob}
+            setPdfBlob={setPdfBlob}
+            setPageNumber={setPageNumber}
+            pageNumber={pageNumber}
+            numPages={numPages}
+            onDocumentLoadSuccess={onDocumentLoadSuccess}
+        />
     );
 };
 

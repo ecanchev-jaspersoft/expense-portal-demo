@@ -2,7 +2,7 @@ import './Sidebar.css';
 import SwitchButton from '../../utils/InputControls/SwitchButton';
 import { FORBIDDEN_INPUT_CONTROLS, BOOLEAN_TEXT } from '../../utils/Constants';
 
-const Sidebar = ({ inputControlsData, handleSwitchButtonChange, isLoading, handlePdfConversion }) => {
+const Sidebar = ({ inputControlsData, handleSwitchButtonChange, isLoading, handlePdfConversion, handlePreviewOnly }) => {
     const transformOriginalValue = (ic) => {
         if (!ic.state || !ic.state.value) {
             return false;
@@ -13,9 +13,13 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, isLoading, handl
     return (
         <section className='sidebar'>
             <h2>Input Controls</h2>
+            <button onClick={handlePreviewOnly} disabled={isLoading} style={{ margin: '20px 0', padding: '10px 20px' }}>
+                Preview PDF
+            </button>
             <button onClick={handlePdfConversion} disabled={isLoading} style={{ margin: '20px 0', padding: '10px 20px' }}>
                 {isLoading ? 'Generating PDF...' : 'Generate PDF & View'}
             </button>
+
             <ul className='switch-button-row'>
                 {inputControlsData?.length > 0 && (
                     <li>
