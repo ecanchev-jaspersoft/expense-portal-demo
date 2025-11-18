@@ -21,6 +21,8 @@ const Dashboard = ({
     const [inputControlsData, setInputControlsData] = useState([]);
     const [reportViz, setReportViz] = useState(null);
 
+    const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
     useEffect(() => {
         if (!window.visualize) {
             console.error('visualize.js library is not loaded.');
@@ -91,7 +93,7 @@ const Dashboard = ({
         setInputControlsData(icsUpdated);
     };
 
-    const handlePreview = () => {
+    const handlePreviewAndPDFConversion = () => {
         if (pdfBlob) {
             setPdfBlob(null);
         }
@@ -100,7 +102,15 @@ const Dashboard = ({
                 accum[icData.id] = [icData.state.value];
                 return accum;
             }, {});
-            reportViz.params(paramsReport).run();
+            reportViz
+                .params(paramsReport)
+                .run()
+                .then(async () => {
+                    console.log('Report refreshed for preview.');
+                    await wait(1000); // Wait for 1 second
+
+                    handlePdfConversion();
+                });
         });
     };
 
@@ -110,8 +120,7 @@ const Dashboard = ({
                 inputControlsData={inputControlsData}
                 handleSwitchButtonChange={handleChange}
                 isLoading={isLoadingPDFGeneration}
-                handlePdfConversion={handlePdfConversion}
-                handlePreviewOnly={handlePreview}
+                handlePdfConversion={handlePreviewAndPDFConversion}
             />
             {!isLoadingPDFGeneration && !pdfBlob && (
                 <section className='main-content'>
