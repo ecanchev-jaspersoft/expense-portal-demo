@@ -1,4 +1,5 @@
 import { Document, Page } from 'react-pdf';
+import './Viewer.css';
 
 export const Viewer = ({pdfBlob, onDocumentLoadSuccess, pageNumber}) => {
     return (

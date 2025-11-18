@@ -106,9 +106,7 @@ const Dashboard = ({
                 .params(paramsReport)
                 .run()
                 .then(async () => {
-                    console.log('Report refreshed for preview.');
                     await wait(1000); // Wait for 1 second
-
                     handlePdfConversion();
                 });
         });
@@ -116,6 +114,12 @@ const Dashboard = ({
 
     return (
         <main className='dashboard-page h-main-section'>
+            {isLoadingPDFGeneration && (
+                <div className='loading-block'>
+                    <div className='loading-spinner'></div>
+                    <p>Generating PDF, please wait...</p>
+                </div>
+            )}
             <Sidebar
                 inputControlsData={inputControlsData}
                 handleSwitchButtonChange={handleChange}
