@@ -1,19 +1,39 @@
-import { CHARTS } from '../../utils/Constants';
 import './Sidebar.css';
-const Sidebar = ({ selectedChart, setSelectedChart }) => {
+import SwitchButton from '../../utils/InputControls/SwitchButton';
+import { FORBIDDEN_INPUT_CONTROLS, BOOLEAN_TEXT } from '../../utils/Constants';
+
+const Sidebar = ({ inputControlsData, handleSwitchButtonChange, isLoading, handlePdfConversion }) => {
+    const transformOriginalValue = (ic) => {
+        if (!ic.state || !ic.state.value) {
+            return false;
+        }
+        return ic.state.value === BOOLEAN_TEXT.TRUE;
+    };
+
     return (
         <section className='sidebar'>
-            <h2>Charts</h2>
-            <ul>
-                {CHARTS.map((chart) => (
-                    <li
-                        key={chart.resource}
-                        className={chart.resource === selectedChart.resource ? 'active' : ''}
-                        onClick={() => setSelectedChart(chart)}
-                    >
-                        {chart.name}
+            <h2>Input Controls</h2>
+            <button onClick={handlePdfConversion} disabled={isLoading} style={{ margin: '20px 0', padding: '10px 20px' }}>
+                {isLoading ? 'Generating PDF...' : 'Generate PDF & View'}
+            </button>
+            <ul className='switch-button-row'>
+                {inputControlsData?.length > 0 && (
+                    <li>
+                        {inputControlsData.map((icToRender) => {
+                            if (!FORBIDDEN_INPUT_CONTROLS.includes(icToRender.id)) {
+                                return (
+                                    <SwitchButton
+                                        key={icToRender.id}
+                                        onChange={(newValue) => handleSwitchButtonChange(newValue, icToRender.id)}
+                                        name={icToRender.id}
+                                        label={icToRender.label}
+                                        origIsChecked={transformOriginalValue(icToRender)}
+                                    />
+                                );
+                            }
+                        })}
                     </li>
-                ))}
+                )}
             </ul>
         </section>
     );

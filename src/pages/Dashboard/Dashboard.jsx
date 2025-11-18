@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import './Dashboard.css';
 import './viz.css';
-import SwitchButton from '../../utils/InputControls/SwitchButton';
 import Sidebar from '../../sections/Sidebar/Sidebar';
 
-import { CHARTS, FORBIDDEN_INPUT_CONTROLS, BOOLEAN_TEXT } from '../../utils/Constants';
+import { CHARTS, BOOLEAN_TEXT } from '../../utils/Constants';
 
-const Dashboard = () => {
-    const [selectedChart, setSelectedChart] = useState(CHARTS[0]);
+const Dashboard = ({ isLoadingPDFGeneration, handlePdfConversion, showDashboard }) => {
+    const [selectedChart] = useState(CHARTS[0]);
     const [inputControlsData, setInputControlsData] = useState([]);
     const [reportViz, setReportViz] = useState(null);
 
@@ -80,40 +79,22 @@ const Dashboard = () => {
         reportViz.params(paramsReport).run();
     };
 
-    const transformOriginalValue = (ic) => {
-        if (!ic.state || !ic.state.value) {
-            return false;
-        }
-        return ic.state.value === BOOLEAN_TEXT.TRUE;
-    };
-
     return (
         <main className='dashboard-page h-main-section'>
-            <Sidebar selectedChart={selectedChart} setSelectedChart={setSelectedChart} />
-            <section className='main-content'>
-                <h1>Welcome to the Dashboard</h1>
+            <Sidebar
+                inputControlsData={inputControlsData}
+                handleSwitchButtonChange={handleChange}
+                isLoading={isLoadingPDFGeneration}
+                handlePdfConversion={handlePdfConversion}
+            />
+            {showDashboard && (
+                <section className='main-content'>
+                    <h1>Welcome to the Dashboard</h1>
 
-                {CHARTS[0].resource === selectedChart?.resource && inputControlsData?.length > 0 && (
-                    <div className='switch-button-row'>
-                        {inputControlsData.map((icToRender) => {
-                            if (!FORBIDDEN_INPUT_CONTROLS.includes(icToRender.id)) {
-                                return (
-                                    <SwitchButton
-                                        key={icToRender.id}
-                                        onChange={(newValue) => handleChange(newValue, icToRender.id)}
-                                        name={icToRender.id}
-                                        label={icToRender.label}
-                                        origIsChecked={transformOriginalValue(icToRender)}
-                                    />
-                                );
-                            }
-                        })}
-                    </div>
-                )}
-
-                {/* Provide container to render your visualization */}
-                <div id='viz-container'></div>
-            </section>
+                    {/* Provide container to render your visualization */}
+                    <div id='viz-container'></div>
+                </section>
+            )}
         </main>
     );
 };
