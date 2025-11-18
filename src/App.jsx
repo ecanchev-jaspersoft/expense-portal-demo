@@ -4,7 +4,8 @@ import Footer from './sections/Footer/Footer';
 import Hero from './sections/Hero/Hero';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login/Login';
-import Dashboard from './pages/Dashboard/Dashboard';
+// import Dashboard from './pages/Dashboard/Dashboard';
+import ReportViewer from './pages/ReportViewer/ReportViewer';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 const ProtectedRoute = ({ children }) => {
@@ -26,7 +27,7 @@ const App = () => {
                         path='/dashboard'
                         element={
                             <ProtectedRoute>
-                                <Dashboard />
+                                <ReportViewer />
                             </ProtectedRoute>
                         }
                     />
