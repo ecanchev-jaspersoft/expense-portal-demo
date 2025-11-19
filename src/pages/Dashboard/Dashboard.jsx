@@ -115,6 +115,20 @@ const Dashboard = ({
         });
     };
 
+    const handleDownloadPdf = () => {
+        reportViz.export(
+            { outputFormat: 'pdf' },
+            (link) => {
+                const url = link.href ? link.href : link;
+                window.location.href = url;
+            },
+            (error) => {
+                alert('PDF Export failed on the server. Error: ' + error.message);
+                console.log(error);
+            }
+        );
+    };
+
     return (
         <main className='dashboard-page h-main-section'>
             {isLoadingPDFGeneration && (
@@ -128,6 +142,7 @@ const Dashboard = ({
                 handleSwitchButtonChange={handleChange}
                 isLoading={isLoadingPDFGeneration}
                 handlePdfConversion={handlePreviewAndPDFConversion}
+                handleDownloadPdf={handleDownloadPdf}
             />
             {!isLoadingPDFGeneration && !pdfBlob && (
                 <section className='main-content'>

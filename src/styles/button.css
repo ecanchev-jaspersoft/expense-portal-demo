@@ -31,7 +31,8 @@
 }
 
 .btn-secondary:hover {
-    background-color: var(--secondary-hover-color);
+    background-color: var(--btn-secondary-text-color);
+    color: var(--text-color);
 }
 
 .btn-accent {
