@@ -4,6 +4,7 @@ import './viz.css';
 import Sidebar from '../../sections/Sidebar/Sidebar';
 import { Viewer } from '../../sections/PdfViewer/Viewer/Viewer';
 import { ViewerControls } from '../../sections/PdfViewer/ViewerControls/ViewerControls';
+import { useAuth } from '../../context/AuthContext';
 
 import { CHARTS, BOOLEAN_TEXT } from '../../utils/Constants';
 
@@ -20,6 +21,7 @@ const Dashboard = ({
     const [selectedChart] = useState(CHARTS[0]);
     const [inputControlsData, setInputControlsData] = useState([]);
     const [reportViz, setReportViz] = useState(null);
+    const { dispatch } = useAuth();
 
     const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -36,6 +38,7 @@ const Dashboard = ({
                 },
             },
             (v) => {
+                dispatch({ type: 'SET_V_OBJECT', payload: v });
                 if ('report' !== selectedChart?.type) {
                     // TODO: Might need to add logic for other viz types
                     v('#viz-container').adhocView({

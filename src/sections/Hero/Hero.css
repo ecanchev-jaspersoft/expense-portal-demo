@@ -5,8 +5,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: var(--background-gradient);
-    color: var(--text-color);
+    /* background: var(--white); */
+        color: var(--primary-color);
     text-align: center;
     animation: fadeIn 1.5s ease-in-out;
 }

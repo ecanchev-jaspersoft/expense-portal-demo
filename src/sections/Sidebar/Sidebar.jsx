@@ -1,4 +1,5 @@
 import './Sidebar.css';
+import '../../styles/button.css';
 import SwitchButton from '../../utils/InputControls/SwitchButton';
 import { FORBIDDEN_INPUT_CONTROLS, BOOLEAN_TEXT } from '../../utils/Constants';
 
@@ -13,10 +14,6 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, isLoading, handl
     return (
         <section className='sidebar'>
             <h2>Input Controls</h2>
-            <button onClick={handlePdfConversion} disabled={isLoading} style={{ margin: '20px 0', padding: '10px 20px' }}>
-                {isLoading ? 'Generating PDF...' : 'Generate PDF & View'}
-            </button>
-
             <ul className='switch-button-row'>
                 {inputControlsData?.length > 0 && (
                     <li>
@@ -36,6 +33,10 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, isLoading, handl
                     </li>
                 )}
             </ul>
+            <button className='btn btn-primary' onClick={handlePdfConversion} disabled={isLoading} style={{ margin: '5px' }}>
+                {isLoading ? 'Generating PDF...' : 'Generate PDF'}
+            </button>
+            <button className='btn btn-secondary'>Download PDF</button>
         </section>
     );
 };
