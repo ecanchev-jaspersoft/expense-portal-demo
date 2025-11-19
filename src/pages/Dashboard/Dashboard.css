@@ -17,8 +17,6 @@
   flex: 1;
   padding: 20px;
   box-sizing: border-box;
-  overflow-y: auto;
-  height: inherit;
 }
 
 .switch-button-row {

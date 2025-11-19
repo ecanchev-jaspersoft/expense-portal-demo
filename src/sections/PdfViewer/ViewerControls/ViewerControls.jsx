@@ -1,16 +1,17 @@
-export const ViewerControls = ({setPageNumber, pageNumber, numPages}) => {
+import './ViewerControls.css';
+export const ViewerControls = ({ setPageNumber, pageNumber, numPages }) => {
     return (
         <>
             {/* Viewer Controls */}
-            <div style={{ padding: '10px', textAlign: 'center', backgroundColor: '#e3f2fd' }}>
+            <div className='viewer-controls'>
                 <button disabled={pageNumber <= 1} onClick={() => setPageNumber((p) => p - 1)}>
-                    &lt; Previous
+                    &lt;
                 </button>
-                <span style={{ margin: '0 15px' }}>
-                    Page **{pageNumber}** of {numPages || '--'}
+                <span>
+                    Page {pageNumber} of <b>{numPages || '--'}</b>
                 </span>
                 <button disabled={pageNumber >= numPages} onClick={() => setPageNumber((p) => p + 1)}>
-                    Next &gt;
+                    &gt;
                 </button>
             </div>
         </>

@@ -139,8 +139,8 @@ const Dashboard = ({
             )}
             {pdfBlob && (
                 <section className='main-content' style={{ border: '1px solid #1e88e5', borderRadius: '4px' }}>
-                    <ViewerControls setPageNumber={setPageNumber} pageNumber={pageNumber} numPages={numPages} />
                     <Viewer pdfBlob={pdfBlob} onDocumentLoadSuccess={onDocumentLoadSuccess} pageNumber={pageNumber} />
+                    <ViewerControls setPageNumber={setPageNumber} pageNumber={pageNumber} numPages={numPages} />
                 </section>
             )}
         </main>

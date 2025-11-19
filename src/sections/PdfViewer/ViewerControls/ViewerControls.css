@@ -1,0 +1,38 @@
+@import '../../../styles/variables.css';
+
+.viewer-controls {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    text-align: right;
+    z-index: 1000;
+}
+
+.viewer-controls button,
+.viewer-controls span {
+    text-align: center;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 17.33px;
+}
+
+.viewer-controls button {
+    padding: var(--padding-small) var(--padding-medium);
+    border: none;
+    color: #444444;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: var(--font-medium);
+}
+
+.viewer-controls button:disabled {
+    cursor: not-allowed;
+}
+
+.viewer-controls span {
+    margin: 0 15px;
+    font-size: var(--font-medium);
+}
