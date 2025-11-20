@@ -14,12 +14,12 @@ const SwitchButton = ({ name, onChange, label, origIsChecked }) => {
 
     return (
         <div className='switch-button'>
-            {label && <span className='switch-button-text'>{label}</span>}
             <input type='checkbox' id={name} className='switch-button-checkbox' checked={isChecked} onChange={handleToggle} />
-            <label className='switch-button-label' htmlFor={name}>
+            <label className='switch-button-label' htmlFor={name} for={name}>
                 <span className='switch-button-inner' />
                 <span className='switch-button-switch' />
             </label>
+            {label && <span className='switch-button-text'>{label}</span>}
         </div>
     );
 };
