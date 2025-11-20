@@ -15,11 +15,15 @@ const SwitchButton = ({ name, onChange, label, origIsChecked }) => {
     return (
         <div className='switch-button'>
             <input type='checkbox' id={name} className='switch-button-checkbox' checked={isChecked} onChange={handleToggle} />
-            <label className='switch-button-label' htmlFor={name} for={name}>
+            <label className='switch-button-label' htmlFor={name}>
                 <span className='switch-button-inner' />
                 <span className='switch-button-switch' />
             </label>
-            {label && <span className='switch-button-text'>{label}</span>}
+            {label && (
+                <label className='switch-button-text' htmlFor={name}>
+                    {label}
+                </label>
+            )}
         </div>
     );
 };

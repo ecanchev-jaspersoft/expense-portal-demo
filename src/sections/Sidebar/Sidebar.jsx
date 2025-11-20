@@ -12,34 +12,36 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPd
     };
 
     return (
-        <section className='sidebar'>
-            <h2>Input Controls</h2>
-            <ul className='switch-button-row'>
-                {inputControlsData?.length > 0 && (
-                    <li>
-                        {inputControlsData.map((icToRender) => {
-                            if (!FORBIDDEN_INPUT_CONTROLS.includes(icToRender.id)) {
-                                return (
-                                    <SwitchButton
-                                        key={icToRender.id}
-                                        onChange={(newValue) => handleSwitchButtonChange(newValue, icToRender.id)}
-                                        name={icToRender.id}
-                                        label={icToRender.label}
-                                        origIsChecked={transformOriginalValue(icToRender)}
-                                    />
-                                );
-                            }
-                        })}
-                    </li>
-                )}
-            </ul>
-            <button className='btn btn-primary' onClick={handleUpdateChart} style={{ margin: '5px' }}>
-                Update Chart
-            </button>
-            <button className='btn btn-secondary' onClick={handleDownloadPdf}>
-                Download PDF
-            </button>
-        </section>
+        <>
+            {inputControlsData?.length > 0 && (
+                <section className='sidebar'>
+                    <h2>Input Controls</h2>
+                    <ul className='switch-button-row'>
+                        <li>
+                            {inputControlsData.map((icToRender) => {
+                                if (!FORBIDDEN_INPUT_CONTROLS.includes(icToRender.id)) {
+                                    return (
+                                        <SwitchButton
+                                            key={icToRender.id}
+                                            onChange={(newValue) => handleSwitchButtonChange(newValue, icToRender.id)}
+                                            name={icToRender.id}
+                                            label={icToRender.label}
+                                            origIsChecked={transformOriginalValue(icToRender)}
+                                        />
+                                    );
+                                }
+                            })}
+                        </li>
+                    </ul>
+                    <button className='btn btn-primary' onClick={handleUpdateChart} style={{ margin: '5px' }}>
+                        Update Chart
+                    </button>
+                    <button className='btn btn-secondary' onClick={handleDownloadPdf}>
+                        Download PDF
+                    </button>
+                </section>
+            )}
+        </>
     );
 };
 
