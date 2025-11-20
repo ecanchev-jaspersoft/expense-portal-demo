@@ -1,7 +1,6 @@
 #viz-container {
-    margin-top: 10px;
-    width: 100%;
-    text-align: -webkit-center;
+    height: 340px;
+    width: auto;
 }
 
 /*Start of Crosstab specific styles*/
@@ -86,4 +85,7 @@
 /*Datatable row header (when data is in group section of ad hoc view)*/
 #viz-container .jr-mDatatable-cell.jr.jr-jHyperLink {
     background-color: #E0D2BC;
+}
+#viz-container #JR_PAGE_ANCHOR_0_1 {
+    width: -webkit-fill-available !important;
 }

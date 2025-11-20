@@ -3,7 +3,7 @@ import '../../styles/button.css';
 import SwitchButton from '../../utils/InputControls/SwitchButton';
 import { FORBIDDEN_INPUT_CONTROLS, BOOLEAN_TEXT } from '../../utils/Constants';
 
-const Sidebar = ({ inputControlsData, handleSwitchButtonChange, isLoading, handlePdfConversion, handleDownloadPdf }) => {
+const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPdf, handleUpdateChart }) => {
     const transformOriginalValue = (ic) => {
         if (!ic.state || !ic.state.value) {
             return false;
@@ -33,8 +33,8 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, isLoading, handl
                     </li>
                 )}
             </ul>
-            <button className='btn btn-primary' onClick={handlePdfConversion} disabled={isLoading} style={{ margin: '5px' }}>
-                {isLoading ? 'Generating PDF...' : 'Generate PDF'}
+            <button className='btn btn-primary' onClick={handleUpdateChart} style={{ margin: '5px' }}>
+                Update Chart
             </button>
             <button className='btn btn-secondary' onClick={handleDownloadPdf}>
                 Download PDF

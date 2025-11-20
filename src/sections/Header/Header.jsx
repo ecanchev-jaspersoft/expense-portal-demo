@@ -26,7 +26,7 @@ const Header = () => {
                     <nav>
                         <ul className='nav-links'>
                             <li>
-                                <a>Logged in as John</a>
+                                <a>Logged in as John Q. Public</a>
                             </li>
                             <li onClick={handleLogout}>
                                 <a href='#'>Log Out</a>

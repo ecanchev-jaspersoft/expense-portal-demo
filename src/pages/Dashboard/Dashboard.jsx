@@ -2,28 +2,16 @@ import { useEffect, useState } from 'react';
 import './Dashboard.css';
 import './viz.css';
 import Sidebar from '../../sections/Sidebar/Sidebar';
-import { Viewer } from '../../sections/PdfViewer/Viewer/Viewer';
-import { ViewerControls } from '../../sections/PdfViewer/ViewerControls/ViewerControls';
 import { useAuth } from '../../context/AuthContext';
 
 import { CHARTS, BOOLEAN_TEXT } from '../../utils/Constants';
 
-const Dashboard = ({
-    isLoadingPDFGeneration,
-    handlePdfConversion,
-    pdfBlob,
-    setPdfBlob,
-    setPageNumber,
-    pageNumber,
-    numPages,
-    onDocumentLoadSuccess,
-}) => {
+const Dashboard = () => {
     const [selectedChart] = useState(CHARTS[0]);
     const [inputControlsData, setInputControlsData] = useState([]);
     const [reportViz, setReportViz] = useState(null);
+    const [isChartLoaded, setIsChartLoaded] = useState(false);
     const { dispatch } = useAuth();
-
-    const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
     useEffect(() => {
         if (!window.visualize) {
@@ -65,6 +53,10 @@ const Dashboard = ({
                     error: (e) => {
                         console.error(e);
                     },
+                    success: () => {
+                        setIsChartLoaded(true);
+                    },
+
                     // events: {
                     //     reportCompleted: (status, error) => {
                     //         if ('ready' === status && !error && automaticPdf) {
@@ -77,7 +69,7 @@ const Dashboard = ({
                 setReportViz(theReportViz);
             }
         );
-    }, [selectedChart]);
+    }, [selectedChart, dispatch]);
 
     const handleChange = (newValue, icName) => {
         const strValue = newValue ? BOOLEAN_TEXT.TRUE : BOOLEAN_TEXT.FALSE;
@@ -96,25 +88,13 @@ const Dashboard = ({
         setInputControlsData(icsUpdated);
     };
 
-    const handlePreviewAndPDFConversion = () => {
-        if (pdfBlob) {
-            setPdfBlob(null);
-        }
-        setTimeout(() => {
-            const paramsReport = inputControlsData.reduce((accum, icData) => {
-                accum[icData.id] = [icData.state.value];
-                return accum;
-            }, {});
-            reportViz
-                .params(paramsReport)
-                .run()
-                .then(async () => {
-                    await wait(1000); // Wait for 1 second
-                    handlePdfConversion();
-                });
-        });
+    const handleUpdateChart = () => {
+        const paramsReport = inputControlsData.reduce((accum, icData) => {
+            accum[icData.id] = [icData.state.value];
+            return accum;
+        }, {});
+        reportViz.params(paramsReport).run();
     };
-
     const handleDownloadPdf = () => {
         reportViz.export(
             { outputFormat: 'pdf' },
@@ -131,31 +111,27 @@ const Dashboard = ({
 
     return (
         <main className='dashboard-page h-main-section'>
-            {isLoadingPDFGeneration && (
-                <div className='loading-block'>
-                    <div className='loading-spinner'></div>
-                    <p>Generating PDF, please wait...</p>
-                </div>
-            )}
             <Sidebar
                 inputControlsData={inputControlsData}
                 handleSwitchButtonChange={handleChange}
-                isLoading={isLoadingPDFGeneration}
-                handlePdfConversion={handlePreviewAndPDFConversion}
+                handleUpdateChart={handleUpdateChart}
                 handleDownloadPdf={handleDownloadPdf}
             />
-            {!isLoadingPDFGeneration && !pdfBlob && (
-                <section className='main-content'>
-                    <h1>Welcome to the Dashboard</h1>
-
-                    {/* Provide container to render your visualization */}
-                    <div id='viz-container'></div>
-                </section>
-            )}
-            {pdfBlob && (
-                <section className='main-content' style={{ border: '1px solid #1e88e5', borderRadius: '4px' }}>
-                    <Viewer pdfBlob={pdfBlob} onDocumentLoadSuccess={onDocumentLoadSuccess} pageNumber={pageNumber} />
-                    <ViewerControls setPageNumber={setPageNumber} pageNumber={pageNumber} numPages={numPages} />
+            <section className='main-content'>
+                {/* Provide container to render your visualization */}
+                <div id='viz-container'></div>
+            </section>
+            {isChartLoaded && (
+                <section className='image-column'>
+                    <div className='image-row'>
+                        <img src='table-1.png' alt='Image 2' />
+                    </div>
+                    <div className='image-row'>
+                        <img src='pie-chart.png' alt='Image 1' />
+                    </div>
+                    <div className='image-row'>
+                        <img src='table-2.png' alt='Image 2' />
+                    </div>
                 </section>
             )}
         </main>
