@@ -11,11 +11,12 @@
   --background-gradient: linear-gradient(135deg, #0076AD, #0096C7);
   --footer-gradient: linear-gradient(135deg, #0076AD, #005F8C);
   --text-color: #f4f4f4;
+  --text-black-color: #212121;
   --white: #ffffff;
 
   --background-btn-primary-color: #0078BD;
-    --background-btn-secondary-color: #E4E4E4;
-    --btn-secondary-text-color: #444444;
+  --background-btn-secondary-color: #E4E4E4;
+  --btn-secondary-text-color: #444444;
   /* Font Sizes */
   --font-large: 2.5rem;
   --font-medium: 1.25rem;

@@ -8,9 +8,8 @@
   overflow-y: auto;
 }
 
-.sidebar h2 {
-  margin-top: 0;
-  color: var(--primary-color);
+.sidebar h5 {
+  color: var(--text-black-color);
 }
 
 .sidebar ul {

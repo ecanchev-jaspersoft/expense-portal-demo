@@ -11,11 +11,26 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPd
         return ic.state.value === BOOLEAN_TEXT.TRUE;
     };
 
+
+    const transformLabel = (label) => {
+        return label
+            .replace(/_/g, ' ')
+            .toLowerCase()
+            .split(' ')
+            .map((word) => {
+                if (word === 'qr') {
+                    return word.toUpperCase();
+                }
+                return word.charAt(0).toUpperCase() + word.slice(1);
+            })
+            .join(' ');
+    };
+
     return (
         <>
             {inputControlsData?.length > 0 && (
                 <section className='sidebar'>
-                    <h2>Input Controls</h2>
+                    <h5>Show/Hide Sections</h5>
                     <ul className='switch-button-row'>
                         <li>
                             {inputControlsData.map((icToRender) => {
@@ -25,7 +40,7 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPd
                                             key={icToRender.id}
                                             onChange={(newValue) => handleSwitchButtonChange(newValue, icToRender.id)}
                                             name={icToRender.id}
-                                            label={icToRender.label}
+                                            label={transformLabel(icToRender.label)}
                                             origIsChecked={transformOriginalValue(icToRender)}
                                         />
                                     );
