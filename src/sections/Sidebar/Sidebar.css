@@ -1,7 +1,9 @@
 @import '../../styles/variables.css';
+
 .sidebar {
+  margin-top: 10px;
   width: 350px;
-  background-color: var(--background-gradient);
+  background-color: var(--white);
   padding: 20px;
   box-sizing: border-box;
   height: inherit;

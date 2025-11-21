@@ -3,6 +3,7 @@
 .dashboard-page {
   display: flex;
   flex-direction: row;
+  background: var(--background-report);
 }
 
 .dashboard-page h1 {
@@ -14,7 +15,7 @@
 }
 
 .main-content {
-    margin-top: 10px;
+  margin-top: 10px;
   flex: 1;
   box-sizing: border-box;
   overflow-y: auto;
@@ -29,15 +30,19 @@
   gap: 16px;
   align-items: center;
 }
+
 .image-column {
-  flex: 1;
-    margin-top: 10px;
+  flex: 0;
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-left: 10px;
+  background: var(--white);
 }
 
 .image-row img {
   border-radius: 4px;
+  max-width: 500px;
+  height: auto;
 }

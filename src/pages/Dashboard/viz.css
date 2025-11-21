@@ -1,6 +1,8 @@
 #viz-container {
     height: 340px;
     width: auto;
+    max-width: 80%;
+    margin: 0 auto;
 }
 
 /*Start of Crosstab specific styles*/
@@ -86,6 +88,7 @@
 #viz-container .jr-mDatatable-cell.jr.jr-jHyperLink {
     background-color: #E0D2BC;
 }
+
 #viz-container #JR_PAGE_ANCHOR_0_1 {
     width: -webkit-fill-available !important;
 }

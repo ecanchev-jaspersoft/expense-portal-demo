@@ -132,6 +132,9 @@ const Dashboard = () => {
                     <div className='image-row'>
                         <img src='table-2.png' alt='Image 2' />
                     </div>
+                    <div className='image-row'>
+                        <img src='pie-chart.png' alt='Image 1' />
+                    </div>
                 </section>
             )}
         </main>
