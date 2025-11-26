@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { NavLink } from 'react-router';
 import './Header.css';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +20,8 @@ const Header = () => {
         <>
             <header className='navbar'>
                 <div className='logo nav-links'>
-                    <NavLink to='/'>ExpensePulse</NavLink>{' '}
+                    <img src='logo_meridian.png' alt='logo' />
+                    <NavLink to='/'>Meridian Trust Bank</NavLink>{' '}
                 </div>
                 {isLoggedIn && (
                     <nav>

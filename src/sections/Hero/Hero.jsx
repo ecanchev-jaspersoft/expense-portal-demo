@@ -4,7 +4,9 @@ import { useAuth } from '../../context/AuthContext';
 
 const Hero = () => {
     const navigate = useNavigate();
-    const { state: { isLoggedIn } } = useAuth();
+    const {
+        state: { isLoggedIn },
+    } = useAuth();
 
     const redirectToPage = () => {
         if (isLoggedIn) {
@@ -15,11 +17,11 @@ const Hero = () => {
     };
 
     return (
-        <section className="hero h-main-section">
-            <div className="hero-content">
-                <h1>Welcome to the ExpensePulse Portal</h1>
+        <section className='hero h-main-section'>
+            <div className='hero-content'>
+                <h1>Welcome to the Meridian Trust Bank Portal</h1>
                 <p>Track your expenses efficiently and effortlessly.</p>
-                <button className="cta-button" onClick={redirectToPage}>
+                <button className='cta-button' onClick={redirectToPage}>
                     Get Started
                 </button>
             </div>
