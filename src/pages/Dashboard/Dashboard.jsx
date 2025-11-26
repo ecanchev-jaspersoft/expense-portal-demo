@@ -124,16 +124,7 @@ const Dashboard = () => {
             {isChartLoaded && (
                 <section className='image-column'>
                     <div className='image-row'>
-                        <img src='table-1.png' alt='Image 2' />
-                    </div>
-                    <div className='image-row'>
-                        <img src='pie-chart.png' alt='Image 1' />
-                    </div>
-                    <div className='image-row'>
-                        <img src='table-2.png' alt='Image 2' />
-                    </div>
-                    <div className='image-row'>
-                        <img src='pie-chart.png' alt='Image 1' />
+                        <img src='right_sidebar.png' alt='Image 2' />
                     </div>
                 </section>
             )}
