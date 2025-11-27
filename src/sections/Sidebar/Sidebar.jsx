@@ -1,7 +1,8 @@
 import './Sidebar.css';
 import '../../styles/button.css';
-import SwitchButton from '../../utils/InputControls/SwitchButton';
+import SwitchButton from '../../utils/InputControls/SwitchButton/SwitchButton';
 import { FORBIDDEN_INPUT_CONTROLS, BOOLEAN_TEXT } from '../../utils/Constants';
+import { Dropdown } from '../../utils/InputControls/Dropdown/Dropdown';
 
 const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPdf, handleUpdateChart }) => {
     const transformOriginalValue = (ic) => {
@@ -10,8 +11,6 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPd
         }
         return ic.state.value === BOOLEAN_TEXT.TRUE;
     };
-
-
     const transformLabel = (label) => {
         return label
             .replace(/_/g, ' ')
@@ -34,6 +33,23 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPd
                     <ul className='switch-button-row'>
                         <li>
                             {inputControlsData.map((icToRender) => {
+                                if (icToRender.id === 'STATEMENT_TIME') {
+                                    return (
+                                        <Dropdown
+                                            key={icToRender.id}
+                                            label={'Time Range'}
+                                            options={[
+                                                { value: '-5y', label: 'Last 5 Years' },
+                                                { value: '-4y', label: 'Last 4 Years' },
+                                                { value: '-3y', label: 'Last 3 Years' },
+                                                { value: '-2y', label: 'Last 2 Years' },
+                                                { value: '-1y', label: 'Last 1 Year' },
+                                            ]}
+                                            name={icToRender.id}
+                                            origSelectedValue={'-5y'}
+                                        />
+                                    );
+                                }
                                 if (!FORBIDDEN_INPUT_CONTROLS.includes(icToRender.id)) {
                                     return (
                                         <SwitchButton
@@ -48,12 +64,14 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPd
                             })}
                         </li>
                     </ul>
-                    <button className='btn btn-primary' onClick={handleUpdateChart} style={{ margin: '5px' }}>
-                        Update Chart
-                    </button>
-                    <button className='btn btn-secondary' onClick={handleDownloadPdf}>
-                        Download PDF
-                    </button>
+                    <div className='sidebar-buttons'>
+                        <button className='btn btn-primary' onClick={handleUpdateChart}>
+                            Update Chart
+                        </button>
+                        <button className='btn btn-secondary' onClick={handleDownloadPdf}>
+                            Download PDF
+                        </button>
+                    </div>
                 </section>
             )}
         </>

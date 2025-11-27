@@ -56,15 +56,6 @@ const Dashboard = () => {
                     success: () => {
                         setIsChartLoaded(true);
                     },
-
-                    // events: {
-                    //     reportCompleted: (status, error) => {
-                    //         if ('ready' === status && !error && automaticPdf) {
-                    //             setAutomaticPdf(false);
-                    //             handlePdfConversion();
-                    //         }
-                    //     },
-                    // },
                 });
                 setReportViz(theReportViz);
             }

@@ -1,0 +1,35 @@
+@import '../../../styles/variables.css';
+
+.dropdown-container {
+    gap: var(--padding-medium);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: var(--padding-small);
+}
+
+.dropdown-label {
+    font-size: var(--font-small);
+    color: var(--text-black-color);
+}
+
+.dropdown-select {
+    padding: var(--padding-small);
+    color: var(--text-black-color);
+    background-color: var(--white);
+    border: 1px solid var(--secondary-hover-color);
+    border-radius: var(--border-radius);
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dropdown-select:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px var(--primary-color);
+    cursor: pointer
+}
+
+.dropdown-select:focus {
+    border-color: var(--primary-hover-color);
+    box-shadow: 0 0 8px var(--primary-hover-color);
+}

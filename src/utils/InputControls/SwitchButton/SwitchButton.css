@@ -1,6 +1,6 @@
 /* SwitchButton.css */
 
-@import '../../styles/variables.css';
+@import '../../../styles/variables.css';
 
 .switch-button {
     padding: 5px 5px;

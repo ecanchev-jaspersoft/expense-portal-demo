@@ -8,6 +8,16 @@
   box-sizing: border-box;
   height: inherit;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-buttons {
+  margin-top: auto;
+  display: flex;
+  flex-direction: row;
+  gap: var(--padding-small);
+  justify-content: center;
 }
 
 .sidebar h5 {
