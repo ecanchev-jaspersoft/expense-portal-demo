@@ -7,6 +7,7 @@
     background: var(--footer-gradient);
     color: var(--text-color);
     animation: fadeIn 1.5s ease-in-out;
+    margin-top: auto;
 }
 
 @keyframes fadeIn {

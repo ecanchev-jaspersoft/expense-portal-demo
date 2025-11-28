@@ -21,5 +21,5 @@ html {
 }
 
 .h-main-section {
-  min-height: calc(100vh - 140px) !important;
+  min-height: calc(100vh - 170px) !important;
 }

@@ -4,3 +4,8 @@
 body {
     animation: fadeIn 1.5s ease-in-out;
 }
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
