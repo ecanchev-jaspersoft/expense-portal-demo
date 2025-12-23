@@ -7,13 +7,29 @@ import { useAuth } from '../../context/AuthContext';
 import { CHARTS, BOOLEAN_TEXT } from '../../utils/Constants';
 
 const Dashboard = () => {
-    const [selectedChart] = useState(CHARTS[0]);
+    const dashboardLikeReports = CHARTS.filter(
+        (chart) => chart.name === 'Financial Health & Performance' || chart.name === 'Customer & Market Groth'
+    );
+    const { dispatch, state } = useAuth();
+    const [selectedChart, setSelectedChart] = useState(null);
     const [inputControlsData, setInputControlsData] = useState([]);
     const [reportViz, setReportViz] = useState(null);
     const [isChartLoaded, setIsChartLoaded] = useState(false);
-    const { dispatch } = useAuth();
+
+    const isPageReportSelected = () => {
+        return state.selectedPage && state.selectedPage === 'pageReport';
+    };
 
     useEffect(() => {
+        const selectedDashboard = isPageReportSelected() ? CHARTS[0] : dashboardLikeReports[0];
+        setSelectedChart(selectedDashboard);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        if (!selectedChart) {
+            return;
+        }
         if (!window.visualize) {
             console.error('visualize.js library is not loaded.');
             return;
@@ -112,7 +128,7 @@ const Dashboard = () => {
                 {/* Provide container to render your visualization */}
                 <div id='viz-container'></div>
             </section>
-            {isChartLoaded && (
+            {isChartLoaded && isPageReportSelected() && (
                 <section className='image-column'>
                     <div className='image-row'>
                         <img src='right_sidebar.png' alt='Image 2' />

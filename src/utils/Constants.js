@@ -39,4 +39,14 @@ export const CHARTS = [
         resource: '/public/Demo_Example/Reports/Tickets/Ticket',
         type: 'report',
     },
+    {
+        name: 'Financial Health & Performance',
+        resource: '/public/Demo_Example/Embedded_Dashboards/Financial_Health___Performance',
+        type: 'report',
+    },
+    {
+        name: 'Customer & Market Groth',
+        resource: '/public/Demo_Example/Embedded_Dashboards/Customer___Market_Growth',
+        type: 'report',
+    },
 ];
