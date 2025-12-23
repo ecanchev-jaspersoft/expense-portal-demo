@@ -38,3 +38,6 @@
 .nav-links a:hover {
     color: var(--neutral-medium);
 }
+.dashboard-switcher {
+    cursor: pointer;
+}

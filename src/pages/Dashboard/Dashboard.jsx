@@ -24,7 +24,7 @@ const Dashboard = () => {
         const selectedDashboard = isPageReportSelected() ? CHARTS[0] : dashboardLikeReports[0];
         setSelectedChart(selectedDashboard);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [state.selectedPage]);
 
     useEffect(() => {
         if (!selectedChart) {
