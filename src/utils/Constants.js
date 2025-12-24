@@ -1,8 +1,37 @@
 export const FORBIDDEN_INPUT_CONTROLS = ['ACCOUNT_NUMBER', 'STATEMENT_TIME'];
-export const BOOLEAN_TEXT={
+
+export const BOOLEAN_TEXT = {
     TRUE: 'TRUE',
-    FALSE: 'FALSE'
+    FALSE: 'FALSE',
 };
+
+export const PAGE_TYPES = {
+    PAGE_REPORT: 'pageReport',
+};
+
+export const CHART_TYPES = {
+    REPORT: 'report',
+    ADHOC_VIEW: 'adhocView',
+};
+
+export const CHART_NAMES = {
+    FINANCIAL_HEALTH: 'Financial Health & Performance',
+    CUSTOMER_MARKET: 'Customer & Market Groth',
+};
+
+export const DOM_ELEMENT_IDS = {
+    VIZ_CONTAINER: 'viz-container',
+    INPUT_CONTROLS_CONTAINER: 'theInputControls',
+};
+
+export const EXPORT_FORMATS = {
+    PDF: 'pdf',
+};
+
+export const AUTH_ACTIONS = {
+    SET_V_OBJECT: 'SET_V_OBJECT',
+};
+
 export const CHARTS = [
     {
         name: 'Account Statement',
