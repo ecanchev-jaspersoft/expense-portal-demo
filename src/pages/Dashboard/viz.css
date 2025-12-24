@@ -2,6 +2,9 @@
     height: 340px;
     width: auto;
     max-width: 80%;
+}
+
+#viz-container:not(.no-margin) {
     margin: 0 auto;
 }
 

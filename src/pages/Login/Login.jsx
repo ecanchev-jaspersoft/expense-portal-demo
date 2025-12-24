@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import DashboardChooser from '../../components/DashboardChooser/DashboardChooser';
+import { AUTH_ACTIONS } from '../../utils/Constants';
+import DashboardChooser from '../Dashboard/components/DashboardChooser/DashboardChooser';
 import './Login.css';
 
 const Login = () => {
@@ -12,7 +13,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (credentials.username && credentials.password) {
-            dispatch({ type: 'LOGIN' });
+            dispatch({ type: AUTH_ACTIONS.LOGIN });
             setShowChooser(true);
         }
     };

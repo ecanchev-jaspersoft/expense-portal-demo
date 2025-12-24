@@ -1,3 +1,4 @@
+import { AUTH_ACTIONS } from '../utils/Constants';
 export const initialState = {
     isLoggedIn: false,
     vObject: null,
@@ -6,18 +7,18 @@ export const initialState = {
 
 export const authReducer = (state, action) => {
     switch (action.type) {
-        case 'LOGIN':
+        case AUTH_ACTIONS.LOGIN:
             return { ...state, isLoggedIn: true };
-        case 'LOGOUT':
+        case AUTH_ACTIONS.LOGOUT:
             return {
                 ...state,
                 isLoggedIn: false,
                 vObject: null,
                 selectedPage: null,
             };
-        case 'SET_V_OBJECT':
+        case AUTH_ACTIONS.SET_V_OBJECT:
             return { ...state, vObject: action.payload };
-        case 'SET_SELECTED_PAGE':
+        case AUTH_ACTIONS.SET_SELECTED_PAGE:
             return {
                 ...state,
                 selectedPage: action.payload,

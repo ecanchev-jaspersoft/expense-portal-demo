@@ -2,8 +2,9 @@ import { NavLink } from 'react-router';
 import { useState } from 'react';
 import './Header.css';
 import { useAuth } from '../../context/AuthContext';
+import { AUTH_ACTIONS } from '../../utils/Constants';
 import { useNavigate } from 'react-router-dom';
-import DashboardChooser from '../../components/DashboardChooser/DashboardChooser';
+import DashboardChooser from '../../pages/Dashboard/components/DashboardChooser/DashboardChooser';
 
 const Header = () => {
     const {
@@ -15,7 +16,7 @@ const Header = () => {
 
     const handleLogout = () => {
         vObject.logout().done(() => {
-            dispatch({ type: 'LOGOUT' });
+            dispatch({ type: AUTH_ACTIONS.LOGOUT });
             navigate('/login');
         });
     };

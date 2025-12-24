@@ -57,13 +57,19 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.dashboard-option-btn.primary:hover {
+.dashboard-option-btn.primary.selected {
     border-color: var(--primary-color);
+}
+
+.dashboard-option-btn.primary:hover {
     background: var(--neutral-light);
 }
 
-.dashboard-option-btn.secondary:hover {
+.dashboard-option-btn.secondary.selected {
     border-color: var(--secondary-color);
+}
+
+.dashboard-option-btn.secondary:hover {
     background: var(--neutral-light);
 }
 
@@ -92,6 +98,7 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -102,6 +109,7 @@
         transform: translateY(20px);
         opacity: 0;
     }
+
     to {
         transform: translateY(0);
         opacity: 1;

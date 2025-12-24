@@ -7,6 +7,7 @@ export const BOOLEAN_TEXT = {
 
 export const PAGE_TYPES = {
     PAGE_REPORT: 'pageReport',
+    DASHBOARD: 'dashboard',
 };
 
 export const CHART_TYPES = {
@@ -30,6 +31,9 @@ export const EXPORT_FORMATS = {
 
 export const AUTH_ACTIONS = {
     SET_V_OBJECT: 'SET_V_OBJECT',
+    SET_SELECTED_PAGE: 'SET_SELECTED_PAGE',
+    LOGIN: 'LOGIN',
+    LOGOUT: 'LOGOUT',
 };
 
 export const CHARTS = [
