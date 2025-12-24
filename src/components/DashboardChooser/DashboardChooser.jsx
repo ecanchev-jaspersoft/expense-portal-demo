@@ -23,15 +23,15 @@ const DashboardChooser = ({ isOpen, onClose }) => {
                     <button className='dashboard-option-btn primary' onClick={() => handleChoice('/pageReport')}>
                         <div className='option-icon'>📊</div>
                         <div className='option-text'>
-                            <h3>Main Dashboard</h3>
-                            <p>View expense reports and analytics</p>
+                            <h3>Page Report</h3>
+                            <p>View report and update its content while hiding or showing specific attributes</p>
                         </div>
                     </button>
                     <button className='dashboard-option-btn secondary' onClick={() => handleChoice('/dashboard')}>
                         <div className='option-icon'>📈</div>
                         <div className='option-text'>
-                            <h3>Secondary Dashboard</h3>
-                            <p>Alternative dashboard view</p>
+                            <h3>Interactive Dashboard</h3>
+                            <p>View dashboard and interact with the content by updating its input controls (filters)</p>
                         </div>
                     </button>
                 </div>

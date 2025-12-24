@@ -1,8 +1,14 @@
 import './Dropdown.css';
 import { useState } from 'react';
 
-export const Dropdown = ({ options, label, name, origSelectedValue }) => {
+export const Dropdown = ({ options, label, name, origSelectedValue, handleChange }) => {
     const [theVal, setTheVal] = useState(origSelectedValue);
+
+    const handleSelectionChange = (e) => {
+        const newVal = e.target.value;
+        setTheVal(newVal);
+        handleChange(newVal);
+    };
     return (
         <div className='dropdown-container'>
             {label && (
@@ -10,7 +16,7 @@ export const Dropdown = ({ options, label, name, origSelectedValue }) => {
                     {label}
                 </label>
             )}
-            <select id={name} name={name} className='dropdown-select' value={theVal} onChange={(e) => setTheVal(e.target.value)}>
+            <select id={name} name={name} className='dropdown-select' value={theVal} onChange={handleSelectionChange}>
                 {options.map((option, index) => (
                     <option key={index} value={option.value}>
                         {option.label}

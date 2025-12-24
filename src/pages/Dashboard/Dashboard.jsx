@@ -13,6 +13,7 @@ const Dashboard = () => {
     const { dispatch, state } = useAuth();
     const [selectedChart, setSelectedChart] = useState(null);
     const [inputControlsData, setInputControlsData] = useState([]);
+    const [inputControlsDataForInteractiveDashboard, setInputControlsDataForInteractiveDashboard] = useState([]);
     const [reportViz, setReportViz] = useState(null);
     const [isChartLoaded, setIsChartLoaded] = useState(false);
 
@@ -21,7 +22,7 @@ const Dashboard = () => {
     };
 
     useEffect(() => {
-        const selectedDashboard = isPageReportSelected() ? CHARTS[0] : dashboardLikeReports[0];
+        const selectedDashboard = isPageReportSelected() ? CHARTS[0] : dashboardLikeReports[1];
         setSelectedChart(selectedDashboard);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.selectedPage]);
@@ -53,15 +54,34 @@ const Dashboard = () => {
                     });
                     return;
                 }
-
                 // Fetch the input controls
-                v.inputControls({
-                    resource: selectedChart.resource,
-                    success: (icData) => {
-                        setInputControlsData(icData);
-                    },
-                    error: () => setInputControlsData([]),
-                });
+                if (!isPageReportSelected()) {
+                    v.inputControls({
+                        container: '#theInputControls',
+                        resource: selectedChart.resource,
+                        success: (icData) => {
+                            setInputControlsData(icData);
+                            console.log('success - inputControlsData: ', icData);
+                        },
+                        error: () => setInputControlsData([]),
+                        events: {
+                            change: (params) => {
+                                console.log('params: ', params);
+                                console.log('events.change - inputControlsData: ', inputControlsData);
+                                setInputControlsDataForInteractiveDashboard(params);
+                            },
+                        },
+                    });
+                } else {
+                    v.inputControls({
+                        resource: selectedChart.resource,
+                        success: (icData) => {
+                            setInputControlsData(icData);
+                            console.log('success - inputControlsData: ', icData);
+                        },
+                        error: () => setInputControlsData([]),
+                    });
+                }
                 // Render the report and store the viz instance
                 const theReportViz = v.report({
                     container: '#viz-container',
@@ -76,10 +96,15 @@ const Dashboard = () => {
                 setReportViz(theReportViz);
             }
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedChart, dispatch]);
 
     const handleChange = (newValue, icName) => {
-        const strValue = newValue ? BOOLEAN_TEXT.TRUE : BOOLEAN_TEXT.FALSE;
+        let strValue = newValue;
+        if (isPageReportSelected()) {
+            // then we have to convert the boolean to string
+            strValue = newValue ? BOOLEAN_TEXT.TRUE : BOOLEAN_TEXT.FALSE;
+        }
         const icsUpdated = inputControlsData.map((ic) => {
             if (ic.id !== icName) {
                 return ic;
@@ -96,6 +121,11 @@ const Dashboard = () => {
     };
 
     const handleUpdateChart = () => {
+        if (!isPageReportSelected()) {
+            console.log('inputControlsDataForInteractiveDashboard: ', inputControlsDataForInteractiveDashboard);
+            reportViz.params(inputControlsDataForInteractiveDashboard).run();
+            return;
+        }
         const paramsReport = inputControlsData.reduce((accum, icData) => {
             accum[icData.id] = [icData.state.value];
             return accum;
@@ -118,12 +148,24 @@ const Dashboard = () => {
 
     return (
         <main className='dashboard-page h-main-section'>
-            <Sidebar
-                inputControlsData={inputControlsData}
-                handleSwitchButtonChange={handleChange}
-                handleUpdateChart={handleUpdateChart}
-                handleDownloadPdf={handleDownloadPdf}
-            />
+            {isPageReportSelected() && (
+                <Sidebar
+                    inputControlsData={inputControlsData}
+                    handleSwitchButtonChange={handleChange}
+                    handleUpdateChart={handleUpdateChart}
+                    handleDownloadPdf={handleDownloadPdf}
+                />
+            )}
+            {!isPageReportSelected() && (
+                <section className='sidebar'>
+                    <div id='theInputControls'></div>
+                    <div className='sidebar-buttons'>
+                        <button className='btn btn-primary' onClick={handleUpdateChart}>
+                            Update Chart
+                        </button>
+                    </div>
+                </section>
+            )}
             <section className='main-content'>
                 {/* Provide container to render your visualization */}
                 <div id='viz-container'></div>

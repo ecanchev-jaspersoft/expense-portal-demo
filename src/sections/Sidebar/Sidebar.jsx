@@ -33,22 +33,35 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPd
                     <ul className='switch-button-row'>
                         <li>
                             {inputControlsData.map((icToRender) => {
-                                if (icToRender.id === 'STATEMENT_TIME') {
-                                    return (
-                                        <Dropdown
-                                            key={icToRender.id}
-                                            label={'Time Range'}
-                                            options={[
-                                                { value: '-5y', label: 'Last 5 Years' },
-                                                { value: '-4y', label: 'Last 4 Years' },
-                                                { value: '-3y', label: 'Last 3 Years' },
-                                                { value: '-2y', label: 'Last 2 Years' },
-                                                { value: '-1y', label: 'Last 1 Year' },
-                                            ]}
-                                            name={icToRender.id}
-                                            origSelectedValue={'-5y'}
-                                        />
-                                    );
+                                if (icToRender.state?.options) {
+                                    if (icToRender.id === 'STATEMENT_TIME') {
+                                        return (
+                                            <Dropdown
+                                                key={icToRender.id}
+                                                label={'Time Range'}
+                                                options={[
+                                                    { value: '-5y', label: 'Last 5 Years' },
+                                                    { value: '-4y', label: 'Last 4 Years' },
+                                                    { value: '-3y', label: 'Last 3 Years' },
+                                                    { value: '-2y', label: 'Last 2 Years' },
+                                                    { value: '-1y', label: 'Last 1 Year' },
+                                                ]}
+                                                name={icToRender.id}
+                                                origSelectedValue={'-5y'}
+                                            />
+                                        );
+                                    } else {
+                                        return (
+                                            <Dropdown
+                                                key={icToRender.id}
+                                                label={icToRender.label}
+                                                options={icToRender.state.options}
+                                                name={icToRender.id}
+                                                origSelectedValue={''}
+                                                handleChange={(newValue) => handleSwitchButtonChange(newValue, icToRender.id)}
+                                            />
+                                        );
+                                    }
                                 }
                                 if (!FORBIDDEN_INPUT_CONTROLS.includes(icToRender.id)) {
                                     return (
