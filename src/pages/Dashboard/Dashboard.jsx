@@ -61,13 +61,10 @@ const Dashboard = () => {
                         resource: selectedChart.resource,
                         success: (icData) => {
                             setInputControlsData(icData);
-                            console.log('success - inputControlsData: ', icData);
                         },
                         error: () => setInputControlsData([]),
                         events: {
                             change: (params) => {
-                                console.log('params: ', params);
-                                console.log('events.change - inputControlsData: ', inputControlsData);
                                 setInputControlsDataForInteractiveDashboard(params);
                             },
                         },
@@ -77,7 +74,6 @@ const Dashboard = () => {
                         resource: selectedChart.resource,
                         success: (icData) => {
                             setInputControlsData(icData);
-                            console.log('success - inputControlsData: ', icData);
                         },
                         error: () => setInputControlsData([]),
                     });
@@ -122,7 +118,6 @@ const Dashboard = () => {
 
     const handleUpdateChart = () => {
         if (!isPageReportSelected()) {
-            console.log('inputControlsDataForInteractiveDashboard: ', inputControlsDataForInteractiveDashboard);
             reportViz.params(inputControlsDataForInteractiveDashboard).run();
             return;
         }
@@ -141,7 +136,7 @@ const Dashboard = () => {
             },
             (error) => {
                 alert('PDF Export failed on the server. Error: ' + error.message);
-                console.log(error);
+                console.error(error);
             }
         );
     };
