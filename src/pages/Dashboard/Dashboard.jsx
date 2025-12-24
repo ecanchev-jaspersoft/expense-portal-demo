@@ -3,6 +3,7 @@ import './Dashboard.css';
 import './viz.css';
 import Sidebar from '../../sections/Sidebar/Sidebar';
 import { useAuth } from '../../context/AuthContext';
+import { Dropdown } from '../../utils/InputControls/Dropdown/Dropdown';
 
 import { CHARTS, BOOLEAN_TEXT } from '../../utils/Constants';
 
@@ -22,7 +23,7 @@ const Dashboard = () => {
     };
 
     useEffect(() => {
-        const selectedDashboard = isPageReportSelected() ? CHARTS[0] : dashboardLikeReports[1];
+        const selectedDashboard = isPageReportSelected() ? CHARTS[0] : dashboardLikeReports[0];
         setSelectedChart(selectedDashboard);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.selectedPage]);
@@ -93,7 +94,7 @@ const Dashboard = () => {
             }
         );
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedChart, dispatch]);
+    }, [selectedChart]);
 
     const handleChange = (newValue, icName) => {
         let strValue = newValue;
@@ -141,6 +142,19 @@ const Dashboard = () => {
         );
     };
 
+    const handleChartSwitch = (chartName) => {
+        const newChart = dashboardLikeReports.find((chart) => chart.name === chartName);
+        if (newChart) {
+            setSelectedChart(newChart);
+            setIsChartLoaded(false);
+        }
+    };
+
+    const chartOptions = dashboardLikeReports.map((chart) => ({
+        value: chart.name,
+        label: chart.name,
+    }));
+
     return (
         <main className='dashboard-page h-main-section'>
             {isPageReportSelected() && (
@@ -152,14 +166,27 @@ const Dashboard = () => {
                 />
             )}
             {!isPageReportSelected() && (
-                <section className='sidebar'>
-                    <div id='theInputControls'></div>
-                    <div className='sidebar-buttons'>
-                        <button className='btn btn-primary' onClick={handleUpdateChart}>
-                            Update Chart
-                        </button>
-                    </div>
-                </section>
+                <>
+                    <section className='sidebar'>
+                        <div id='theInputControls'></div>
+                        <div className='sidebar-buttons'>
+                            <button className='btn btn-primary' onClick={handleUpdateChart}>
+                                Update Chart
+                            </button>
+                        </div>
+                    </section>
+                    {chartOptions && selectedChart?.name && (
+                        <section className='chart-selector-section'>
+                            <Dropdown
+                                options={chartOptions}
+                                label='Select Chart'
+                                name='chartSelector'
+                                origSelectedValue={selectedChart?.name || ''}
+                                handleChange={handleChartSwitch}
+                            />
+                        </section>
+                    )}
+                </>
             )}
             <section className='main-content'>
                 {/* Provide container to render your visualization */}
