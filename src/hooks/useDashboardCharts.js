@@ -9,10 +9,9 @@ import { CHARTS, CHART_NAMES } from '../utils/Constants';
 export const useDashboardCharts = (isPageReportSelected) => {
     const [selectedChart, setSelectedChart] = useState(null);
 
+    // Filter charts to only include dashboard-type visualizations
     const dashboardLikeReports = useMemo(() => {
-        return CHARTS.filter(
-            (chart) => chart.name === CHART_NAMES.FINANCIAL_HEALTH || chart.name === CHART_NAMES.CUSTOMER_MARKET
-        );
+        return CHARTS.filter((chart) => chart.name === CHART_NAMES.FINANCIAL_HEALTH || chart.name === CHART_NAMES.CUSTOMER_MARKET);
     }, []);
 
     const chartOptions = useMemo(() => {

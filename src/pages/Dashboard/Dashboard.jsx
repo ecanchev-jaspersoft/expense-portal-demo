@@ -1,22 +1,27 @@
 import './Dashboard.css';
 import './viz.css';
 import { useAuth } from '../../context/AuthContext';
-import { useDashboardCharts } from '../../hooks/useDashboardCharts';
-import { useInputControls } from '../../hooks/useInputControls';
-import { useVisualization } from '../../hooks/useVisualization';
-import { DashboardSidebar } from './components/DashboardSidebar';
-import { ChartSelector } from './components/ChartSelector';
-import { VisualizationContainer } from './components/VisualizationContainer';
-import { ImageColumn } from './components/ImageColumn';
+import { useDashboardCharts, useInputControls, useVisualization } from '../../hooks';
+import { DashboardSidebar, ChartSelector, VisualizationContainer, ImageColumn } from './components';
 import { PAGE_TYPES } from '../../utils/Constants';
 
+/**
+ * Dashboard component - Main page for displaying JasperReports visualizations
+ * 
+ * This component orchestrates the display of interactive dashboards and reports.
+ * It supports two modes:
+ * - Page Report mode: Traditional report with input controls in a sidebar
+ * - Interactive Dashboard mode: Dashboard with chart selector and dynamic controls
+ * 
+ * The component uses custom hooks for separation of concerns:
+ * - useDashboardCharts: Manages chart selection and filtering
+ * - useInputControls: Handles input control state and updates
+ * - useVisualization: Manages JasperReports visualization library integration
+ */
 const Dashboard = () => {
     const { dispatch, state } = useAuth();
-
     const isPageReportSelected = state.selectedPage && state.selectedPage === PAGE_TYPES.PAGE_REPORT;
-
     const { selectedChart, chartOptions, handleChartSwitch } = useDashboardCharts(isPageReportSelected);
-
     const {
         inputControlsData,
         setInputControlsData,

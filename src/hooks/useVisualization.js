@@ -31,6 +31,7 @@ export const useVisualization = (
 
         setIsChartLoaded(false);
 
+        // Initialize JasperReports visualization library with authentication
         window.visualize(
             {
                 auth: {
@@ -39,8 +40,10 @@ export const useVisualization = (
                 },
             },
             (v) => {
+                // Store visualization instance in global state for potential reuse
                 dispatch({ type: AUTH_ACTIONS.SET_V_OBJECT, payload: v });
 
+                // Handle non-report visualizations (e.g., ad-hoc views)
                 if (CHART_TYPES.REPORT !== selectedChart?.type) {
                     v(`#${DOM_ELEMENT_IDS.VIZ_CONTAINER}`).adhocView({
                         resource: selectedChart.resource,
@@ -51,7 +54,9 @@ export const useVisualization = (
                     return;
                 }
 
+                // Setup input controls based on report mode
                 if (!isPageReportSelected) {
+                    // Interactive dashboard mode: render controls in container with change events
                     v.inputControls({
                         container: `#${DOM_ELEMENT_IDS.INPUT_CONTROLS_CONTAINER}`,
                         resource: selectedChart.resource,
@@ -61,11 +66,13 @@ export const useVisualization = (
                         error: () => setInputControlsData([]),
                         events: {
                             change: (params) => {
+                                // Track changes for immediate updates in interactive mode
                                 setInputControlsDataForInteractiveDashboard(params);
                             },
                         },
                     });
                 } else {
+                    // Page report mode: fetch controls without rendering (handled by Sidebar)
                     v.inputControls({
                         resource: selectedChart.resource,
                         success: (icData) => {
@@ -75,6 +82,7 @@ export const useVisualization = (
                     });
                 }
 
+                // Render the report visualization
                 const theReportViz = v.report({
                     container: `#${DOM_ELEMENT_IDS.VIZ_CONTAINER}`,
                     resource: selectedChart.resource,
