@@ -1,27 +1,43 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { AUTH_ACTIONS } from '../../utils/Constants';
-import DashboardChooser from '../Dashboard/components/DashboardChooser/DashboardChooser';
+import { AUTH_ACTIONS, USER_ROLES, PAGE_TYPES } from '../../utils/Constants';
 import './Login.css';
 
+const USERS = {
+    JOHN: 'john',
+    ADMIN: 'admin',
+};
+
 const Login = () => {
+    const navigate = useNavigate();
     const [isDisabledBtn, setIsDisabledBtn] = useState(true);
     const [credentials, setCredentials] = useState({ username: '', password: '' });
-    const [showChooser, setShowChooser] = useState(false);
     const { dispatch } = useAuth();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (credentials.username && credentials.password) {
-            dispatch({ type: AUTH_ACTIONS.LOGIN });
-            setShowChooser(true);
+        if (!credentials.username.trim() || !credentials.password.trim()) {
+            return;
+        }
+
+        if (credentials.username.trim().toLowerCase() === USERS.JOHN && credentials.password.trim().toLowerCase() === USERS.JOHN) {
+            dispatch({ type: AUTH_ACTIONS.LOGIN, payload: USER_ROLES.REGULAR });
+            dispatch({ type: AUTH_ACTIONS.SET_SELECTED_PAGE, payload: PAGE_TYPES.PAGE_REPORT });
+            navigate(`/${PAGE_TYPES.PAGE_REPORT}`);
+        } else if (credentials.username.trim().toLowerCase() === USERS.ADMIN && credentials.password.trim().toLowerCase() === USERS.ADMIN) {
+            dispatch({ type: AUTH_ACTIONS.LOGIN, payload: USER_ROLES.ADMIN });
+            dispatch({ type: AUTH_ACTIONS.SET_SELECTED_PAGE, payload: PAGE_TYPES.DASHBOARD });
+            navigate(`/${PAGE_TYPES.DASHBOARD}`);
+        } else {
+            alert('INVALID CREDENTIALS');
         }
     };
 
     const updateCredentials = (field, value) => {
         const newCredentials = { ...credentials, [field]: value };
         setCredentials(newCredentials);
-        setIsDisabledBtn(!(newCredentials.username && newCredentials.password));
+        setIsDisabledBtn(!(newCredentials.username.trim() && newCredentials.password.trim()));
     };
 
     return (
@@ -46,7 +62,6 @@ const Login = () => {
                     </button>
                 </form>
             </div>
-            <DashboardChooser isOpen={showChooser} onClose={() => setShowChooser(false)} />
         </>
     );
 };

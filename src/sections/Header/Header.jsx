@@ -1,18 +1,16 @@
 import { NavLink } from 'react-router';
-import { useState } from 'react';
 import './Header.css';
 import { useAuth } from '../../context/AuthContext';
-import { AUTH_ACTIONS } from '../../utils/Constants';
+import { AUTH_ACTIONS, USER_ROLES } from '../../utils/Constants';
 import { useNavigate } from 'react-router-dom';
-import DashboardChooser from '../../pages/Dashboard/components/DashboardChooser/DashboardChooser';
 
 const Header = () => {
     const {
-        state: { isLoggedIn, vObject },
+        state: { isLoggedIn, vObject, loggedInUser },
         dispatch,
     } = useAuth();
     const navigate = useNavigate();
-    const [showChooser, setShowChooser] = useState(false);
+    const username = loggedInUser === USER_ROLES.ADMIN ? 'Admin' : 'John Q. Public';
 
     const handleLogout = () => {
         vObject.logout().done(() => {
@@ -32,12 +30,7 @@ const Header = () => {
                     <nav>
                         <ul className='nav-links'>
                             <li>
-                                <a className='dashboard-switcher' onClick={() => setShowChooser(true)}>
-                                    Switch Dashboard
-                                </a>
-                            </li>
-                            <li>
-                                <a>Logged in as John Q. Public</a>
+                                <a>Logged in as {username}</a>
                             </li>
                             <li onClick={handleLogout}>
                                 <a href='#'>Log Out</a>
@@ -46,7 +39,6 @@ const Header = () => {
                     </nav>
                 )}
             </header>
-            <DashboardChooser isOpen={showChooser} onClose={() => setShowChooser(false)} />
         </>
     );
 };

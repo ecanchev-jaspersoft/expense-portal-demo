@@ -29,6 +29,11 @@ export const EXPORT_FORMATS = {
     PDF: 'pdf',
 };
 
+export const USER_ROLES = {
+    REGULAR: 'REGULAR',
+    ADMIN: 'ADMIN',
+};
+
 export const AUTH_ACTIONS = {
     SET_V_OBJECT: 'SET_V_OBJECT',
     SET_SELECTED_PAGE: 'SET_SELECTED_PAGE',
