@@ -2,7 +2,7 @@ import './Dashboard.css';
 import './viz.css';
 import { useAuth } from '../../context/AuthContext';
 import { useDashboardCharts, useInputControls, useVisualization } from '../../hooks';
-import { DashboardSidebar, ChartSelector, VisualizationContainer, ImageColumn } from './components';
+import { DashboardSidebar, VisualizationContainer, ImageColumn } from './components';
 import { PAGE_TYPES } from '../../utils/Constants';
 
 /**
@@ -25,8 +25,6 @@ const Dashboard = () => {
     const {
         inputControlsData,
         setInputControlsData,
-        inputControlsDataForInteractiveDashboard,
-        setInputControlsDataForInteractiveDashboard,
         handleInputControlChange,
         buildReportParams,
     } = useInputControls(isPageReportSelected);
@@ -34,12 +32,11 @@ const Dashboard = () => {
     const { isChartLoaded, handleUpdateChart, handleDownloadPdf } = useVisualization(
         selectedChart,
         dispatch,
-        isPageReportSelected,
         setInputControlsData
     );
 
     const onUpdateChart = () => {
-        handleUpdateChart(inputControlsDataForInteractiveDashboard, buildReportParams);
+        handleUpdateChart(buildReportParams);
     };
 
     return (
@@ -50,12 +47,6 @@ const Dashboard = () => {
                 handleInputControlChange={handleInputControlChange}
                 onUpdateChart={onUpdateChart}
                 handleDownloadPdf={handleDownloadPdf}
-                handleDashboardInputChange={(newValue, controlId) => {
-                    setInputControlsDataForInteractiveDashboard({
-                        ...inputControlsDataForInteractiveDashboard,
-                        [controlId]: newValue
-                    });
-                }}
             />
             <VisualizationContainer 
                 chartOptions={chartOptions}

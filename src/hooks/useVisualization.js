@@ -5,14 +5,12 @@ import { CHART_TYPES, DOM_ELEMENT_IDS, AUTH_ACTIONS, EXPORT_FORMATS } from '../u
  * Custom hook to manage visualization library initialization and rendering
  * @param {Object} selectedChart - The currently selected chart configuration
  * @param {Function} dispatch - Redux dispatch function
- * @param {boolean} isPageReportSelected - Whether page report mode is active
  * @param {Function} setInputControlsData - Setter for input controls data
  * @returns {Object} Visualization state and handlers
  */
 export const useVisualization = (
     selectedChart,
     dispatch,
-    isPageReportSelected,
     setInputControlsData
 ) => {
     const [reportViz, setReportViz] = useState(null);
@@ -78,13 +76,9 @@ export const useVisualization = (
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedChart]);
 
-    const handleUpdateChart = (inputControlsDataForInteractiveDashboard, buildReportParams) => {
+    const handleUpdateChart = (buildReportParams) => {
         if (!reportViz) return;
 
-        if (!isPageReportSelected) {
-            reportViz.params(inputControlsDataForInteractiveDashboard).run();
-            return;
-        }
         const paramsReport = buildReportParams();
         reportViz.params(paramsReport).run();
     };

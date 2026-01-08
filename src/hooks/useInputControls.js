@@ -8,7 +8,6 @@ import { BOOLEAN_TEXT } from '../utils/Constants';
  */
 export const useInputControls = (isPageReportSelected) => {
     const [inputControlsData, setInputControlsData] = useState([]);
-    const [inputControlsDataForInteractiveDashboard, setInputControlsDataForInteractiveDashboard] = useState([]);
 
     const handleInputControlChange = (newValue, icName) => {
         let strValue = newValue;
@@ -25,7 +24,7 @@ export const useInputControls = (isPageReportSelected) => {
                 ...ic,
                 state: {
                     ...ic.state,
-                    value: strValue,
+                    value: strValue.trim(),
                 },
             };
         });
@@ -46,8 +45,6 @@ export const useInputControls = (isPageReportSelected) => {
     return {
         inputControlsData,
         setInputControlsData,
-        inputControlsDataForInteractiveDashboard,
-        setInputControlsDataForInteractiveDashboard,
         handleInputControlChange,
         buildReportParams,
     };
