@@ -52,10 +52,11 @@ const Dashboard = () => {
                 onUpdateChart={onUpdateChart}
                 handleDownloadPdf={handleDownloadPdf}
             />
-            {!isPageReportSelected && (
-                <ChartSelector chartOptions={chartOptions} selectedChartName={selectedChart?.name} handleChartSwitch={handleChartSwitch} />
-            )}
-            <VisualizationContainer />
+            <VisualizationContainer 
+                chartOptions={chartOptions}
+                selectedChartName={selectedChart?.name}
+                handleChartSwitch={handleChartSwitch}
+            />
             <ImageColumn isVisible={isChartLoaded && isPageReportSelected} />
         </main>
     );

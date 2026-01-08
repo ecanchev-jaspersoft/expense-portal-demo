@@ -1,7 +1,7 @@
-import { Dropdown } from '../../../utils/InputControls/Dropdown/Dropdown';
+import { Tabs } from '../../../utils/InputControls/Tabs/Tabs';
 
 /**
- * ChartSelector component - Dropdown to switch between different chart views
+ * ChartSelector component - Tabs to switch between different chart views
  * @param {Object} props - Component props
  * @param {Array<{value: string, label: string}>} props.chartOptions - Available chart options
  * @param {string} props.selectedChartName - Currently selected chart name
@@ -14,12 +14,10 @@ export const ChartSelector = ({ chartOptions, selectedChartName, handleChartSwit
 
     return (
         <section className='chart-selector-section'>
-            <Dropdown
+            <Tabs
                 options={chartOptions}
-                label='Select Chart'
-                name='chartSelector'
-                origSelectedValue={selectedChartName}
-                handleChange={handleChartSwitch}
+                activeTab={selectedChartName}
+                onTabChange={handleChartSwitch}
             />
         </section>
     );

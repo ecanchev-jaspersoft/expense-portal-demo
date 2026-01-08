@@ -1,0 +1,49 @@
+@import '../../../styles/variables.css';
+
+.tabs-container {
+    width: 100%;
+    background: var(--white);
+    border-bottom: 2px solid var(--secondary-hover-color);
+    flex-shrink: 0;
+    height: auto;
+}
+
+.tabs-list {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    align-items: stretch;
+}
+
+.tab-button {
+    padding: var(--padding-medium) var(--padding-large);
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--text-black-color);
+    font-size: var(--font-small);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+    position: relative;
+    min-width: 120px;
+    text-align: center;
+}
+
+.tab-button:hover {
+    background: var(--neutral-light);
+    color: var(--primary-color);
+}
+
+.tab-button.active {
+    border-bottom-color: var(--primary-color);
+    color: var(--primary-color);
+    background: var(--neutral-light);
+    font-weight: 600;
+}
+
+.tab-button:focus {
+    outline: 2px solid var(--primary-hover-color);
+    outline-offset: -2px;
+}
