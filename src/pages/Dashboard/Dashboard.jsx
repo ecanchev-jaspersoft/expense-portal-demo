@@ -35,8 +35,7 @@ const Dashboard = () => {
         selectedChart,
         dispatch,
         isPageReportSelected,
-        setInputControlsData,
-        setInputControlsDataForInteractiveDashboard
+        setInputControlsData
     );
 
     const onUpdateChart = () => {
@@ -51,6 +50,12 @@ const Dashboard = () => {
                 handleInputControlChange={handleInputControlChange}
                 onUpdateChart={onUpdateChart}
                 handleDownloadPdf={handleDownloadPdf}
+                handleDashboardInputChange={(newValue, controlId) => {
+                    setInputControlsDataForInteractiveDashboard({
+                        ...inputControlsDataForInteractiveDashboard,
+                        [controlId]: newValue
+                    });
+                }}
             />
             <VisualizationContainer 
                 chartOptions={chartOptions}

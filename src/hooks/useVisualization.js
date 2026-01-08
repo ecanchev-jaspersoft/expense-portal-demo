@@ -7,15 +7,13 @@ import { CHART_TYPES, DOM_ELEMENT_IDS, AUTH_ACTIONS, EXPORT_FORMATS } from '../u
  * @param {Function} dispatch - Redux dispatch function
  * @param {boolean} isPageReportSelected - Whether page report mode is active
  * @param {Function} setInputControlsData - Setter for input controls data
- * @param {Function} setInputControlsDataForInteractiveDashboard - Setter for interactive dashboard data
  * @returns {Object} Visualization state and handlers
  */
 export const useVisualization = (
     selectedChart,
     dispatch,
     isPageReportSelected,
-    setInputControlsData,
-    setInputControlsDataForInteractiveDashboard
+    setInputControlsData
 ) => {
     const [reportViz, setReportViz] = useState(null);
     const [isChartLoaded, setIsChartLoaded] = useState(false);
@@ -54,33 +52,14 @@ export const useVisualization = (
                     return;
                 }
 
-                // Setup input controls based on report mode
-                if (!isPageReportSelected) {
-                    // Interactive dashboard mode: render controls in container with change events
-                    v.inputControls({
-                        container: `#${DOM_ELEMENT_IDS.INPUT_CONTROLS_CONTAINER}`,
-                        resource: selectedChart.resource,
-                        success: (icData) => {
-                            setInputControlsData(icData);
-                        },
-                        error: () => setInputControlsData([]),
-                        events: {
-                            change: (params) => {
-                                // Track changes for immediate updates in interactive mode
-                                setInputControlsDataForInteractiveDashboard(params);
-                            },
-                        },
-                    });
-                } else {
-                    // Page report mode: fetch controls without rendering (handled by Sidebar)
-                    v.inputControls({
-                        resource: selectedChart.resource,
-                        success: (icData) => {
-                            setInputControlsData(icData);
-                        },
-                        error: () => setInputControlsData([]),
-                    });
-                }
+                // Fetch input controls data for both modes
+                v.inputControls({
+                    resource: selectedChart.resource,
+                    success: (icData) => {
+                        setInputControlsData(icData);
+                    },
+                    error: () => setInputControlsData([]),
+                });
 
                 // Render the report visualization
                 const theReportViz = v.report({

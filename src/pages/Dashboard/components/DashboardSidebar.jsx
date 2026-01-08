@@ -1,5 +1,5 @@
 import Sidebar from '../../../sections/Sidebar/Sidebar';
-import { DOM_ELEMENT_IDS } from '../../../utils/Constants';
+import { DashboardInputControls } from './DashboardInputControls';
 
 /**
  * DashboardSidebar component - Renders the appropriate sidebar based on report mode
@@ -9,6 +9,7 @@ import { DOM_ELEMENT_IDS } from '../../../utils/Constants';
  * @param {Function} props.handleInputControlChange - Handler for input control changes
  * @param {Function} props.onUpdateChart - Handler to update/refresh the chart
  * @param {Function} props.handleDownloadPdf - Handler to download chart as PDF
+ * @param {Function} props.handleDashboardInputChange - Handler for dashboard input control changes
  */
 export const DashboardSidebar = ({
     isPageReportSelected,
@@ -16,6 +17,7 @@ export const DashboardSidebar = ({
     handleInputControlChange,
     onUpdateChart,
     handleDownloadPdf,
+    handleDashboardInputChange,
 }) => {
     if (isPageReportSelected) {
         return (
@@ -30,7 +32,10 @@ export const DashboardSidebar = ({
 
     return (
         <section className='sidebar'>
-            <div id={DOM_ELEMENT_IDS.INPUT_CONTROLS_CONTAINER}></div>
+            <DashboardInputControls
+                inputControlsData={inputControlsData}
+                handleInputChange={handleDashboardInputChange}
+            />
             <div className='sidebar-buttons'>
                 <button className='btn btn-primary' onClick={onUpdateChart}>
                     Update Chart

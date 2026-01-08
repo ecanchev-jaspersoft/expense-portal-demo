@@ -1,0 +1,65 @@
+@import '../../../styles/variables.css';
+
+.dashboard-input-controls {
+    padding: var(--padding-medium);
+    background: var(--white);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--padding-medium);
+}
+
+.dashboard-input-controls h5 {
+    margin: 0 0 var(--padding-medium) 0;
+    color: var(--primary-color);
+    font-size: var(--font-medium);
+    font-weight: 600;
+}
+
+.dashboard-controls-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-medium);
+}
+
+.dashboard-control-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-small);
+}
+
+.dashboard-control-label {
+    font-size: var(--font-small);
+    font-weight: 500;
+    color: var(--text-black-color);
+}
+
+.dashboard-control-select {
+    padding: var(--padding-small);
+    border: 1px solid var(--secondary-hover-color);
+    border-radius: var(--border-radius);
+    background: var(--white);
+    color: var(--text-black-color);
+    font-size: var(--font-small);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+}
+
+.dashboard-control-select:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px var(--primary-color);
+}
+
+.dashboard-control-select:focus {
+    border-color: var(--primary-hover-color);
+    box-shadow: 0 0 8px var(--primary-hover-color);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .dashboard-controls-grid {
+        gap: var(--padding-small);
+    }
+    
+    .dashboard-input-controls {
+        padding: var(--padding-small);
+    }
+}
