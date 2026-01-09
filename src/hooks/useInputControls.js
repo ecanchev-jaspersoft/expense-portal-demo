@@ -11,9 +11,30 @@ export const useInputControls = (isPageReportSelected) => {
     const [inputControlsData, setInputControlsData] = useState([]);
     const [loadingDependencies, setLoadingDependencies] = useState({});
 
+    // Helper function to extract selected values from a control
+    const getSelectedValues = (control) => {
+        return control?.state?.options
+            ?.filter(opt => opt.selected)
+            ?.map(opt => opt.value) || [];
+    };
+
+    // Helper function to find control by ID
+    const findControlById = (controls, controlId) => {
+        return controls.find(ic => ic.id === controlId);
+    };
+
+    // Helper function to manage loading states
+    const manageLoadingStates = (dependencies, isLoading) => {
+        const states = {};
+        dependencies.forEach(depId => {
+            states[depId] = isLoading;
+        });
+        setLoadingDependencies(prev => ({ ...prev, ...states }));
+    };
+
     const handleInputControlChange = async (newValue, icName) => {
         // Find the current control to check for dependencies
-        const currentControl = inputControlsData.find(ic => ic.id === icName);
+        const currentControl = findControlById(inputControlsData, icName);
         
         // Update the specific input control while preserving others
         const icsUpdated = inputControlsData.map((ic) => {
@@ -58,28 +79,20 @@ export const useInputControls = (isPageReportSelected) => {
 
     const fetchDependentOptions = async (controlId, slaveDependencies, latestInputControlsData) => {
         // Set loading state for all dependent controls
-        const loadingStates = {};
-        slaveDependencies.forEach(depId => {
-            loadingStates[depId] = true;
-        });
-        setLoadingDependencies(prev => ({ ...prev, ...loadingStates }));
+        manageLoadingStates(slaveDependencies, true);
 
         try {
             // Get the master control data from the latest data
-            const masterControl = latestInputControlsData.find(ic => ic.id === controlId);
-            const masterSelectedValues = masterControl?.state?.options
-                ?.filter(opt => opt.selected)
-                ?.map(opt => opt.value) || [];
+            const masterControl = findControlById(latestInputControlsData, controlId);
+            const masterSelectedValues = getSelectedValues(masterControl);
 
             // Build request body with slave dependencies first, then master control
             const requestBody = {};
 
             // Add slave dependencies with their current values from latest data
             slaveDependencies.forEach(slaveId => {
-                const slaveControl = latestInputControlsData.find(ic => ic.id === slaveId);
-                const currentValues = slaveControl?.state?.options
-                    ?.filter(opt => opt.selected)
-                    ?.map(opt => opt.value) || [];
+                const slaveControl = findControlById(latestInputControlsData, slaveId);
+                const currentValues = getSelectedValues(slaveControl);
                 requestBody[slaveId] = currentValues;
             });
 
@@ -123,11 +136,7 @@ export const useInputControls = (isPageReportSelected) => {
             console.error('Error fetching dependent options:', error);
         } finally {
             // Clear loading states
-            const clearedStates = {};
-            slaveDependencies.forEach(depId => {
-                clearedStates[depId] = false;
-            });
-            setLoadingDependencies(prev => ({ ...prev, ...clearedStates }));
+            manageLoadingStates(slaveDependencies, false);
         }
     };
 
@@ -141,9 +150,7 @@ export const useInputControls = (isPageReportSelected) => {
                 // Handle multi-select dropdowns
                 if (icData.type === 'multiSelect') {
                     // Extract selected values from multi-select structure
-                    const selectedValues = icData.state.options
-                        .filter(option => option.selected)
-                        .map(option => option.value.trim());
+                    const selectedValues = getSelectedValues(icData);
                     accum[icData.id] = selectedValues;
                 } else {
                     // Handle regular dropdowns

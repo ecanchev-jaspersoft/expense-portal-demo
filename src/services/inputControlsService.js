@@ -10,11 +10,6 @@
  */
 export const doPostToFetchDependentOptions = async (uri, requestBody) => {
     try {
-        console.log('API Request - Fetching dependent options:', {
-            uri,
-            requestBody
-        });
-
         const response = await fetch(uri, {
             method: "POST",
             headers: {
@@ -30,11 +25,7 @@ export const doPostToFetchDependentOptions = async (uri, requestBody) => {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-
-        const data = await response.json();
-        console.log('API Response - Dependent options fetched:', data);
-        
-        return data;
+        return await response.json();
     } catch (error) {
         console.error('Error fetching dependent options:', error);
         throw error;
