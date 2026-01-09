@@ -1,5 +1,6 @@
 import './DashboardInputControls.css';
 import { Dropdown } from '../../../utils/InputControls/Dropdown/Dropdown';
+import { MultiSelectDropdown } from '../../../utils/InputControls/MultiSelectDropdown/MultiSelectDropdown';
 import { FORBIDDEN_INPUT_CONTROLS, BOOLEAN_TEXT } from '../../../utils/Constants';
 
 /**
@@ -19,17 +20,32 @@ export const DashboardInputControls = ({ inputControlsData, handleInputChange })
             <div className='dashboard-controls-grid'>
                 {inputControlsData.map((ic) => {
                     if (ic.state?.options) {
-                        return (
-                            <Dropdown
-                                key={ic.id}
-                                label={ic.label}
-                                options={ic.state.options}
-                                name={ic.id}
-                                origSelectedValue={ic.state.value || ''}
-                                handleChange={(newValue) => handleInputChange(newValue, ic.id)}
-                            />
-                        );
+                        // Check if this should be a multi-select dropdown
+                        if (ic.type === 'multiSelect') {
+                            return (
+                                <MultiSelectDropdown
+                                    key={ic.id}
+                                    label={ic.label}
+                                    options={ic.state.options}
+                                    name={ic.id}
+                                    handleChange={(updatedOptions) => handleInputChange(updatedOptions, ic.id)}
+                                />
+                            );
+                        } else {
+                            // Regular dropdown
+                            return (
+                                <Dropdown
+                                    key={ic.id}
+                                    label={ic.label}
+                                    options={ic.state.options}
+                                    name={ic.id}
+                                    origSelectedValue={ic.state.value || ''}
+                                    handleChange={(newValue) => handleInputChange(newValue, ic.id)}
+                                />
+                            );
+                        }
                     }
+                    
                     return null;
                 })}
             </div>

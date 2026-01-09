@@ -1,0 +1,210 @@
+@import '../../../styles/variables.css';
+
+.multi-select-dropdown {
+    width: 100%;
+    margin-bottom: var(--padding-small);
+    position: relative;
+}
+
+.multi-select-label {
+    display: block;
+    font-size: var(--font-small);
+    font-weight: 500;
+    color: var(--text-black-color);
+    margin-bottom: var(--padding-small);
+}
+
+.multi-select-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--secondary-hover-color);
+    border-radius: var(--border-radius);
+    background: var(--white);
+    min-height: 40px;
+    height: 40px;
+    width: 100%;
+    max-width: 300px;
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    isolation: isolate;
+}
+
+.multi-select-container:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px var(--primary-color);
+}
+
+.multi-select-container:focus-within {
+    border-color: var(--primary-hover-color);
+    box-shadow: 0 0 8px var(--primary-hover-color);
+    outline: none;
+}
+
+.multi-select-tags {
+    flex: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--padding-small);
+    padding: var(--padding-small);
+    height: 32px;
+    align-items: center;
+    overflow: hidden;
+}
+
+.multi-select-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: var(--font-small);
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.multi-select-overflow-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--secondary-color);
+    color: var(--white);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: var(--font-small);
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.multi-select-tag-remove {
+    background: none;
+    border: none;
+    color: var(--white);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.multi-select-tag-remove:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.multi-select-placeholder {
+    color: var(--neutral-dark);
+    font-style: italic;
+}
+
+.multi-select-arrow {
+    background: none;
+    border: none;
+    padding: var(--padding-small);
+    cursor: pointer;
+    color: var(--text-black-color);
+    transition: transform 0.3s ease;
+    font-size: 12px;
+}
+
+.multi-select-arrow.open {
+    transform: rotate(180deg);
+}
+
+.multi-select-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border: 1px solid var(--secondary-hover-color);
+    border-top: none;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 9999;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 0;
+}
+
+.multi-select-actions {
+    display: flex;
+    gap: var(--padding-small);
+    padding: var(--padding-small);
+    border-bottom: 1px solid var(--secondary-hover-color);
+}
+
+.multi-select-action-btn {
+    flex: 1;
+    padding: 6px 12px;
+    background: var(--neutral-light);
+    border: 1px solid var(--secondary-hover-color);
+    border-radius: 4px;
+    color: var(--text-black-color);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.multi-select-action-btn:hover {
+    background: var(--primary-color);
+    color: var(--white);
+    border-color: var(--primary-color);
+}
+
+.multi-select-divider {
+    height: 1px;
+    background: var(--secondary-hover-color);
+    margin: 0;
+}
+
+.multi-select-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--padding-small);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.multi-select-option:hover {
+    background: var(--neutral-light);
+}
+
+.multi-select-option.selected {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+.multi-select-option.selected:hover {
+    background: var(--primary-hover-color);
+}
+
+.multi-select-option-text {
+    flex: 1;
+}
+
+.multi-select-option-check {
+    font-weight: bold;
+    margin-left: var(--padding-small);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .multi-select-options {
+        max-height: 150px;
+    }
+
+    .multi-select-tag {
+        font-size: 12px;
+        padding: 2px 6px;
+    }
+}

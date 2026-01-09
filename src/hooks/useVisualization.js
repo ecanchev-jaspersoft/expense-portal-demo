@@ -80,6 +80,7 @@ export const useVisualization = (
         if (!reportViz) return;
 
         const paramsReport = buildReportParams();
+        // console.log('paramsReport', paramsReport);
         reportViz.params(paramsReport).run();
     };
 

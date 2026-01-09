@@ -10,23 +10,35 @@ export const useInputControls = (isPageReportSelected) => {
     const [inputControlsData, setInputControlsData] = useState([]);
 
     const handleInputControlChange = (newValue, icName) => {
-        let strValue = newValue;
-        // Page reports require boolean values as string literals
-        if (isPageReportSelected) {
-            strValue = newValue ? BOOLEAN_TEXT.TRUE : BOOLEAN_TEXT.FALSE;
-        }
         // Update the specific input control while preserving others
         const icsUpdated = inputControlsData.map((ic) => {
             if (ic.id !== icName) {
                 return ic;
             }
-            return {
-                ...ic,
-                state: {
-                    ...ic.state,
-                    value: strValue.trim(),
-                },
-            };
+            // Handle different data structures
+            if (Array.isArray(newValue)) {
+                // Multi-select dropdown - update the entire options array
+                return {
+                    ...ic,
+                    state: {
+                        ...ic.state,
+                        options: newValue,
+                    },
+                };
+            } else {
+                // Regular input control - handle boolean/string conversion
+                let strValue = newValue;
+                if (isPageReportSelected) {
+                    strValue = newValue ? BOOLEAN_TEXT.TRUE : BOOLEAN_TEXT.FALSE;
+                }
+                return {
+                    ...ic,
+                    state: {
+                        ...ic.state,
+                        value: strValue,
+                    },
+                };
+            }
         });
         setInputControlsData(icsUpdated);
     };
@@ -37,7 +49,22 @@ export const useInputControls = (isPageReportSelected) => {
      */
     const buildReportParams = () => {
         return inputControlsData.reduce((accum, icData) => {
-            accum[icData.id] = [icData.state.value];
+            if (icData.state?.options) {
+                // Handle multi-select dropdowns
+                if (icData.type === 'multiSelect') {
+                    // Extract selected values from multi-select structure
+                    const selectedValues = icData.state.options
+                        .filter(option => option.selected)
+                        .map(option => option.value.trim());
+                    accum[icData.id] = selectedValues;
+                } else {
+                    // Handle regular dropdowns
+                    accum[icData.id] = [icData.state.value.trim()];
+                }
+            } else {
+                // Handle other input control types
+                accum[icData.id] = [icData.state.value.trim()];
+            }
             return accum;
         }, {});
     };
