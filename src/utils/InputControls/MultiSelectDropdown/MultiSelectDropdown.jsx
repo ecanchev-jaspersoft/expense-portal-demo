@@ -1,94 +1,47 @@
 import { useState, useEffect, useRef } from 'react';
 import './MultiSelectDropdown.css';
 
-/**
- * MultiSelectDropdown component - Dropdown with tag-based multi-select functionality
- * @param {Object} props - Component props
- * @param {string} props.label - Label for the dropdown
- * @param {Array<{value: string, label: string, selected: boolean}>} props.options - Available options with selection state
- * @param {string} props.name - Name identifier for the dropdown
- * @param {Function} props.handleChange - Handler for selection changes (selectedOptions, controlId)
- */
 export const MultiSelectDropdown = ({ label, options, name, handleChange }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
-
-    // Derive selected options from props instead of maintaining separate state
     const selectedOptions = options.filter(opt => opt.selected);
 
     // Close dropdown when clicking outside
     useEffect(() => {
+        if (!isOpen) return;
+        
         const handleClickOutside = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            if (!dropdownRef.current?.contains(event.target)) {
                 setIsOpen(false);
             }
         };
 
-        // Add event listener when dropdown is open
-        if (isOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
-        }
-
-        // Cleanup event listener
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [isOpen]);
 
-    const toggleDropdown = () => setIsOpen(!isOpen);
-
-    const handleOptionClick = (clickedOption) => {
-        let newSelectedOptions;
-        
-        if (clickedOption.selected) {
-            // Remove from selection
-            newSelectedOptions = selectedOptions.filter(opt => opt.value !== clickedOption.value);
-        } else {
-            // Add to selection
-            newSelectedOptions = [...selectedOptions, clickedOption];
-        }
-
-        // Update options structure to reflect selection changes
+    const updateOptions = (newSelectedOptions) => {
         const updatedOptions = options.map(opt => ({
             ...opt,
             selected: newSelectedOptions.some(selected => selected.value === opt.value)
         }));
-
-        // Call parent handler with full updated structure
         handleChange(updatedOptions, name);
+    };
+
+    const handleOptionClick = (clickedOption) => {
+        const newSelectedOptions = clickedOption.selected
+            ? selectedOptions.filter(opt => opt.value !== clickedOption.value)
+            : [...selectedOptions, clickedOption];
+        updateOptions(newSelectedOptions);
     };
 
     const removeTag = (optionToRemove) => {
-        const newSelectedOptions = selectedOptions.filter(opt => opt.value !== optionToRemove.value);
-        
-        // Update options structure
-        const updatedOptions = options.map(opt => ({
-            ...opt,
-            selected: newSelectedOptions.some(selected => selected.value === opt.value)
-        }));
-
-        handleChange(updatedOptions, name);
+        updateOptions(selectedOptions.filter(opt => opt.value !== optionToRemove.value));
     };
 
-    const selectAll = () => {
-        // Select all options
-        const updatedOptions = options.map(opt => ({
-            ...opt,
-            selected: true
-        }));
-
-        handleChange(updatedOptions, name);
-    };
-
-    const clearAll = () => {
-        // Deselect all options
-        const updatedOptions = options.map(opt => ({
-            ...opt,
-            selected: false
-        }));
-
-        handleChange(updatedOptions, name);
-    };
+    const selectAll = () => updateOptions(options);
+    const clearAll = () => updateOptions([]);
+    const toggleDropdown = () => setIsOpen(!isOpen);
 
     return (
         <div className='multi-select-dropdown' ref={dropdownRef}>
