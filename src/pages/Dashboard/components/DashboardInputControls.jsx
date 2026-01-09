@@ -1,15 +1,15 @@
 import './DashboardInputControls.css';
 import { Dropdown } from '../../../utils/InputControls/Dropdown/Dropdown';
 import { MultiSelectDropdown } from '../../../utils/InputControls/MultiSelectDropdown/MultiSelectDropdown';
-import { FORBIDDEN_INPUT_CONTROLS, BOOLEAN_TEXT } from '../../../utils/Constants';
 
 /**
  * DashboardInputControls component - Custom input controls for dashboard mode
  * @param {Object} props - Component props
  * @param {Array} props.inputControlsData - Input controls data from the visualization
  * @param {Function} props.handleInputChange - Handler for input control changes
+ * @param {Object} props.loadingDependencies - Loading states for dependent controls
  */
-export const DashboardInputControls = ({ inputControlsData, handleInputChange }) => {
+export const DashboardInputControls = ({ inputControlsData, handleInputChange, loadingDependencies }) => {
     if (!inputControlsData || inputControlsData.length === 0) {
         return null;
     }
@@ -28,6 +28,7 @@ export const DashboardInputControls = ({ inputControlsData, handleInputChange })
                                     label={ic.label}
                                     options={ic.state.options}
                                     name={ic.id}
+                                    isLoading={loadingDependencies[ic.id] || false}
                                     handleChange={(updatedOptions) => handleInputChange(updatedOptions, ic.id)}
                                 />
                             );

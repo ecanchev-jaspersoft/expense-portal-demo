@@ -27,6 +27,7 @@ const Dashboard = () => {
         setInputControlsData,
         handleInputControlChange,
         buildReportParams,
+        loadingDependencies,
     } = useInputControls(isPageReportSelected);
 
     const { isChartLoaded, handleUpdateChart, handleDownloadPdf } = useVisualization(
@@ -47,6 +48,7 @@ const Dashboard = () => {
                 handleInputControlChange={handleInputControlChange}
                 onUpdateChart={onUpdateChart}
                 handleDownloadPdf={handleDownloadPdf}
+                loadingDependencies={loadingDependencies}
             />
             <VisualizationContainer 
                 chartOptions={chartOptions}

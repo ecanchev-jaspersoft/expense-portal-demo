@@ -9,6 +9,7 @@ import { DashboardInputControls } from './DashboardInputControls';
  * @param {Function} props.handleInputControlChange - Handler for input control changes
  * @param {Function} props.onUpdateChart - Handler to update/refresh the chart
  * @param {Function} props.handleDownloadPdf - Handler to download chart as PDF
+ * @param {Object} props.loadingDependencies - Loading states for dependent controls
  */
 export const DashboardSidebar = ({
     isPageReportSelected,
@@ -16,6 +17,7 @@ export const DashboardSidebar = ({
     handleInputControlChange,
     onUpdateChart,
     handleDownloadPdf,
+    loadingDependencies,
 }) => {
     if (isPageReportSelected) {
         return (
@@ -33,6 +35,7 @@ export const DashboardSidebar = ({
             <DashboardInputControls
                 inputControlsData={inputControlsData}
                 handleInputChange={handleInputControlChange}
+                loadingDependencies={loadingDependencies}
             />
             <div className='sidebar-buttons'>
                 <button className='btn btn-primary' onClick={onUpdateChart}>

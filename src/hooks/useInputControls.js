@@ -8,13 +8,18 @@ import { BOOLEAN_TEXT } from '../utils/Constants';
  */
 export const useInputControls = (isPageReportSelected) => {
     const [inputControlsData, setInputControlsData] = useState([]);
+    const [loadingDependencies, setLoadingDependencies] = useState({});
 
-    const handleInputControlChange = (newValue, icName) => {
+    const handleInputControlChange = async (newValue, icName) => {
+        // Find the current control to check for dependencies
+        const currentControl = inputControlsData.find(ic => ic.id === icName);
+        
         // Update the specific input control while preserving others
         const icsUpdated = inputControlsData.map((ic) => {
             if (ic.id !== icName) {
                 return ic;
             }
+            
             // Handle different data structures
             if (Array.isArray(newValue)) {
                 // Multi-select dropdown - update the entire options array
@@ -40,7 +45,57 @@ export const useInputControls = (isPageReportSelected) => {
                 };
             }
         });
+
+        // Update state first
         setInputControlsData(icsUpdated);
+
+        // Handle dependencies if this is a multi-select with slaves
+        if (currentControl?.type === 'multiSelect' && currentControl?.slaveDependencies?.length > 0) {
+            await fetchDependentOptions(icName, currentControl.slaveDependencies);
+        }
+    };
+
+    const fetchDependentOptions = async (controlId, slaveDependencies) => {
+        // Set loading state for all dependent controls
+        const loadingStates = {};
+        slaveDependencies.forEach(depId => {
+            loadingStates[depId] = true;
+        });
+        setLoadingDependencies(prev => ({ ...prev, ...loadingStates }));
+
+        try {
+            // TODO: Replace with actual API call
+            console.log(`Fetching dependencies for ${controlId}:`, slaveDependencies);
+            
+            // Simulate API delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // TODO: Replace with actual API response
+            // For now, we'll just reset the dependent controls
+            const updatedControls = inputControlsData.map(ic => {
+                if (slaveDependencies.includes(ic.id)) {
+                    return {
+                        ...ic,
+                        state: {
+                            ...ic.state,
+                            options: ic.state.options.map(opt => ({ ...opt, selected: false }))
+                        }
+                    };
+                }
+                return ic;
+            });
+
+            setInputControlsData(updatedControls);
+        } catch (error) {
+            console.error('Error fetching dependent options:', error);
+        } finally {
+            // Clear loading states
+            const clearedStates = {};
+            slaveDependencies.forEach(depId => {
+                clearedStates[depId] = false;
+            });
+            setLoadingDependencies(prev => ({ ...prev, ...clearedStates }));
+        }
     };
 
     /**
@@ -74,5 +129,6 @@ export const useInputControls = (isPageReportSelected) => {
         setInputControlsData,
         handleInputControlChange,
         buildReportParams,
+        loadingDependencies,
     };
 };

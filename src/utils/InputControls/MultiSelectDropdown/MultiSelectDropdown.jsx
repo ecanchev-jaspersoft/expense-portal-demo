@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import './MultiSelectDropdown.css';
 
-export const MultiSelectDropdown = ({ label, options, name, handleChange }) => {
+export const MultiSelectDropdown = ({ label, options, name, handleChange, isLoading = false }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
     const selectedOptions = options.filter(opt => opt.selected);
@@ -48,8 +48,8 @@ export const MultiSelectDropdown = ({ label, options, name, handleChange }) => {
             {label && (
                 <label className='multi-select-label'>{label}</label>
             )}
-            <div className='multi-select-container'>
-                <div className='multi-select-tags' onClick={toggleDropdown}>
+            <div className={`multi-select-container ${isLoading ? 'loading' : ''}`}>
+                <div className='multi-select-tags' onClick={!isLoading ? toggleDropdown : undefined}>
                     {selectedOptions.length > 0 ? (
                         <>
                             {selectedOptions.slice(0, 2).map((option) => (
@@ -60,8 +60,9 @@ export const MultiSelectDropdown = ({ label, options, name, handleChange }) => {
                                         className='multi-select-tag-remove'
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            removeTag(option);
+                                            if (!isLoading) removeTag(option);
                                         }}
+                                        disabled={isLoading}
                                     >
                                         ×
                                     </button>
@@ -74,15 +75,18 @@ export const MultiSelectDropdown = ({ label, options, name, handleChange }) => {
                             )}
                         </>
                     ) : (
-                        <span className='multi-select-placeholder'>Select options...</span>
+                        <span className='multi-select-placeholder'>
+                            {isLoading ? 'Loading...' : 'Select options...'}
+                        </span>
                     )}
                 </div>
                 <button
                     type='button'
-                    className={`multi-select-arrow ${isOpen ? 'open' : ''}`}
-                    onClick={toggleDropdown}
+                    className={`multi-select-arrow ${isOpen ? 'open' : ''} ${isLoading ? 'loading' : ''}`}
+                    onClick={!isLoading ? toggleDropdown : undefined}
+                    disabled={isLoading}
                 >
-                    ▼
+                    {isLoading ? '⏳' : '▼'}
                 </button>
             </div>
             
