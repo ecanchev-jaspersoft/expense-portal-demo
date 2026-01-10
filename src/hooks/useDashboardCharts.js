@@ -11,7 +11,7 @@ export const useDashboardCharts = (isPageReportSelected) => {
 
     // Filter charts to only include dashboard-type visualizations
     const dashboardLikeReports = useMemo(() => {
-        return CHARTS.filter((chart) => chart.name === CHART_NAMES.FINANCIAL_HEALTH || chart.name === CHART_NAMES.CUSTOMER_MARKET);
+        return CHARTS.filter((chart) => CHART_NAMES.CUSTOMER_MARKET===chart.name || CHART_NAMES.FINANCIAL_HEALTH===chart.name || CHART_NAMES.OPERATIONAL_EFFICIENCY===chart.name || CHART_NAMES.PEOPLE_TALENT===chart.name);
     }, []);
 
     const chartOptions = useMemo(() => {

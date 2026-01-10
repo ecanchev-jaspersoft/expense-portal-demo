@@ -6,7 +6,7 @@ import './Login.css';
 
 const USERS = {
     JOHN: 'john',
-    ADMIN: 'admin',
+    ADMIN: 'manager',
 };
 
 const Login = () => {

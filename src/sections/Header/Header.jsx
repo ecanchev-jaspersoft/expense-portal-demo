@@ -10,7 +10,7 @@ const Header = () => {
         dispatch,
     } = useAuth();
     const navigate = useNavigate();
-    const username = loggedInUser === USER_ROLES.ADMIN ? 'Admin' : 'John Q. Public';
+    const username = loggedInUser === USER_ROLES.ADMIN ? 'Manager' : 'John Q. Public';
 
     const handleLogout = () => {
         vObject.logout().done(() => {

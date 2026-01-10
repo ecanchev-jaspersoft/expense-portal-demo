@@ -18,6 +18,8 @@ export const CHART_TYPES = {
 export const CHART_NAMES = {
     FINANCIAL_HEALTH: 'Financial Health & Performance',
     CUSTOMER_MARKET: 'Customer & Market Groth',
+    OPERATIONAL_EFFICIENCY: 'Operational Efficiency',
+    PEOPLE_TALENT: 'People & Talent',
 };
 
 export const DOM_ELEMENT_IDS = {
@@ -84,6 +86,16 @@ export const CHARTS = [
     },
     {
         name: 'Customer & Market Groth',
+        resource: '/public/Demo_Example/Embedded_Dashboards/Customer___Market_Growth',
+        type: 'report',
+    },
+    {
+        name: 'Operational Efficiency',
+        resource: '/public/Demo_Example/Embedded_Dashboards/Financial_Health___Performance',
+        type: 'report',
+    },
+    {
+        name: 'People & Talent',
         resource: '/public/Demo_Example/Embedded_Dashboards/Customer___Market_Growth',
         type: 'report',
     },
