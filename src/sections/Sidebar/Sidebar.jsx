@@ -4,7 +4,7 @@ import SwitchButton from '../../utils/InputControls/SwitchButton/SwitchButton';
 import { FORBIDDEN_INPUT_CONTROLS, BOOLEAN_TEXT } from '../../utils/Constants';
 import { Dropdown } from '../../utils/InputControls/Dropdown/Dropdown';
 
-const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPdf }) => {
+const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPdf, isChartLoaded }) => {
     const transformOriginalValue = (ic) => {
         if (!ic.state || !ic.state.value) {
             return false;
@@ -48,6 +48,7 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPd
                                                 ]}
                                                 name={icToRender.id}
                                                 origSelectedValue={'-5y'}
+                                                disabled={!isChartLoaded}
                                             />
                                         );
                                     } else {
@@ -59,6 +60,7 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPd
                                                 name={icToRender.id}
                                                 origSelectedValue={''}
                                                 handleChange={(newValue) => handleSwitchButtonChange(newValue, icToRender.id)}
+                                                disabled={!isChartLoaded}
                                             />
                                         );
                                     }
@@ -71,6 +73,7 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPd
                                             name={icToRender.id}
                                             label={transformLabel(icToRender.label)}
                                             origIsChecked={transformOriginalValue(icToRender)}
+                                            disabled={!isChartLoaded}
                                         />
                                     );
                                 }

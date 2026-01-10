@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import './MultiSelectDropdown.css';
 
-export const MultiSelectDropdown = ({ label, options, name, handleChange, isLoading = false }) => {
+export const MultiSelectDropdown = ({ label, options, name, handleChange, isLoading = false, disabled = false }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
     const selectedOptions = options.filter(opt => opt.selected);
@@ -39,17 +39,23 @@ export const MultiSelectDropdown = ({ label, options, name, handleChange, isLoad
         updateOptions(selectedOptions.filter(opt => opt.value !== optionToRemove.value));
     };
 
-    const selectAll = () => updateOptions(options);
-    const clearAll = () => updateOptions([]);
-    const toggleDropdown = () => setIsOpen(!isOpen);
+    const selectAll = () => {
+        updateOptions(options);
+    };
+    const clearAll = () => {
+        updateOptions([]);
+    };
+    const toggleDropdown = () => {
+        setIsOpen(!isOpen);
+    };
 
     return (
         <div className='multi-select-dropdown' ref={dropdownRef}>
             {label && (
                 <label className='multi-select-label'>{label}</label>
             )}
-            <div className={`multi-select-container ${isLoading ? 'loading' : ''}`}>
-                <div className='multi-select-tags' onClick={!isLoading ? toggleDropdown : undefined}>
+            <div className={`multi-select-container ${isLoading ? 'loading' : ''} ${disabled ? 'disabled' : ''}`}>
+                <div className='multi-select-tags' onClick={disabled || isLoading ? undefined : toggleDropdown}>
                     {selectedOptions.length > 0 ? (
                         <>
                             {selectedOptions.slice(0, 2).map((option) => (
@@ -76,21 +82,21 @@ export const MultiSelectDropdown = ({ label, options, name, handleChange, isLoad
                         </>
                     ) : (
                         <span className='multi-select-placeholder'>
-                            {isLoading ? 'Loading...' : 'Select options...'}
+                            {isLoading ? 'Loading...' : disabled ? 'Disabled' : 'Select options...'}
                         </span>
                     )}
                 </div>
                 <button
                     type='button'
-                    className={`multi-select-arrow ${isOpen ? 'open' : ''} ${isLoading ? 'loading' : ''}`}
-                    onClick={!isLoading ? toggleDropdown : undefined}
-                    disabled={isLoading}
+                    className={`multi-select-arrow ${isOpen ? 'open' : ''} ${isLoading ? 'loading' : ''} ${disabled ? 'disabled' : ''}`}
+                    onClick={disabled || isLoading ? undefined : toggleDropdown}
+                    disabled={isLoading || disabled}
                 >
-                    {isLoading ? '⏳' : '▼'}
+                    {isLoading ? '⏳' : disabled ? '🚫' : '▼'}
                 </button>
             </div>
             
-            {isOpen && (
+            {isOpen && !disabled && (
                 <div className='multi-select-options'>
                     {/* Select All / Clear All buttons */}
                     <div className='multi-select-actions'>
@@ -98,6 +104,7 @@ export const MultiSelectDropdown = ({ label, options, name, handleChange, isLoad
                             type='button'
                             className='multi-select-action-btn'
                             onClick={selectAll}
+                            disabled={disabled || isLoading}
                         >
                             Select All
                         </button>
@@ -105,6 +112,7 @@ export const MultiSelectDropdown = ({ label, options, name, handleChange, isLoad
                             type='button'
                             className='multi-select-action-btn'
                             onClick={clearAll}
+                            disabled={disabled || isLoading}
                         >
                             Clear All
                         </button>
@@ -117,8 +125,8 @@ export const MultiSelectDropdown = ({ label, options, name, handleChange, isLoad
                     {options.map((option) => (
                         <div
                             key={option.value}
-                            className={`multi-select-option ${option.selected ? 'selected' : ''}`}
-                            onClick={() => handleOptionClick(option)}
+                            className={`multi-select-option ${option.selected ? 'selected' : ''} ${disabled || isLoading ? 'disabled' : ''}`}
+                            onClick={disabled || isLoading ? undefined : () => handleOptionClick(option)}
                         >
                             <span className='multi-select-option-text'>{option.label}</span>
                             {option.selected && <span className='multi-select-option-check'>✓</span>}

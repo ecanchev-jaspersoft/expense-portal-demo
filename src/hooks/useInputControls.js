@@ -36,7 +36,6 @@ export const useInputControls = (isPageReportSelected, selectedChart) => {
     const handleInputControlChange = async (newValue, icName) => {
         // Find the current control to check for dependencies
         const currentControl = findControlById(inputControlsData, icName);
-        
         // Update the specific input control while preserving others
         const icsUpdated = inputControlsData.map((ic) => {
             if (ic.id !== icName) {

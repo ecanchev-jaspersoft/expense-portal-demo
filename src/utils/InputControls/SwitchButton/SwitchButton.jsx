@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './SwitchButton.css'; // Assuming you will style the component in a CSS file
 
-const SwitchButton = ({ name, onChange, label, origIsChecked }) => {
+const SwitchButton = ({ name, onChange, label, origIsChecked, disabled = false }) => {
     const [isChecked, setIsChecked] = useState(origIsChecked || false);
 
     const handleToggle = () => {
@@ -14,7 +14,7 @@ const SwitchButton = ({ name, onChange, label, origIsChecked }) => {
 
     return (
         <div className='switch-button'>
-            <input type='checkbox' id={name} className='switch-button-checkbox' checked={isChecked} onChange={handleToggle} />
+            <input type='checkbox' id={name} className='switch-button-checkbox' checked={isChecked} onChange={handleToggle} disabled={disabled} />
             <label className='switch-button-label' htmlFor={name}>
                 <span className='switch-button-inner' />
                 <span className='switch-button-switch' />

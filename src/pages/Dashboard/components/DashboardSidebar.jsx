@@ -17,6 +17,7 @@ export const DashboardSidebar = ({
     handleInputControlChange,
     handleDownloadPdf,
     loadingDependencies,
+    isChartLoaded,
 }) => {
     if (isPageReportSelected) {
         return (
@@ -24,6 +25,7 @@ export const DashboardSidebar = ({
                 inputControlsData={inputControlsData}
                 handleSwitchButtonChange={handleInputControlChange}
                 handleDownloadPdf={handleDownloadPdf}
+                isChartLoaded={isChartLoaded}
             />
         );
     }
@@ -34,6 +36,7 @@ export const DashboardSidebar = ({
                 inputControlsData={inputControlsData}
                 handleInputChange={handleInputControlChange}
                 loadingDependencies={loadingDependencies}
+                isChartLoaded={isChartLoaded}
             />
         </section>
     );

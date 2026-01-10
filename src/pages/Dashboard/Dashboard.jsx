@@ -79,6 +79,7 @@ const Dashboard = () => {
                 handleInputControlChange={handleInputControlChange}
                 handleDownloadPdf={handleDownloadPdf}
                 loadingDependencies={loadingDependencies}
+                isChartLoaded={isChartLoaded}
             />
             <VisualizationContainer 
                 chartOptions={chartOptions}

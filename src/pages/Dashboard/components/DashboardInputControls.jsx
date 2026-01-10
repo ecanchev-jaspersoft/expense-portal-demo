@@ -9,7 +9,7 @@ import { MultiSelectDropdown } from '../../../utils/InputControls/MultiSelectDro
  * @param {Function} props.handleInputChange - Handler for input control changes
  * @param {Object} props.loadingDependencies - Loading states for dependent controls
  */
-export const DashboardInputControls = ({ inputControlsData, handleInputChange, loadingDependencies }) => {
+export const DashboardInputControls = ({ inputControlsData, handleInputChange, loadingDependencies, isChartLoaded }) => {
     if (!inputControlsData || inputControlsData.length === 0) {
         return null;
     }
@@ -29,7 +29,8 @@ export const DashboardInputControls = ({ inputControlsData, handleInputChange, l
                                     options={ic.state.options}
                                     name={ic.id}
                                     isLoading={loadingDependencies[ic.id] || false}
-                                    handleChange={(updatedOptions) => handleInputChange(updatedOptions, ic.id)}
+                                    handleChange={(selectedValues) => handleInputChange(selectedValues, ic.id )}
+                                    disabled={!isChartLoaded}
                                 />
                             );
                         } else {
@@ -42,6 +43,7 @@ export const DashboardInputControls = ({ inputControlsData, handleInputChange, l
                                     name={ic.id}
                                     origSelectedValue={ic.state.value || ''}
                                     handleChange={(newValue) => handleInputChange(newValue, ic.id)}
+                                    disabled={!isChartLoaded}
                                 />
                             );
                         }
