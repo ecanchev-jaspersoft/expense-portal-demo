@@ -1,15 +1,15 @@
-import './DashboardInputControls.css';
-import { Dropdown } from '../../../utils/InputControls/Dropdown/Dropdown';
-import { MultiSelectDropdown } from '../../../utils/InputControls/MultiSelectDropdown/MultiSelectDropdown';
+import './MultiValuesInputControls.css';
+import { Dropdown } from '../../../../utils/InputControls/Dropdown/Dropdown';
+import { MultiSelectDropdown } from '../../../../utils/InputControls/MultiSelectDropdown/MultiSelectDropdown';
 
 /**
- * DashboardInputControls component - Custom input controls for dashboard mode
+ * MultiValuesInputControls component - Custom input controls for dashboard mode
  * @param {Object} props - Component props
  * @param {Array} props.inputControlsData - Input controls data from the visualization
  * @param {Function} props.handleInputChange - Handler for input control changes
  * @param {Object} props.loadingDependencies - Loading states for dependent controls
  */
-export const DashboardInputControls = ({ inputControlsData, handleInputChange, loadingDependencies, isChartLoaded }) => {
+export const MultiValuesInputControls = ({ inputControlsData, handleInputChange, loadingDependencies, isChartLoaded }) => {
     if (!inputControlsData || inputControlsData.length === 0) {
         return null;
     }

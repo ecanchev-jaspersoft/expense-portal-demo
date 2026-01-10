@@ -1,10 +1,10 @@
-import './Sidebar.css';
-import '../../styles/button.css';
-import SwitchButton from '../../utils/InputControls/SwitchButton/SwitchButton';
-import { FORBIDDEN_INPUT_CONTROLS, BOOLEAN_TEXT } from '../../utils/Constants';
-import { Dropdown } from '../../utils/InputControls/Dropdown/Dropdown';
+import './SingleValueInputControls.css';
+import '../../../../styles/button.css';
+import SwitchButton from '../../../../utils/InputControls/SwitchButton/SwitchButton';
+import { FORBIDDEN_INPUT_CONTROLS, BOOLEAN_TEXT } from '../../../../utils/Constants';
+import { Dropdown } from '../../../../utils/InputControls/Dropdown/Dropdown';
 
-const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPdf, isChartLoaded }) => {
+const SingleValueInputControls = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPdf, isChartLoaded }) => {
     const transformOriginalValue = (ic) => {
         if (!ic.state || !ic.state.value) {
             return false;
@@ -24,6 +24,7 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPd
             })
             .join(' ');
     };
+    
 
     return (
         <>
@@ -33,8 +34,8 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPd
                     <ul className='switch-button-row'>
                         <li>
                             {inputControlsData.map((icToRender) => {
-                                if (icToRender.state?.options) {
-                                    if (icToRender.id === 'STATEMENT_TIME') {
+                                if (icToRender.id === 'STATEMENT_TIME') {
+                                    // dummy dropdown for time range
                                         return (
                                             <Dropdown
                                                 key={icToRender.id}
@@ -51,23 +52,9 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPd
                                                 disabled={!isChartLoaded}
                                             />
                                         );
-                                    } else {
+                                    }  else if (!FORBIDDEN_INPUT_CONTROLS.includes(icToRender.id)) {
                                         return (
-                                            <Dropdown
-                                                key={icToRender.id}
-                                                label={icToRender.label}
-                                                options={icToRender.state.options}
-                                                name={icToRender.id}
-                                                origSelectedValue={''}
-                                                handleChange={(newValue) => handleSwitchButtonChange(newValue, icToRender.id)}
-                                                disabled={!isChartLoaded}
-                                            />
-                                        );
-                                    }
-                                }
-                                if (!FORBIDDEN_INPUT_CONTROLS.includes(icToRender.id)) {
-                                    return (
-                                        <SwitchButton
+                                            <SwitchButton
                                             key={icToRender.id}
                                             onChange={(newValue) => handleSwitchButtonChange(newValue, icToRender.id)}
                                             name={icToRender.id}
@@ -91,4 +78,4 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPd
     );
 };
 
-export default Sidebar;
+export default SingleValueInputControls;

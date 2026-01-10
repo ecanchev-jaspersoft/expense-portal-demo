@@ -1,5 +1,5 @@
-import Sidebar from '../../../sections/Sidebar/Sidebar';
-import { DashboardInputControls } from './DashboardInputControls';
+import SingleValueInputControls from './SingleValueInputControls/SingleValueInputControls';
+import { MultiValuesInputControls } from './MultiValuesInputControls/MultiValuesInputControls';
 
 /**
  * DashboardSidebar component - Renders the appropriate sidebar based on report mode
@@ -21,7 +21,7 @@ export const DashboardSidebar = ({
 }) => {
     if (isPageReportSelected) {
         return (
-            <Sidebar
+            <SingleValueInputControls
                 inputControlsData={inputControlsData}
                 handleSwitchButtonChange={handleInputControlChange}
                 handleDownloadPdf={handleDownloadPdf}
@@ -32,7 +32,7 @@ export const DashboardSidebar = ({
 
     return (
         <section className='sidebar'>
-            <DashboardInputControls
+            <MultiValuesInputControls
                 inputControlsData={inputControlsData}
                 handleInputChange={handleInputControlChange}
                 loadingDependencies={loadingDependencies}

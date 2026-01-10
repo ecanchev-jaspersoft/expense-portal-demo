@@ -7,7 +7,7 @@ export const Dropdown = ({ options, label, name, origSelectedValue, handleChange
     const handleSelectionChange = (e) => {
         const newVal = e.target.value;
         setTheVal(newVal);
-        handleChange(newVal);
+        handleChange?.(newVal);
     };
     return (
         <div className='dropdown-container'>
