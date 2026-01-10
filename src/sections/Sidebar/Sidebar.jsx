@@ -4,7 +4,7 @@ import SwitchButton from '../../utils/InputControls/SwitchButton/SwitchButton';
 import { FORBIDDEN_INPUT_CONTROLS, BOOLEAN_TEXT } from '../../utils/Constants';
 import { Dropdown } from '../../utils/InputControls/Dropdown/Dropdown';
 
-const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPdf, handleUpdateChart }) => {
+const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPdf }) => {
     const transformOriginalValue = (ic) => {
         if (!ic.state || !ic.state.value) {
             return false;
@@ -78,9 +78,6 @@ const Sidebar = ({ inputControlsData, handleSwitchButtonChange, handleDownloadPd
                         </li>
                     </ul>
                     <div className='sidebar-buttons'>
-                        <button className='btn btn-primary' onClick={handleUpdateChart}>
-                            Update Chart
-                        </button>
                         <button className='btn btn-secondary' onClick={handleDownloadPdf}>
                             Download PDF
                         </button>

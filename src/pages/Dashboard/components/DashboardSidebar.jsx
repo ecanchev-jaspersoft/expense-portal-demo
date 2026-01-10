@@ -15,7 +15,6 @@ export const DashboardSidebar = ({
     isPageReportSelected,
     inputControlsData,
     handleInputControlChange,
-    onUpdateChart,
     handleDownloadPdf,
     loadingDependencies,
 }) => {
@@ -24,7 +23,6 @@ export const DashboardSidebar = ({
             <Sidebar
                 inputControlsData={inputControlsData}
                 handleSwitchButtonChange={handleInputControlChange}
-                handleUpdateChart={onUpdateChart}
                 handleDownloadPdf={handleDownloadPdf}
             />
         );
@@ -37,11 +35,6 @@ export const DashboardSidebar = ({
                 handleInputChange={handleInputControlChange}
                 loadingDependencies={loadingDependencies}
             />
-            <div className='sidebar-buttons'>
-                <button className='btn btn-primary' onClick={onUpdateChart}>
-                    Update Chart
-                </button>
-            </div>
         </section>
     );
 };
