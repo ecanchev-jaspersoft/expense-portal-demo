@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
+import { useDisabledState } from '../../../hooks/useDisabledState';
 import './MultiSelectDropdown.css';
 
 export const MultiSelectDropdown = ({ label, options, name, handleChange, isLoading = false, disabled = false }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
     const selectedOptions = options.filter(opt => opt.selected);
+    const { isDisabled, createClickHandler } = useDisabledState(disabled, isLoading);
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -55,7 +57,7 @@ export const MultiSelectDropdown = ({ label, options, name, handleChange, isLoad
                 <label className='multi-select-label'>{label}</label>
             )}
             <div className={`multi-select-container ${isLoading ? 'loading' : ''} ${disabled ? 'disabled' : ''}`}>
-                <div className='multi-select-tags' onClick={disabled || isLoading ? undefined : toggleDropdown}>
+                <div className='multi-select-tags' onClick={createClickHandler(toggleDropdown)}>
                     {selectedOptions.length > 0 ? (
                         <>
                             {selectedOptions.slice(0, 2).map((option) => (
@@ -82,21 +84,21 @@ export const MultiSelectDropdown = ({ label, options, name, handleChange, isLoad
                         </>
                     ) : (
                         <span className='multi-select-placeholder'>
-                            {isLoading ? 'Loading...' : disabled ? 'Disabled' : 'Select options...'}
+                            {isLoading ? 'Loading...' : isDisabled ? 'Disabled' : 'Select options...'}
                         </span>
                     )}
                 </div>
                 <button
                     type='button'
                     className={`multi-select-arrow ${isOpen ? 'open' : ''} ${isLoading ? 'loading' : ''} ${disabled ? 'disabled' : ''}`}
-                    onClick={disabled || isLoading ? undefined : toggleDropdown}
-                    disabled={isLoading || disabled}
+                    onClick={createClickHandler(toggleDropdown)}
+                    disabled={isDisabled}
                 >
-                    {isLoading ? '⏳' : disabled ? '🚫' : '▼'}
+                    {isLoading ? '⏳' : isDisabled ? '🚫' : '▼'}
                 </button>
             </div>
             
-            {isOpen && !disabled && (
+            {isOpen && !isDisabled && (
                 <div className='multi-select-options'>
                     {/* Select All / Clear All buttons */}
                     <div className='multi-select-actions'>
@@ -104,7 +106,7 @@ export const MultiSelectDropdown = ({ label, options, name, handleChange, isLoad
                             type='button'
                             className='multi-select-action-btn'
                             onClick={selectAll}
-                            disabled={disabled || isLoading}
+                            disabled={isDisabled}
                         >
                             Select All
                         </button>
@@ -112,7 +114,7 @@ export const MultiSelectDropdown = ({ label, options, name, handleChange, isLoad
                             type='button'
                             className='multi-select-action-btn'
                             onClick={clearAll}
-                            disabled={disabled || isLoading}
+                            disabled={isDisabled}
                         >
                             Clear All
                         </button>
@@ -125,8 +127,8 @@ export const MultiSelectDropdown = ({ label, options, name, handleChange, isLoad
                     {options.map((option) => (
                         <div
                             key={option.value}
-                            className={`multi-select-option ${option.selected ? 'selected' : ''} ${disabled || isLoading ? 'disabled' : ''}`}
-                            onClick={disabled || isLoading ? undefined : () => handleOptionClick(option)}
+                            className={`multi-select-option ${option.selected ? 'selected' : ''} ${isDisabled ? 'disabled' : ''}`}
+                            onClick={createClickHandler(() => handleOptionClick(option))}
                         >
                             <span className='multi-select-option-text'>{option.label}</span>
                             {option.selected && <span className='multi-select-option-check'>✓</span>}
