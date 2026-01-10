@@ -5,9 +5,10 @@ import { doPostToFetchDependentOptions } from '../services/inputControlsService'
 /**
  * Custom hook to manage input controls state and updates
  * @param {boolean} isPageReportSelected - Whether page report mode is active
+ * @param {Object} selectedChart - Currently selected chart with resource path
  * @returns {Object} Input controls state and handlers
  */
-export const useInputControls = (isPageReportSelected) => {
+export const useInputControls = (isPageReportSelected, selectedChart) => {
     const [inputControlsData, setInputControlsData] = useState([]);
     const [loadingDependencies, setLoadingDependencies] = useState({});
 
@@ -78,6 +79,10 @@ export const useInputControls = (isPageReportSelected) => {
     };
 
     const fetchDependentOptions = async (controlId, slaveDependencies, latestInputControlsData) => {
+        if (!selectedChart?.resource) {
+            console.warn('No selected chart available for API call');
+            return;
+        }
         // Set loading state for all dependent controls
         manageLoadingStates(slaveDependencies, true);
 
@@ -99,14 +104,11 @@ export const useInputControls = (isPageReportSelected) => {
             // Add master control as the last element
             requestBody[controlId] = masterSelectedValues;
 
-            // Build API URI
-            const slaveDependenciesIds = masterControl.slaveDependencies.join(';');
-            const resourcePath = '/public/Demo_Example/Embedded_Dashboards/Financial_Health___Performance';
-            const apiUri = 'http://localhost:8080/jasperserver-pro/rest_v2/reports'+resourcePath+'/inputControls/'+slaveDependenciesIds+'/values?freshData=false&includeTotalCount=true';
+            // Build API URI - only if selectedChart is available
+            const apiUri = `http://localhost:8080/jasperserver-pro/rest_v2/reports${selectedChart.resource}/inputControls/${masterControl.slaveDependencies.join(';')}/values?freshData=false&includeTotalCount=true`;
 
             // Call the service
             const response = await doPostToFetchDependentOptions(apiUri, requestBody);
-            console.log('API Response - Dependent options fetched:', response);
 
             // Update dependent controls with API response
             if (response?.inputControlState) {
