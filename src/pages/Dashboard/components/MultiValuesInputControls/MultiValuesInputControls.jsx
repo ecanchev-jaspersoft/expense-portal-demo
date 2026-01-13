@@ -2,7 +2,7 @@ import './MultiValuesInputControls.css';
 import { Dropdown } from '../../../../utils/InputControls/Dropdown/Dropdown';
 import { MultiSelectDropdown } from '../../../../utils/InputControls/MultiSelectDropdown/MultiSelectDropdown';
 import { DatePicker } from '../../../../utils/InputControls/DatePicker/DatePicker';
-import { DATE_PICKER_ID } from '../../../../utils/Constants';
+import { DOM_ELEMENT_IDS } from '../../../../utils/Constants';
 
 /**
  * MultiValuesInputControls component - Custom input controls for dashboard mode
@@ -58,7 +58,7 @@ export const MultiValuesInputControls = ({ inputControlsData, handleInputChange,
                 <div className='dashboard-control-item'>
                     <DatePicker
                         label="Date Range"
-                        name={DATE_PICKER_ID}
+                        name={DOM_ELEMENT_IDS.DATE_PICKER_ID}
                         disabled={!isChartLoaded}
                     />
                 </div>

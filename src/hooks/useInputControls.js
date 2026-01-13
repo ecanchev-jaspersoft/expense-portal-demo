@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useAuth } from '../context/AppContext';
-import { BOOLEAN_TEXT, DATE_PICKER_ID, AUTH_ACTIONS, CHARTS } from '../utils/Constants';
+import { BOOLEAN_TEXT, DOM_ELEMENT_IDS, AUTH_ACTIONS, CHARTS } from '../utils/Constants';
 import { doPostToFetchDependentOptions } from '../services/inputControlsService';
 
 /**
@@ -172,7 +172,7 @@ export const useInputControls = (isPageReportSelected, selectedChart) => {
         dispatch({ type: AUTH_ACTIONS.SET_INPUT_CONTROLS_DATA, payload: clearedControls });
 
         // Clear date picker input
-        const dateInputElement = document.getElementById(DATE_PICKER_ID);
+        const dateInputElement = document.getElementById(DOM_ELEMENT_IDS.DATE_PICKER_ID);
         if (dateInputElement) {
             dateInputElement.value = '';
         }

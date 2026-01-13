@@ -6,12 +6,13 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
 import { AppProvider, useAuth } from './context/AppContext';
+import { PAGE_TYPES } from './utils/Constants';
 
 const ProtectedRoute = ({ children }) => {
     const {
         state: { isLoggedIn },
     } = useAuth();
-    return isLoggedIn ? children : <Navigate to='/login' />;
+    return isLoggedIn ? children : <Navigate to={`/${PAGE_TYPES.LOGIN}`} />;
 };
 
 const App = () => {
@@ -21,9 +22,9 @@ const App = () => {
                 <Header />
                 <Routes>
                     <Route path='/' element={<Hero />} />
-                    <Route path='/login' element={<Login />} />
+                    <Route path={`/${PAGE_TYPES.LOGIN}`} element={<Login />} />
                     <Route
-                        path='/pageReport'
+                        path={`/${PAGE_TYPES.PAGE_REPORT}`}
                         element={
                             <ProtectedRoute>
                                 <Dashboard />
@@ -31,14 +32,14 @@ const App = () => {
                         }
                     />
                     <Route
-                        path='/dashboard'
+                        path={`/${PAGE_TYPES.DASHBOARD}`}
                         element={
                             <ProtectedRoute>
                                 <Dashboard />
                             </ProtectedRoute>
                         }
                     />
-                    <Route path='*' element={<Navigate to='/login' />} />
+                    <Route path='*' element={<Navigate to={`/${PAGE_TYPES.LOGIN}`} />} />
                 </Routes>
                 <Footer />
             </Router>

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback } from 'react';
 import './Hero.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AppContext';
@@ -10,23 +10,16 @@ const Hero = () => {
         state: { isLoggedIn, loggedInUser },
     } = useAuth();
 
-    // Handle redirection when auth state changes
-    useEffect(() => {
-        if (isLoggedIn) {
-            if (loggedInUser === USER_ROLES.ADMIN) {
-                navigate('/dashboard');
-            } else {
-                navigate('/pageReport');
-            }
-        }
-    }, [isLoggedIn, loggedInUser, navigate]);
+    const navigateProperly = useCallback(() => {
+        navigate(isLoggedIn ? (loggedInUser === USER_ROLES.ADMIN ? `/${PAGE_TYPES.DASHBOARD}` : `/${PAGE_TYPES.PAGE_REPORT}`) : `/${PAGE_TYPES.LOGIN}`);
+    }, [navigate, isLoggedIn, loggedInUser]);
 
     return (
         <section className='hero h-main-section'>
             <div className='hero-content'>
                 <h1>Welcome to the Meridian Trust Bank Portal</h1>
                 <p>Track your expenses efficiently and effortlessly.</p>
-                <button className='cta-button' onClick={() => navigate('/pageReport')}>
+                <button className='cta-button' onClick={navigateProperly}>
                     Get Started
                 </button>
             </div>

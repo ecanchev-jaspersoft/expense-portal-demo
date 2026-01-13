@@ -1,4 +1,3 @@
-export const DATE_PICKER_ID = 'date-picker-dashboard-view';
 export const FORBIDDEN_INPUT_CONTROLS = ['ACCOUNT_NUMBER', 'STATEMENT_TIME'];
 
 export const BOOLEAN_TEXT = {
@@ -9,6 +8,7 @@ export const BOOLEAN_TEXT = {
 export const PAGE_TYPES = {
     PAGE_REPORT: 'pageReport',
     DASHBOARD: 'dashboard',
+    LOGIN: 'login',
 };
 
 export const CHART_TYPES = {
@@ -26,6 +26,7 @@ export const CHART_NAMES = {
 export const DOM_ELEMENT_IDS = {
     VIZ_CONTAINER: 'viz-container',
     INPUT_CONTROLS_CONTAINER: 'theInputControls',
+    DATE_PICKER_ID: 'date-picker-dashboard-view',
 };
 
 export const EXPORT_FORMATS = {

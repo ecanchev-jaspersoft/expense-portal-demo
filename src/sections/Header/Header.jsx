@@ -2,25 +2,26 @@ import { NavLink } from 'react-router';
 import './Header.css';
 import { useAuth } from '../../context/AppContext';
 import { AUTH_ACTIONS, USER_ROLES, PAGE_TYPES, CHARTS } from '../../utils/Constants';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Tabs } from '../../utils/InputControls/Tabs/Tabs';
 import { useChartState } from '../../hooks/useChartState';
 
 const Header = () => {
     const {
-        state: { isLoggedIn, loggedInUser, selectedPage, selectedChart, vObject },
+        state: { isLoggedIn, loggedInUser, selectedChart, vObject },
         dispatch,
     } = useAuth();
     const { chartOptions } = useChartState(false);
     const navigate = useNavigate();
-    const username = loggedInUser === USER_ROLES.ADMIN ? 'Manager' : 'John Q. Public';
+    const location = useLocation();
     const isManager = loggedInUser === USER_ROLES.ADMIN;
-    const isDashboardMode = selectedPage === PAGE_TYPES.DASHBOARD;
+    const username = isManager ? 'Manager' : 'John Q. Public';
+    const isDashboardRoute = location.pathname.endsWith(`/${PAGE_TYPES.DASHBOARD}`);
 
     const handleLogout = () => {
         vObject.logout().done(() => {
+            navigate(`/${PAGE_TYPES.LOGIN}`);
             dispatch({ type: AUTH_ACTIONS.LOGOUT });
-            navigate('/login');
         });
     };
 
@@ -40,7 +41,7 @@ const Header = () => {
                 </div>
                 
                 {/* Chart tabs for manager users in dashboard mode */}
-                {isLoggedIn && isManager && isDashboardMode && chartOptions && (
+                {isLoggedIn && isManager && isDashboardRoute && chartOptions && (
                     <div className='header-tabs'>
                         <Tabs
                             options={chartOptions}

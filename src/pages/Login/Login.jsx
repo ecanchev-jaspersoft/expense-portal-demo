@@ -50,12 +50,15 @@ const Login = () => {
                         placeholder='Username'
                         value={credentials.username}
                         onChange={(e) => updateCredentials('username', e.target.value)}
+                        required
+                        autoComplete='username'
                     />
                     <input
                         type='password'
                         placeholder='Password'
                         value={credentials.password}
                         onChange={(e) => updateCredentials('password', e.target.value)}
+                        autoComplete='current-password'
                     />
                     <button type='submit' disabled={isDisabledBtn}>
                         Login
