@@ -35,7 +35,6 @@ export const authReducer = (state, action) => {
                 chartOptions: action.payload,
             };
         case AUTH_ACTIONS.SET_SELECTED_CHART:
-            console.log('STATE: ', state);
             return {
                 ...state,
                 selectedChartName: action.payload,
