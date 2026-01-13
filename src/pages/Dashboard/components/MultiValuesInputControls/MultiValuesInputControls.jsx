@@ -17,35 +17,36 @@ export const MultiValuesInputControls = ({ inputControlsData, handleInputChange,
 
     return (
         <div className='dashboard-input-controls'>
-            <h5>Dashboard Filters</h5>
             <div className='dashboard-controls-grid'>
                 {inputControlsData.map((ic) => {
                     if (ic.state?.options) {
                         // Check if this should be a multi-select dropdown
                         if (ic.type === 'multiSelect') {
                             return (
-                                <MultiSelectDropdown
-                                    key={ic.id}
-                                    label={ic.label}
-                                    options={ic.state.options}
-                                    name={ic.id}
-                                    isLoading={loadingDependencies[ic.id] || false}
-                                    handleChange={(selectedValues) => handleInputChange(selectedValues, ic.id )}
-                                    disabled={!isChartLoaded}
-                                />
+                                <div key={ic.id} className='dashboard-control-item'>
+                                    <MultiSelectDropdown
+                                        label={ic.label}
+                                        options={ic.state.options}
+                                        name={ic.id}
+                                        isLoading={loadingDependencies[ic.id] || false}
+                                        handleChange={(selectedValues) => handleInputChange(selectedValues, ic.id )}
+                                        disabled={!isChartLoaded}
+                                    />
+                                </div>
                             );
                         } else {
                             // Regular dropdown
                             return (
-                                <Dropdown
-                                    key={ic.id}
-                                    label={ic.label}
-                                    options={ic.state.options}
-                                    name={ic.id}
-                                    origSelectedValue={ic.state.value || ''}
-                                    handleChange={(newValue) => handleInputChange(newValue, ic.id)}
-                                    disabled={!isChartLoaded}
-                                />
+                                <div key={ic.id} className='dashboard-control-item'>
+                                    <Dropdown
+                                        label={ic.label}
+                                        options={ic.state.options}
+                                        name={ic.id}
+                                        origSelectedValue={ic.state.value || ''}
+                                        handleChange={(newValue) => handleInputChange(newValue, ic.id)}
+                                        disabled={!isChartLoaded}
+                                    />
+                                </div>
                             );
                         }
                     }
@@ -53,11 +54,13 @@ export const MultiValuesInputControls = ({ inputControlsData, handleInputChange,
                     return null;
                 })}
                 
-                <DatePicker
-                    label="Date Range"
-                    name="date-picker"
-                    disabled={!isChartLoaded}
-                />
+                <div className='dashboard-control-item'>
+                    <DatePicker
+                        label="Date Range"
+                        name="date-picker"
+                        disabled={!isChartLoaded}
+                    />
+                </div>
             </div>
         </div>
     );

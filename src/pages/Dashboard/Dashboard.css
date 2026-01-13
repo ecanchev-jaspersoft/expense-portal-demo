@@ -2,8 +2,9 @@
 
 .dashboard-page {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   background: var(--background-report);
+  height: 100vh;
 }
 
 .dashboard-page h1 {
@@ -21,8 +22,13 @@
   height: fit-content;
   margin-bottom: 0;
 }
+.dashboard-main-content {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  overflow: hidden;
+}
 .main-content {
-  margin-top: 10px;
   flex: 1;
   box-sizing: border-box;
   overflow-y: auto;
@@ -30,7 +36,9 @@
   margin-bottom: 5px;
   margin-left: 5px;
   display: flex;
-    flex-direction: column;
+  flex-direction: column;
+  /* justify-content: center; */
+    align-items: center;
 }
 
 .switch-button-row {

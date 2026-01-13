@@ -2,7 +2,7 @@ import './Dashboard.css';
 import './viz.css';
 import { useAuth } from '../../context/AuthContext';
 import { useChartState, useInputControls, useVisualization } from '../../hooks';
-import { DashboardSidebar, VisualizationContainer, ImageColumn } from './components';
+import { DashboardControls, VisualizationContainer, ImageColumn } from './components';
 import { PAGE_TYPES } from '../../utils/Constants';
 import { useEffect, useRef, useCallback } from 'react';
 
@@ -11,7 +11,7 @@ import { useEffect, useRef, useCallback } from 'react';
  * 
  * This component orchestrates the display of interactive dashboards and reports.
  * It supports two modes:
- * - Page Report mode: Traditional report with input controls in a sidebar
+ * - Page Report mode: Traditional report with input controls at the top
  * - Interactive Dashboard mode: Dashboard with chart selector and dynamic controls
  * 
  * The component uses custom hooks for separation of concerns:
@@ -72,8 +72,8 @@ const Dashboard = () => {
     }, [inputControlsData, buildReportParams, immediateUpdateChart, isChartLoaded, selectedChart]);
 
     return (
-        <main className='dashboard-page h-main-section'>
-            <DashboardSidebar
+        <div className='dashboard-page'>
+            <DashboardControls
                 isPageReportSelected={isPageReportSelected}
                 inputControlsData={inputControlsData}
                 handleInputControlChange={handleInputControlChange}
@@ -81,9 +81,11 @@ const Dashboard = () => {
                 loadingDependencies={loadingDependencies}
                 isChartLoaded={isChartLoaded}
             />
-            <VisualizationContainer />
-            <ImageColumn isVisible={isChartLoaded && isPageReportSelected} />
-        </main>
+            <main className='dashboard-main-content'>
+                <VisualizationContainer />
+                {isChartLoaded && isPageReportSelected && <ImageColumn />}
+            </main>
+        </div>
     );
 };
 

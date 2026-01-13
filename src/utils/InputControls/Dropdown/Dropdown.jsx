@@ -10,7 +10,7 @@ export const Dropdown = ({ options, label, name, origSelectedValue, handleChange
         handleChange?.(newVal);
     };
     return (
-        <div className='dropdown-container'>
+        <div className='dropdown-container vertical'>
             {label && (
                 <label htmlFor={name} className='dropdown-label'>
                     {label}

@@ -2,7 +2,8 @@ import SingleValueInputControls from './SingleValueInputControls/SingleValueInpu
 import { MultiValuesInputControls } from './MultiValuesInputControls/MultiValuesInputControls';
 
 /**
- * DashboardSidebar component - Renders the appropriate sidebar based on report mode
+ * DashboardControls component - Renders the appropriate input controls based on report mode
+ * Now displays horizontally at the top instead of in a sidebar
  * @param {Object} props - Component props
  * @param {boolean} props.isPageReportSelected - Whether page report mode is active
  * @param {Array} props.inputControlsData - Input controls data from the visualization
@@ -11,7 +12,7 @@ import { MultiValuesInputControls } from './MultiValuesInputControls/MultiValues
  * @param {Function} props.handleDownloadPdf - Handler to download chart as PDF
  * @param {Object} props.loadingDependencies - Loading states for dependent controls
  */
-export const DashboardSidebar = ({
+export const DashboardControls = ({
     isPageReportSelected,
     inputControlsData,
     handleInputControlChange,
@@ -31,7 +32,7 @@ export const DashboardSidebar = ({
     }
 
     return (
-        <section className='sidebar'>
+        <section className='dashboard-controls-horizontal'>
             <MultiValuesInputControls
                 inputControlsData={inputControlsData}
                 handleInputChange={handleInputControlChange}

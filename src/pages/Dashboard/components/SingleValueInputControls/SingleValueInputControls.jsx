@@ -29,7 +29,7 @@ const SingleValueInputControls = ({ inputControlsData, handleSwitchButtonChange,
     return (
         <>
             {inputControlsData?.length > 0 && (
-                <section className='sidebar'>
+                <section className='dashboard-controls-horizontal'>
                     <h5>Show/Hide Sections</h5>
                     <ul className='switch-button-row'>
                         <li>
@@ -67,7 +67,7 @@ const SingleValueInputControls = ({ inputControlsData, handleSwitchButtonChange,
                             })}
                         </li>
                     </ul>
-                    <div className='sidebar-buttons'>
+                    <div className='dashboard-controls-buttons'>
                         <button className='btn btn-secondary' onClick={handleDownloadPdf}>
                             Download PDF
                         </button>

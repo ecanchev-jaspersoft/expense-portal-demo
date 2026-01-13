@@ -1,37 +1,56 @@
 @import '../../../../styles/variables.css';
 
-.sidebar {
-  margin-top: 10px;
-  width: 350px;
+.dashboard-controls-horizontal {
+  width: 100%;
   background-color: var(--white);
-  padding: 20px;
   box-sizing: border-box;
-  height: inherit;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: stretch; /* added this line to make the container use full width */
 }
 
-.sidebar-buttons {
-  margin-top: auto;
+.dashboard-controls-buttons {
+  margin-top: 8px;
   display: flex;
   flex-direction: row;
-  gap: var(--padding-small);
+  gap: 8px;
   justify-content: center;
 }
 
-.sidebar h5 {
+.dashboard-controls-horizontal h5 {
   color: var(--text-black-color);
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 600;
 }
 
-.sidebar ul {
+.dashboard-controls-horizontal ul {
   list-style: none;
-  padding: 0;
+  padding: 0 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-start;
+  box-sizing: border-box;
 }
 
-.sidebar li {
-  padding: 10px;
+.dashboard-controls-horizontal li {
+  padding: var(--padding-small) var(--padding-medium);
   cursor: pointer;
   border-radius: var(--border-radius);
   transition: background-color 0.3s;
+  border: 1px solid var(--secondary-hover-color);
+    background: var(--white);
+  }
+  
+  .dashboard-controls-horizontal li:hover {
+    background-color: var(--neutral-light);
+    border-color: var(--primary-color);
+  }
+  
+  .dashboard-controls-horizontal li.active {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-color: var(--primary-color);
 }

@@ -7,24 +7,25 @@
 
 .datepicker-label {
     display: block;
-    font-size: var(--font-small);
+    font-size: 13px;
     font-weight: 500;
     color: var(--text-black-color);
-    margin-bottom: var(--padding-small);
+    margin-bottom: 4px;
 }
 
 .datepicker-input {
     width: 100%;
-    max-width: 300px;
-    padding: var(--padding-small);
+    padding: 6px 12px;
     color: var(--text-black-color);
     background-color: var(--white);
-    border: 1px solid var(--secondary-hover-color);
-    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
     outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
     box-sizing: border-box;
+    font-size: 14px;
+    height: 30px;
 }
 
 /* Target calendar icon in WebKit browsers */

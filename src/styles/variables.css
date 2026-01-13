@@ -14,6 +14,7 @@
   --text-black-color: #212121;
   --white: #ffffff;
   --background-report: #F7F7F7;
+  --border-color: #b9b4b4;
 
   --background-btn-primary-color: #0078BD;
   --background-btn-secondary-color: #E4E4E4;
@@ -28,4 +29,5 @@
   --padding-medium: 1rem;
   --padding-large: 1.5rem;
   --border-radius: 8px;
+  --border-radius-sm: 2px;
 }
