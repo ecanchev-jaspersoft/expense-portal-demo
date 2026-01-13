@@ -1,13 +1,13 @@
 import { NavLink } from 'react-router';
 import './Header.css';
 import { useAuth } from '../../context/AuthContext';
-import { AUTH_ACTIONS, USER_ROLES, PAGE_TYPES } from '../../utils/Constants';
+import { AUTH_ACTIONS, USER_ROLES, PAGE_TYPES, CHARTS } from '../../utils/Constants';
 import { useNavigate } from 'react-router-dom';
 import { Tabs } from '../../utils/InputControls/Tabs/Tabs';
 
 const Header = () => {
     const {
-        state: { isLoggedIn, vObject, loggedInUser, selectedPage, chartOptions, selectedChartName },
+        state: { isLoggedIn, vObject, loggedInUser, selectedPage, chartOptions, selectedChart },
         dispatch,
     } = useAuth();
     const navigate = useNavigate();
@@ -23,7 +23,10 @@ const Header = () => {
     };
 
     const handleChartSwitch = (chartName) => {
-        dispatch({ type: AUTH_ACTIONS.SET_SELECTED_CHART, payload: chartName });
+        const chart = CHARTS.find(c => c.name === chartName);
+        if (chart) {
+            dispatch({ type: AUTH_ACTIONS.SET_SELECTED_CHART_OBJECT, payload: chart });
+        }
     };
 
     return (
@@ -39,7 +42,7 @@ const Header = () => {
                     <div className='header-tabs'>
                         <Tabs
                             options={chartOptions}
-                            activeTab={selectedChartName}
+                            activeTab={selectedChart?.name}
                             onTabChange={handleChartSwitch}
                         />
                     </div>

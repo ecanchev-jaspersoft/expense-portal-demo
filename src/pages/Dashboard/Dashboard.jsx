@@ -20,31 +20,30 @@ import { useEffect, useRef, useCallback } from 'react';
  * - useVisualization: Manages JasperReports visualization library integration
  */
 const Dashboard = () => {
-    const { dispatch, state } = useAuth();
+    const { state } = useAuth();
     const isPageReportSelected = state.selectedPage && state.selectedPage === PAGE_TYPES.PAGE_REPORT;
-    const { selectedChart } = useChartState(isPageReportSelected);
+    
+    // Initialize chart state if needed
+    useChartState(isPageReportSelected);
 
     const {
         inputControlsData,
-        setInputControlsData,
         handleInputControlChange,
         clearMultiSelects,
         buildReportParams,
         loadingDependencies,
-    } = useInputControls(isPageReportSelected, selectedChart);
+    } = useInputControls(isPageReportSelected, state.selectedChart);
 
     const { isChartLoaded, handleUpdateChart, handleDownloadPdf } = useVisualization(
-        selectedChart,
-        dispatch,
-        setInputControlsData
+        state.selectedChart
     );
 
     // Create immediate update function
     const immediateUpdateChart = useCallback((buildReportParamsFunc) => {
-        if (isChartLoaded && selectedChart) {
+        if (isChartLoaded && state.selectedChart) {
             handleUpdateChart(buildReportParamsFunc);
         }
-    }, [handleUpdateChart, isChartLoaded, selectedChart]);
+    }, [handleUpdateChart, isChartLoaded, state.selectedChart]);
 
     // Track previous input control values to detect actual changes
     const previousInputValues = useRef({});
@@ -52,7 +51,7 @@ const Dashboard = () => {
     // Trigger automatic chart updates when input controls change
     useEffect(() => {
         // Trigger for any input control changes when chart is loaded (both dashboard and page report modes)
-        if (inputControlsData.length > 0 && isChartLoaded && selectedChart) {
+        if (inputControlsData.length > 0 && isChartLoaded && state.selectedChart) {
             // Check if any input control values actually changed
             const currentValues = inputControlsData.reduce((acc, ic) => {
                 if (ic.type === 'multiSelect') {
@@ -70,7 +69,7 @@ const Dashboard = () => {
                 immediateUpdateChart(buildReportParams);
             }
         }
-    }, [inputControlsData, buildReportParams, immediateUpdateChart, isChartLoaded, selectedChart]);
+    }, [inputControlsData, buildReportParams, immediateUpdateChart, isChartLoaded, state.selectedChart]);
 
     return (
         <div className='dashboard-page'>

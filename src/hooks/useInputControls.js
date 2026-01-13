@@ -1,16 +1,18 @@
-import { useState } from 'react';
-import { BOOLEAN_TEXT, DATE_PICKER_ID } from '../utils/Constants';
+import { useCallback } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { BOOLEAN_TEXT, DATE_PICKER_ID, AUTH_ACTIONS } from '../utils/Constants';
 import { doPostToFetchDependentOptions } from '../services/inputControlsService';
 
 /**
  * Custom hook to manage input controls state and updates
+ * Uses Auth context as single source of truth for state management
  * @param {boolean} isPageReportSelected - Whether page report mode is active
  * @param {Object} selectedChart - Currently selected chart with resource path
  * @returns {Object} Input controls state and handlers
  */
 export const useInputControls = (isPageReportSelected, selectedChart) => {
-    const [inputControlsData, setInputControlsData] = useState([]);
-    const [loadingDependencies, setLoadingDependencies] = useState({});
+    const { dispatch, state } = useAuth();
+    const { inputControlsData, loadingDependencies } = state;
 
     // Helper function to extract selected values from a control
     const getSelectedValues = (control) => {
@@ -25,13 +27,13 @@ export const useInputControls = (isPageReportSelected, selectedChart) => {
     };
 
     // Helper function to manage loading states
-    const manageLoadingStates = (dependencies, isLoading) => {
+    const manageLoadingStates = useCallback((dependencies, isLoading) => {
         const states = {};
         dependencies.forEach(depId => {
             states[depId] = isLoading;
         });
-        setLoadingDependencies(prev => ({ ...prev, ...states }));
-    };
+        dispatch({ type: AUTH_ACTIONS.SET_LOADING_DEPENDENCIES, payload: { ...loadingDependencies, ...states } });
+    }, [dispatch, loadingDependencies]);
 
     const handleInputControlChange = async (newValue, icName) => {
         // Find the current control to check for dependencies
@@ -69,7 +71,7 @@ export const useInputControls = (isPageReportSelected, selectedChart) => {
         });
 
         // Update state first
-        setInputControlsData(icsUpdated);
+        dispatch({ type: AUTH_ACTIONS.SET_INPUT_CONTROLS_DATA, payload: icsUpdated });
 
         // Handle dependencies if this is a multi-select with slaves
         if (currentControl?.type === 'multiSelect' && currentControl?.slaveDependencies?.length > 0) {
@@ -129,7 +131,7 @@ export const useInputControls = (isPageReportSelected, selectedChart) => {
                     return ic; // Return unchanged if no match
                 });
 
-                setInputControlsData(updatedControls);
+                dispatch({ type: AUTH_ACTIONS.SET_INPUT_CONTROLS_DATA, payload: updatedControls });
             } else {
                 console.warn('API response does not contain inputControlState:', response);
             }
@@ -164,7 +166,7 @@ export const useInputControls = (isPageReportSelected, selectedChart) => {
         });
 
         // Update state
-        setInputControlsData(clearedControls);
+        dispatch({ type: AUTH_ACTIONS.SET_INPUT_CONTROLS_DATA, payload: clearedControls });
 
         // Clear date picker input
         const dateInputElement = document.getElementById(DATE_PICKER_ID);
@@ -203,7 +205,6 @@ export const useInputControls = (isPageReportSelected, selectedChart) => {
 
     return {
         inputControlsData,
-        setInputControlsData,
         handleInputControlChange,
         clearMultiSelects,
         buildReportParams,

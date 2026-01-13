@@ -5,7 +5,9 @@ export const initialState = {
     vObject: null,
     selectedPage: null,
     chartOptions: null,
-    selectedChartName: null,
+    selectedChart: null,
+    inputControlsData: [],
+    loadingDependencies: {},
 };
 
 export const authReducer = (state, action) => {
@@ -20,7 +22,9 @@ export const authReducer = (state, action) => {
                 vObject: null,
                 selectedPage: null,
                 chartOptions: null,
-                selectedChartName: null,
+                selectedChart: null,
+                inputControlsData: [],
+                loadingDependencies: {},
             };
         case AUTH_ACTIONS.SET_V_OBJECT:
             return { ...state, vObject: action.payload };
@@ -34,10 +38,20 @@ export const authReducer = (state, action) => {
                 ...state,
                 chartOptions: action.payload,
             };
-        case AUTH_ACTIONS.SET_SELECTED_CHART:
+        case AUTH_ACTIONS.SET_SELECTED_CHART_OBJECT:
             return {
                 ...state,
-                selectedChartName: action.payload,
+                selectedChart: action.payload,
+            };
+        case AUTH_ACTIONS.SET_INPUT_CONTROLS_DATA:
+            return {
+                ...state,
+                inputControlsData: action.payload,
+            };
+        case AUTH_ACTIONS.SET_LOADING_DEPENDENCIES:
+            return {
+                ...state,
+                loadingDependencies: action.payload,
             };
         default:
             throw new Error(`Unhandled action type: ${action.type}`);

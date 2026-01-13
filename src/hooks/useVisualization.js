@@ -1,18 +1,17 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 import { CHART_TYPES, DOM_ELEMENT_IDS, AUTH_ACTIONS, EXPORT_FORMATS } from '../utils/Constants';
 
 /**
  * Custom hook to manage visualization library initialization and rendering
+ * Uses Auth context for state management instead of props
  * @param {Object} selectedChart - The currently selected chart configuration
- * @param {Function} dispatch - Redux dispatch function
- * @param {Function} setInputControlsData - Setter for input controls data
  * @returns {Object} Visualization state and handlers
  */
 export const useVisualization = (
-    selectedChart,
-    dispatch,
-    setInputControlsData
+    selectedChart
 ) => {
+    const { dispatch } = useAuth();
     const [reportViz, setReportViz] = useState(null);
     const [isChartLoaded, setIsChartLoaded] = useState(false);
 
@@ -54,9 +53,9 @@ export const useVisualization = (
                 v.inputControls({
                     resource: selectedChart.resource,
                     success: (icData) => {
-                        setInputControlsData(icData);
+                        dispatch({ type: AUTH_ACTIONS.SET_INPUT_CONTROLS_DATA, payload: icData });
                     },
-                    error: () => setInputControlsData([]),
+                    error: () => dispatch({ type: AUTH_ACTIONS.SET_INPUT_CONTROLS_DATA, payload: [] }),
                 });
 
                 // Render the report visualization

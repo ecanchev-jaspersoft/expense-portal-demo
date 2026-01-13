@@ -1,17 +1,17 @@
 import { useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { AUTH_ACTIONS } from '../utils/Constants';
+import { AUTH_ACTIONS, CHARTS } from '../utils/Constants';
 import { useDashboardCharts } from './useDashboardCharts';
 
 /**
- * Custom hook to manage chart state with context synchronization
- * Eliminates duplication between Dashboard and Header components
+ * Custom hook to manage chart state with context as single source of truth
+ * Eliminates duplication by using Auth context instead of local state
  * @param {boolean} isPageReportSelected - Whether page report mode is active
  * @returns {Object} Chart state and handlers
  */
 export const useChartState = (isPageReportSelected) => {
     const { dispatch, state } = useAuth();
-    const { selectedChart, chartOptions, handleChartSwitch } = useDashboardCharts(isPageReportSelected);
+    const { chartOptions } = useDashboardCharts(isPageReportSelected);
 
     // Sync chart options to context when they change
     useEffect(() => {
@@ -20,29 +20,30 @@ export const useChartState = (isPageReportSelected) => {
         }
     }, [chartOptions, dispatch]);
 
-    // Sync selected chart to context when it changes
+    // Initialize selected chart from context or set default
     useEffect(() => {
-        if (selectedChart?.name) {
-            dispatch({ type: AUTH_ACTIONS.SET_SELECTED_CHART, payload: selectedChart.name });
+        if (!state.selectedChart) {
+            const defaultChart = isPageReportSelected 
+                ? CHARTS[0]
+                : chartOptions?.[0] ? CHARTS.find(chart => chart.name === chartOptions[0].value) : null;
+            
+            if (defaultChart) {
+                dispatch({ type: AUTH_ACTIONS.SET_SELECTED_CHART_OBJECT, payload: defaultChart });
+            }
         }
-    }, [selectedChart, dispatch]);
+    }, [isPageReportSelected, chartOptions, state.selectedChart, dispatch]);
 
-    // Sync local chart selection with context changes (when tabs are clicked in header)
-    useEffect(() => {
-        if (state.selectedChartName && selectedChart?.name !== state.selectedChartName) {
-            handleChartSwitch(state.selectedChartName);
+    // Handle chart switching by updating context
+    const handleChartSwitch = useCallback((chartName) => {
+        const newChart = CHARTS.find(chart => chart.name === chartName);
+        if (newChart) {
+            dispatch({ type: AUTH_ACTIONS.SET_SELECTED_CHART_OBJECT, payload: newChart });
         }
-    }, [state.selectedChartName, selectedChart, handleChartSwitch]);
-
-    // Unified chart switch handler that updates both local state and context
-    const unifiedHandleChartSwitch = useCallback((chartName) => {
-        handleChartSwitch(chartName);
-        dispatch({ type: AUTH_ACTIONS.SET_SELECTED_CHART, payload: chartName });
-    }, [handleChartSwitch, dispatch]);
+    }, [dispatch]);
 
     return {
-        selectedChart,
-        chartOptions,
-        handleChartSwitch: unifiedHandleChartSwitch,
+        selectedChart: state.selectedChart,
+        chartOptions: state.chartOptions,
+        handleChartSwitch,
     };
 };

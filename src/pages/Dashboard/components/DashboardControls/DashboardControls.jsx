@@ -25,7 +25,7 @@ export const DashboardControls = ({
         <section className='dashboard-controls-horizontal'>
             <div className='dashboard-controls-header'>
                 <div className='dashboard-controls-title-section'>
-                    <h2 className='chart-title'>{state.selectedChartName || 'Dashboard'}</h2>
+                    <h2 className='chart-title'>{state.selectedChart?.name || 'Dashboard'}</h2>
                     <button 
                         className='clear-btn'
                         onClick={clearMultiSelects}
