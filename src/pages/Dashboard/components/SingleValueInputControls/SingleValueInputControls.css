@@ -7,7 +7,27 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: stretch; /* added this line to make the container use full width */
+  align-items: stretch;
+}
+
+.dashboard-controls-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.dashboard-control-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 0 1 auto;
+  width: 270px;
 }
 
 .dashboard-controls-buttons {
@@ -23,34 +43,4 @@
   margin: 0 0 8px 0;
   font-size: 14px;
   font-weight: 600;
-}
-
-.dashboard-controls-horizontal ul {
-  list-style: none;
-  padding: 0 16px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: flex-start;
-  box-sizing: border-box;
-}
-
-.dashboard-controls-horizontal li {
-  padding: var(--padding-small) var(--padding-medium);
-  cursor: pointer;
-  border-radius: var(--border-radius);
-  transition: background-color 0.3s;
-  border: 1px solid var(--secondary-hover-color);
-    background: var(--white);
-  }
-  
-  .dashboard-controls-horizontal li:hover {
-    background-color: var(--neutral-light);
-    border-color: var(--primary-color);
-  }
-  
-  .dashboard-controls-horizontal li.active {
-    background-color: var(--primary-color);
-    color: var(--white);
-    border-color: var(--primary-color);
 }

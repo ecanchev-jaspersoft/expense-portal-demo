@@ -1,0 +1,69 @@
+@import '../../../../styles/variables.css';
+
+.sidebar-controls {
+  width: 315px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 10px;
+  background: var(--white);
+  border-radius: var(--border-radius);
+  padding: var(--padding-medium);
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.sidebar-controls h5 {
+  color: var(--text-black-color);
+  margin: 0 0 var(--padding-medium) 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.sidebar-controls .dashboard-controls-horizontal {
+  width: 100%;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-controls .dashboard-controls-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-medium);
+  align-items: stretch;
+  width: 100%;
+  padding: 0;
+  justify-content: flex-start;
+}
+
+.sidebar-controls .dashboard-control-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: none;
+  width: 270px;
+}
+
+.sidebar-controls .dashboard-controls-buttons {
+  margin-top: var(--padding-medium);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: stretch;
+}
+
+.sidebar-controls .dashboard-controls-buttons button {
+  width: 100%;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  .sidebar-controls {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 0;
+    max-height: none;
+  }
+}

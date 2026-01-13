@@ -31,42 +31,43 @@ const SingleValueInputControls = ({ inputControlsData, handleSwitchButtonChange,
             {inputControlsData?.length > 0 && (
                 <section className='dashboard-controls-horizontal'>
                     <h5>Show/Hide Sections</h5>
-                    <ul className='switch-button-row'>
-                        <li>
-                            {inputControlsData.map((icToRender) => {
-                                if (icToRender.id === 'STATEMENT_TIME') {
-                                    // dummy dropdown for time range
-                                        return (
-                                            <Dropdown
-                                                key={icToRender.id}
-                                                label={'Time Range'}
-                                                options={[
-                                                    { value: '-5y', label: 'Last 5 Years' },
-                                                    { value: '-4y', label: 'Last 4 Years' },
-                                                    { value: '-3y', label: 'Last 3 Years' },
-                                                    { value: '-2y', label: 'Last 2 Years' },
-                                                    { value: '-1y', label: 'Last 1 Year' },
-                                                ]}
-                                                name={icToRender.id}
-                                                origSelectedValue={'-5y'}
-                                                disabled={!isChartLoaded}
-                                            />
-                                        );
-                                    }  else if (!FORBIDDEN_INPUT_CONTROLS.includes(icToRender.id)) {
-                                        return (
-                                            <SwitchButton
-                                            key={icToRender.id}
+                    <div className='dashboard-controls-grid'>
+                        {inputControlsData.map((icToRender) => {
+                            if (icToRender.id === 'STATEMENT_TIME') {
+                                // dummy dropdown for time range
+                                return (
+                                    <div key={icToRender.id} className='dashboard-control-item'>
+                                        <Dropdown
+                                            label={'Time Range'}
+                                            options={[
+                                                { value: '-5y', label: 'Last 5 Years' },
+                                                { value: '-4y', label: 'Last 4 Years' },
+                                                { value: '-3y', label: 'Last 3 Years' },
+                                                { value: '-2y', label: 'Last 2 Years' },
+                                                { value: '-1y', label: 'Last 1 Year' },
+                                            ]}
+                                            name={icToRender.id}
+                                            origSelectedValue={'-5y'}
+                                            disabled={!isChartLoaded}
+                                        />
+                                    </div>
+                                );
+                            } else if (!FORBIDDEN_INPUT_CONTROLS.includes(icToRender.id)) {
+                                return (
+                                    <div key={icToRender.id} className='dashboard-control-item'>
+                                        <SwitchButton
                                             onChange={(newValue) => handleSwitchButtonChange(newValue, icToRender.id)}
                                             name={icToRender.id}
                                             label={transformLabel(icToRender.label)}
                                             origIsChecked={transformOriginalValue(icToRender)}
                                             disabled={!isChartLoaded}
                                         />
-                                    );
-                                }
-                            })}
-                        </li>
-                    </ul>
+                                    </div>
+                                );
+                            }
+                            return null;
+                        })}
+                    </div>
                     <div className='dashboard-controls-buttons'>
                         <button className='btn btn-secondary' onClick={handleDownloadPdf}>
                             Download PDF

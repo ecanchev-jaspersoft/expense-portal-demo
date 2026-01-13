@@ -2,7 +2,7 @@ import './Dashboard.css';
 import './viz.css';
 import { useAuth } from '../../context/AuthContext';
 import { useChartState, useInputControls, useVisualization } from '../../hooks';
-import { DashboardControls, VisualizationContainer, ImageColumn } from './components';
+import { DashboardControls, VisualizationContainer, ImageColumn, SidebarControls } from './components';
 import { PAGE_TYPES } from '../../utils/Constants';
 import { useEffect, useRef, useCallback } from 'react';
 
@@ -73,18 +73,31 @@ const Dashboard = () => {
 
     return (
         <div className='dashboard-page'>
-            <DashboardControls
-                isPageReportSelected={isPageReportSelected}
-                inputControlsData={inputControlsData}
-                handleInputControlChange={handleInputControlChange}
-                handleDownloadPdf={handleDownloadPdf}
-                loadingDependencies={loadingDependencies}
-                isChartLoaded={isChartLoaded}
-            />
-            <main className='dashboard-main-content'>
-                <VisualizationContainer />
-                {isChartLoaded && isPageReportSelected && <ImageColumn />}
-            </main>
+            {isPageReportSelected ? (
+                <main className='dashboard-main-content'
+                style={{maxHeight: '100vh'}}>
+                    <SidebarControls
+                        inputControlsData={inputControlsData}
+                        handleSwitchButtonChange={handleInputControlChange}
+                        handleDownloadPdf={handleDownloadPdf}
+                        isChartLoaded={isChartLoaded}
+                    />
+                    <VisualizationContainer />
+                    <ImageColumn isVisible={isChartLoaded && isPageReportSelected}/>
+                </main>
+            ) : (
+                <>
+                    <DashboardControls
+                        inputControlsData={inputControlsData}
+                        handleInputControlChange={handleInputControlChange}
+                        loadingDependencies={loadingDependencies}
+                        isChartLoaded={isChartLoaded}
+                    />
+                    <main className='dashboard-main-content'>
+                        <VisualizationContainer />
+                    </main>
+                </>
+            )}
         </div>
     );
 };
