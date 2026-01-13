@@ -1,15 +1,17 @@
 import { NavLink } from 'react-router';
 import './Header.css';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/AppContext';
 import { AUTH_ACTIONS, USER_ROLES, PAGE_TYPES, CHARTS } from '../../utils/Constants';
 import { useNavigate } from 'react-router-dom';
 import { Tabs } from '../../utils/InputControls/Tabs/Tabs';
+import { useChartState } from '../../hooks/useChartState';
 
 const Header = () => {
     const {
-        state: { isLoggedIn, vObject, loggedInUser, selectedPage, chartOptions, selectedChart },
+        state: { isLoggedIn, loggedInUser, selectedPage, selectedChart, vObject },
         dispatch,
     } = useAuth();
+    const { chartOptions } = useChartState(false);
     const navigate = useNavigate();
     const username = loggedInUser === USER_ROLES.ADMIN ? 'Manager' : 'John Q. Public';
     const isManager = loggedInUser === USER_ROLES.ADMIN;

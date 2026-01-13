@@ -1,5 +1,5 @@
 import { MultiValuesInputControls } from '../MultiValuesInputControls/MultiValuesInputControls';
-import { useAuth } from '../../../../context/AuthContext';
+import { useAuth } from '../../../../context/AppContext';
 import './DashboardControls.css';
 
 /**

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/AppContext';
 import { AUTH_ACTIONS, USER_ROLES, PAGE_TYPES } from '../../utils/Constants';
 import './Login.css';
 

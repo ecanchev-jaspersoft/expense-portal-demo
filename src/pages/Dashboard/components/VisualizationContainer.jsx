@@ -1,5 +1,5 @@
 import { DOM_ELEMENT_IDS, PAGE_TYPES } from '../../../utils/Constants';
-import { useAuth } from '../../../context/AuthContext';
+import { useAuth } from '../../../context/AppContext';
 
 /**
  * VisualizationContainer component - Container for the JasperReports visualization

@@ -1,6 +1,6 @@
 import './Dashboard.css';
 import './viz.css';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/AppContext';
 import { useChartState, useInputControls, useVisualization } from '../../hooks';
 import { DashboardControls, VisualizationContainer, ImageColumn, SidebarControls } from './components';
 import { PAGE_TYPES } from '../../utils/Constants';

@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/AppContext';
 import { AUTH_ACTIONS, CHARTS } from '../utils/Constants';
 import { useDashboardCharts } from './useDashboardCharts';
 
@@ -12,13 +12,6 @@ import { useDashboardCharts } from './useDashboardCharts';
 export const useChartState = (isPageReportSelected) => {
     const { dispatch, state } = useAuth();
     const { chartOptions } = useDashboardCharts(isPageReportSelected);
-
-    // Sync chart options to context when they change
-    useEffect(() => {
-        if (chartOptions) {
-            dispatch({ type: AUTH_ACTIONS.SET_CHART_OPTIONS, payload: chartOptions });
-        }
-    }, [chartOptions, dispatch]);
 
     // Initialize selected chart from context or set default
     useEffect(() => {
@@ -43,7 +36,7 @@ export const useChartState = (isPageReportSelected) => {
 
     return {
         selectedChart: state.selectedChart,
-        chartOptions: state.chartOptions,
+        chartOptions,
         handleChartSwitch,
     };
 };

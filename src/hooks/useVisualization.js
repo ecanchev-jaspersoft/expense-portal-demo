@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { CHART_TYPES, DOM_ELEMENT_IDS, AUTH_ACTIONS, EXPORT_FORMATS } from '../utils/Constants';
+import { useAuth } from '../context/AppContext';
+import { CHART_TYPES, DOM_ELEMENT_IDS, AUTH_ACTIONS, EXPORT_FORMATS, CHARTS } from '../utils/Constants';
 
 /**
  * Custom hook to manage visualization library initialization and rendering
@@ -11,9 +11,13 @@ import { CHART_TYPES, DOM_ELEMENT_IDS, AUTH_ACTIONS, EXPORT_FORMATS } from '../u
 export const useVisualization = (
     selectedChart
 ) => {
-    const { dispatch } = useAuth();
+    const { dispatch, state } = useAuth();
     const [reportViz, setReportViz] = useState(null);
     const [isChartLoaded, setIsChartLoaded] = useState(false);
+
+    // Determine which chart to use based on mode
+    const isPageReportSelected = state.selectedPage === 'pageReport';
+    const chartToUse = isPageReportSelected ? CHARTS[0] : selectedChart;
 
     useEffect(() => {
         if (!selectedChart) {
@@ -35,13 +39,12 @@ export const useVisualization = (
                 },
             },
             (v) => {
-                // Store visualization instance in global state for potential reuse
                 dispatch({ type: AUTH_ACTIONS.SET_V_OBJECT, payload: v });
 
                 // Handle non-report visualizations (e.g., ad-hoc views)
-                if (CHART_TYPES.REPORT !== selectedChart?.type) {
+                if (CHART_TYPES.REPORT !== chartToUse?.type) {
                     v(`#${DOM_ELEMENT_IDS.VIZ_CONTAINER}`).adhocView({
-                        resource: selectedChart.resource,
+                        resource: chartToUse.resource,
                         error: (e) => {
                             console.error(e);
                         },
@@ -51,7 +54,7 @@ export const useVisualization = (
 
                 // Fetch input controls data for both modes
                 v.inputControls({
-                    resource: selectedChart.resource,
+                    resource: chartToUse.resource,
                     success: (icData) => {
                         dispatch({ type: AUTH_ACTIONS.SET_INPUT_CONTROLS_DATA, payload: icData });
                     },
@@ -61,7 +64,7 @@ export const useVisualization = (
                 // Render the report visualization
                 const theReportViz = v.report({
                     container: `#${DOM_ELEMENT_IDS.VIZ_CONTAINER}`,
-                    resource: selectedChart.resource,
+                    resource: chartToUse.resource,
                     error: (e) => {
                         console.error(e);
                     },

@@ -5,7 +5,7 @@ import Hero from './sections/Hero/Hero';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
-import { AuthProvider, useAuth } from './context/AuthContext';
+import { AppProvider, useAuth } from './context/AppContext';
 
 const ProtectedRoute = ({ children }) => {
     const {
@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children }) => {
 
 const App = () => {
     return (
-        <AuthProvider>
+        <AppProvider>
             <Router basename='/expense-portal-demo'>
                 <Header />
                 <Routes>
@@ -38,11 +38,11 @@ const App = () => {
                             </ProtectedRoute>
                         }
                     />
-                    <Route path='*' element={<Navigate to='/' />} />
+                    <Route path='*' element={<Navigate to='/login' />} />
                 </Routes>
                 <Footer />
             </Router>
-        </AuthProvider>
+        </AppProvider>
     );
 };
 

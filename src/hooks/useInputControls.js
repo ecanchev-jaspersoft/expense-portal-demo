@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { BOOLEAN_TEXT, DATE_PICKER_ID, AUTH_ACTIONS } from '../utils/Constants';
+import { useAuth } from '../context/AppContext';
+import { BOOLEAN_TEXT, DATE_PICKER_ID, AUTH_ACTIONS, CHARTS } from '../utils/Constants';
 import { doPostToFetchDependentOptions } from '../services/inputControlsService';
 
 /**
@@ -13,6 +13,9 @@ import { doPostToFetchDependentOptions } from '../services/inputControlsService'
 export const useInputControls = (isPageReportSelected, selectedChart) => {
     const { dispatch, state } = useAuth();
     const { inputControlsData, loadingDependencies } = state;
+
+    // Determine which chart to use based on mode
+    const chartToUse = isPageReportSelected ? CHARTS[0] : selectedChart;
 
     // Helper function to extract selected values from a control
     const getSelectedValues = (control) => {
@@ -80,8 +83,8 @@ export const useInputControls = (isPageReportSelected, selectedChart) => {
     };
 
     const fetchDependentOptions = async (controlId, slaveDependencies, latestInputControlsData) => {
-        if (!selectedChart?.resource) {
-            console.warn('No selected chart available for API call');
+        if (!chartToUse?.resource) {
+            console.warn('No chart available for API call');
             return;
         }
         // Set loading state for all dependent controls
@@ -105,8 +108,8 @@ export const useInputControls = (isPageReportSelected, selectedChart) => {
             // Add master control as the last element
             requestBody[controlId] = masterSelectedValues;
 
-            // Build API URI - only if selectedChart is available
-            const apiUri = `http://localhost:8080/jasperserver-pro/rest_v2/reports${selectedChart.resource}/inputControls/${masterControl.slaveDependencies.join(';')}/values?freshData=false&includeTotalCount=true`;
+            // Build API URI - only if chartToUse is available
+            const apiUri = `http://localhost:8080/jasperserver-pro/rest_v2/reports${chartToUse.resource}/inputControls/${masterControl.slaveDependencies.join(';')}/values?freshData=false&includeTotalCount=true`;
 
             // Call the service
             const response = await doPostToFetchDependentOptions(apiUri, requestBody);

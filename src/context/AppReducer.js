@@ -4,13 +4,12 @@ export const initialState = {
     loggedInUser: null,
     vObject: null,
     selectedPage: null,
-    chartOptions: null,
     selectedChart: null,
     inputControlsData: [],
     loadingDependencies: {},
 };
 
-export const authReducer = (state, action) => {
+export const appReducer = (state, action) => {
     switch (action.type) {
         case AUTH_ACTIONS.LOGIN:
             return { ...state, isLoggedIn: true, loggedInUser: action.payload };
@@ -21,7 +20,6 @@ export const authReducer = (state, action) => {
                 loggedInUser: null,
                 vObject: null,
                 selectedPage: null,
-                chartOptions: null,
                 selectedChart: null,
                 inputControlsData: [],
                 loadingDependencies: {},
@@ -32,11 +30,6 @@ export const authReducer = (state, action) => {
             return {
                 ...state,
                 selectedPage: action.payload,
-            };
-        case AUTH_ACTIONS.SET_CHART_OPTIONS:
-            return {
-                ...state,
-                chartOptions: action.payload,
             };
         case AUTH_ACTIONS.SET_SELECTED_CHART_OBJECT:
             return {
