@@ -28,6 +28,7 @@ const Dashboard = () => {
         inputControlsData,
         setInputControlsData,
         handleInputControlChange,
+        clearMultiSelects,
         buildReportParams,
         loadingDependencies,
     } = useInputControls(isPageReportSelected, selectedChart);
@@ -90,6 +91,7 @@ const Dashboard = () => {
                     <DashboardControls
                         inputControlsData={inputControlsData}
                         handleInputControlChange={handleInputControlChange}
+                        clearMultiSelects={clearMultiSelects}
                         loadingDependencies={loadingDependencies}
                         isChartLoaded={isChartLoaded}
                     />

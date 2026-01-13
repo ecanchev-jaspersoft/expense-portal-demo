@@ -1,3 +1,4 @@
+export const DATE_PICKER_ID = 'date-picker-dashboard-view';
 export const FORBIDDEN_INPUT_CONTROLS = ['ACCOUNT_NUMBER', 'STATEMENT_TIME'];
 
 export const BOOLEAN_TEXT = {

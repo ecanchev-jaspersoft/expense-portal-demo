@@ -1,0 +1,55 @@
+@import '../../../../styles/variables.css';
+
+.dashboard-controls-horizontal {
+  width: 100%;
+  background-color: var(--white);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-controls-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 6px 16px;
+}
+
+.dashboard-controls-title-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chart-title {
+  margin: 0;
+  color: var(--text-black-color);
+  line-height: 1.2;
+}
+
+.clear-btn {
+  padding: 0;
+  font-size: 12px;
+  min-height: auto;
+  border: none;
+  background: transparent;
+  color: var(--primary-color);
+  transition: color 0.2s ease;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-weight: 400;
+  align-self: flex-start;
+}
+
+.clear-btn:hover:not(:disabled) {
+  color: var(--primary-hover-color);
+}
+
+.clear-btn:active:not(:disabled) {
+  color: var(--primary-hover-color);
+}
+
+.clear-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

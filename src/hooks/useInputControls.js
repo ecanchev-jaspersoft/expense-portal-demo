@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BOOLEAN_TEXT } from '../utils/Constants';
+import { BOOLEAN_TEXT, DATE_PICKER_ID } from '../utils/Constants';
 import { doPostToFetchDependentOptions } from '../services/inputControlsService';
 
 /**
@@ -145,6 +145,42 @@ export const useInputControls = (isPageReportSelected, selectedChart) => {
      * Builds report parameters object from input controls data
      * JasperReports expects parameters as { paramName: [value] }
      */
+    const clearMultiSelects = async () => {
+        // Clear all multi-select dropdowns by setting all options to selected: false
+        const clearedControls = inputControlsData.map((ic) => {
+            if (ic.type === 'multiSelect' && ic.state?.options) {
+                return {
+                    ...ic,
+                    state: {
+                        ...ic.state,
+                        options: ic.state.options.map(option => ({
+                            ...option,
+                            selected: false
+                        }))
+                    }
+                };
+            }
+            return ic;
+        });
+
+        // Update state
+        setInputControlsData(clearedControls);
+
+        // Clear date picker input
+        const dateInputElement = document.getElementById(DATE_PICKER_ID);
+        if (dateInputElement) {
+            dateInputElement.value = '';
+        }
+
+        // Handle dependencies for all multi-select controls
+        const multiSelectControls = clearedControls.filter(ic => ic.type === 'multiSelect');
+        for (const control of multiSelectControls) {
+            if (control.slaveDependencies?.length > 0) {
+                await fetchDependentOptions(control.id, control.slaveDependencies, clearedControls);
+            }
+        }
+    };
+
     const buildReportParams = () => {
         return inputControlsData.reduce((accum, icData) => {
             if (icData.state?.options) {
@@ -169,6 +205,7 @@ export const useInputControls = (isPageReportSelected, selectedChart) => {
         inputControlsData,
         setInputControlsData,
         handleInputControlChange,
+        clearMultiSelects,
         buildReportParams,
         loadingDependencies,
     };
