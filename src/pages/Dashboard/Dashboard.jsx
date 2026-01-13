@@ -1,7 +1,7 @@
 import './Dashboard.css';
 import './viz.css';
 import { useAuth } from '../../context/AuthContext';
-import { useDashboardCharts, useInputControls, useVisualization } from '../../hooks';
+import { useChartState, useInputControls, useVisualization } from '../../hooks';
 import { DashboardSidebar, VisualizationContainer, ImageColumn } from './components';
 import { PAGE_TYPES } from '../../utils/Constants';
 import { useEffect, useRef, useCallback } from 'react';
@@ -15,14 +15,14 @@ import { useEffect, useRef, useCallback } from 'react';
  * - Interactive Dashboard mode: Dashboard with chart selector and dynamic controls
  * 
  * The component uses custom hooks for separation of concerns:
- * - useDashboardCharts: Manages chart selection and filtering
+ * - useChartState: Manages chart selection and context synchronization
  * - useInputControls: Handles input control state and updates
  * - useVisualization: Manages JasperReports visualization library integration
  */
 const Dashboard = () => {
     const { dispatch, state } = useAuth();
     const isPageReportSelected = state.selectedPage && state.selectedPage === PAGE_TYPES.PAGE_REPORT;
-    const { selectedChart, chartOptions, handleChartSwitch } = useDashboardCharts(isPageReportSelected);
+    const { selectedChart } = useChartState(isPageReportSelected);
 
     const {
         inputControlsData,
@@ -81,11 +81,7 @@ const Dashboard = () => {
                 loadingDependencies={loadingDependencies}
                 isChartLoaded={isChartLoaded}
             />
-            <VisualizationContainer 
-                chartOptions={chartOptions}
-                selectedChartName={selectedChart?.name}
-                handleChartSwitch={handleChartSwitch}
-            />
+            <VisualizationContainer />
             <ImageColumn isVisible={isChartLoaded && isPageReportSelected} />
         </main>
     );

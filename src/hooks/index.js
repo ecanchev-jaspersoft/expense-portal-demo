@@ -5,3 +5,4 @@
 export { useDashboardCharts } from './useDashboardCharts';
 export { useInputControls } from './useInputControls';
 export { useVisualization } from './useVisualization';
+export { useChartState } from './useChartState';

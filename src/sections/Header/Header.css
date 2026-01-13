@@ -9,6 +9,7 @@
     background: var(--background-gradient);
     color: var(--text-color);
     animation: fadeIn 1.5s ease-in-out;
+    gap: 2rem;
 }
 
 .navbar .logo img {
@@ -38,6 +39,45 @@
 .nav-links a:hover {
     color: var(--neutral-medium);
 }
+
 .dashboard-switcher {
     cursor: pointer;
+}
+/* Header tabs container */
+.header-tabs {
+    flex: 1;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.header-tabs .tabs-container {
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius);
+    padding: 0;
+}
+
+.header-tabs .tab-button {
+    color: var(--text-color);
+    border-bottom: 2px solid transparent;
+    height: 32px;
+    min-width: 80px;
+    font-size: 13px;
+}
+
+.header-tabs .tab-button:hover {
+    color: var(--text-color);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.header-tabs .tab-button.active {
+    color: var(--text-color);
+    border-bottom-color: var(--text-color);
+    background: rgba(255, 255, 255, 0.2);
+    font-weight: 600;
+}
+
+.header-tabs .tab-button:focus {
+    outline: 1px solid rgba(255, 255, 255, 0.5);
 }
