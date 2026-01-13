@@ -1,0 +1,70 @@
+@import '../../../styles/variables.css';
+
+.datepicker {
+    width: 100%;
+    margin-bottom: var(--padding-small);
+}
+
+.datepicker-label {
+    display: block;
+    font-size: var(--font-small);
+    font-weight: 500;
+    color: var(--text-black-color);
+    margin-bottom: var(--padding-small);
+}
+
+.datepicker-input {
+    width: 100%;
+    max-width: 300px;
+    padding: var(--padding-small);
+    color: var(--text-black-color);
+    background-color: var(--white);
+    border: 1px solid var(--secondary-hover-color);
+    border-radius: var(--border-radius);
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* Target calendar icon in WebKit browsers */
+.datepicker-input::-webkit-calendar-picker-indicator {
+    cursor: pointer !important;
+    color: var(--primary-color);
+}
+
+/* Target calendar icon in Firefox */
+.datepicker-input::-moz-calendar-picker-indicator {
+    cursor: pointer !important;
+    color: var(--primary-color);
+}
+
+/* Target clear button in WebKit browsers */
+.datepicker-input::-webkit-clear-button {
+    cursor: pointer !important;
+}
+
+/* Target clear button in Firefox */
+.datepicker-input::-moz-clear-button {
+    cursor: pointer !important;
+}
+
+.datepicker-input:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px var(--primary-color);
+}
+
+.datepicker-input:focus {
+    border-color: var(--primary-hover-color);
+    box-shadow: 0 0 8px var(--primary-hover-color);
+}
+
+.datepicker-input:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.datepicker-input:disabled:hover {
+    border-color: var(--secondary-hover-color);
+    box-shadow: none;
+}
