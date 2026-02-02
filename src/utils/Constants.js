@@ -18,7 +18,7 @@ export const CHART_TYPES = {
 
 export const CHART_NAMES = {
     FINANCIAL_HEALTH: 'Financial Health & Performance',
-    CUSTOMER_MARKET: 'Customer & Market Groth',
+    CUSTOMER_MARKET: 'Customer & Market Growth',
     OPERATIONAL_EFFICIENCY: 'Operational Efficiency',
     PEOPLE_TALENT: 'People & Talent',
 };
@@ -90,7 +90,7 @@ export const CHARTS = [
         type: 'report',
     },
     {
-        name: 'Customer & Market Groth',
+        name: 'Customer & Market Growth',
         resource: '/public/Demo_Example/Embedded_Dashboards/Customer___Market_Growth',
         type: 'report',
     },
